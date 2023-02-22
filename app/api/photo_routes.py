@@ -57,7 +57,7 @@ def post_photo():
         db.session.add(photo)
         db.session.commit()
         return photo.to_dict()
-        
+
     return {'errors': validation_errors_to_error_messages(photo.errors)}, 401
 
 @photo_routes.route('/<int:id>')
@@ -65,3 +65,37 @@ def single_photo(id):
     single_photo = Photo.query.get(id)
     photo = single_photo.to_dict()
     return jsonify(photo)
+
+@photo_routes.route('/<int:id>', methods=["PUT"])
+def edit_photo(id):
+    current_photo = Photo.query.get(id)
+
+    res = request.get_json()
+    photo = PhotoForm()
+    photo["csrf_token"].data = request.cookies["csrf_token"]
+    if photo.validate_on_submit():
+        photo.populate_obj(current_photo)
+
+        current_photo.taken_date = res["takenDate"]
+        current_photo.category = res["category"]
+        current_photo.camera_type = res["cameraType"]
+        current_photo.lense_type = res["lenseType"]
+        current_photo.privacy = res["privacy"]
+        current_photo.title = res["title"]
+        current_photo.description = res["description"]
+        current_photo.location = res["location"]
+
+        db.session.commit()
+        photo = current_photo.to_dict()
+        return jsonify(photo)
+    return {'errors': validation_errors_to_error_messages(photo.errors)}, 401
+
+@photo_routes.route('/<int:id>', methods=["DELETE"])
+def delete_photo(id):
+    current_photo = Photo.query.get(id)
+
+    if current_photo:
+        db.session.delete(current_photo)
+        db.session.commit()
+    else:
+        return {'error': 'Coult not delete photo'}

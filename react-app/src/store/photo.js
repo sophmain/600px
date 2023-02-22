@@ -1,5 +1,6 @@
 const LOAD_PHOTOS = 'photo/LOAD_PHOTOS'
 const LOAD_SINGLEPHOTO = 'photo/LOAD_SINGLEPHOTO'
+const POST_PHOTO = 'photo/POST_PHOTO'
 const CLEAN_UP_PHOTO = 'photo/CLEAN_UP_PHOTO'
 
 const actionLoadPhotos = (photos) => ({
@@ -9,6 +10,11 @@ const actionLoadPhotos = (photos) => ({
 
 const actionLoadSinglePhoto = (photo) => ({
     type: LOAD_SINGLEPHOTO,
+    photo
+})
+
+const actionPostPhoto = (photo) => ({
+    type: POST_PHOTO,
     photo
 })
 
