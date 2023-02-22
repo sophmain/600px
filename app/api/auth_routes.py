@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, request
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
@@ -61,8 +61,11 @@ def sign_up():
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
         user = User(
+            first_name=form.data['firstName'],
+            last_name=form.data['lastName'],
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password']
