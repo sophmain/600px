@@ -18,12 +18,15 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/login" >
+          {/* <Route exact path='/'>
+
+          </Route> */}
+          {/* <Route path="/login" >
             <LoginFormPage />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
-          </Route>
+          </Route> */}
         </Switch>
       )}
     </>
