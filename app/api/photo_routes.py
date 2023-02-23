@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify, request
-from flask_login import login_required
-from app.models import Photo
-from ..forms import PhotoForm
+from flask_login import login_required, current_user
+from app.models import Photo, Upload, db
+from ..forms.photo_form import PhotoForm
+from app.awsupload import (
+    upload_file_to_s3, allowed_file, get_unique_filename)
 
 photo_routes = Blueprint('photo', __name__)
 
@@ -35,24 +37,73 @@ def all_photos():
 
     return jsonify(photo_res)
 
+@photo_routes.route('/upload', methods=['GET'])
+def load_uploads():
+    all_uploads = Upload.query.all()
+    uploads = [upload.to_dict() for upload in all_uploads]
+
+    upload_res = []
+    for upload in uploads:
+
+        upload_res.append({
+            'id': upload['id'],
+            'uploadUrl': upload['uploadUrl'],
+            'userId': upload['userId']
+        })
+
+    return jsonify(upload_res)
+
+@photo_routes.route('/upload', methods=['POST'])
+@login_required
+def upload_image():
+    if "image" not in request.files:
+        return {"errors": "image required"}, 400
+
+    image = request.files["image"]
+
+    if not allowed_file(image.filename):
+        return {"errors": "file type not permitted"}, 400
+
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+
+    if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message
+        return upload, 400
+
+    url = upload["url"]
+
+    # flask_login allows us to get the current user from the request
+    new_image = Upload(user_id=current_user.id, upload_url=url)
+    db.session.add(new_image)
+    db.session.commit()
+    return {"url": url}
+
+
 @photo_routes.route('/', methods=['POST'])
 def post_photo():
+    print('>>>>>>>>>>hits post route')
+    print('<<<<<request', request.get_json())
     res = request.get_json()
     print('res from post photo route', res)
     photo = PhotoForm()
     photo["csrf_token"].data = request.cookies["csrf_token"]
+    print('PHOTO FROM INSIDE ROUTE', photo)
 
     if photo.validate_on_submit():
         photo = Photo(
             user_id=res["userId"],
+            upload_id=res["uploadId"],
             taken_date=res["takenDate"],
             category=res["category"],
-            camera_type=res["cameraType"]
-            lense_type=res["lenseType"]
-            privacy=res["privacy"]
-            title=res["title"]
-            description=res["description"]
-            location=res["location"]
+            camera_type=res["cameraType"],
+            lense_type=res["lenseType"],
+            privacy=res["privacy"],
+            title=res["title"],
+            description=res["description"],
+            location=res["location"],
         )
         db.session.add(photo)
         db.session.commit()

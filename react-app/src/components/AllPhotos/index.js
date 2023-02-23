@@ -28,11 +28,6 @@ const AllPhotos = () => {
 
     return (
         <div>
-            <form action="{{url_for('create')}}" method="POST" enctype="multipart/form-data">
-                <label for="user_file">Upload Your File</label>
-                <input type="file" name="user_file"></input>
-                <button type="submit">Upload</button>
-            </form>
             <ul className='all-photos'>
                 {photos.map((photo) => {
                     return (
