@@ -7,6 +7,8 @@ import UploadPhoto from "./components/UploadPhoto";
 import PostPhoto from "./components/PostPhoto";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import EditPhoto from "./components/EditPhoto";
+import { thunkLoadSinglePhoto } from "./store/photo";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +33,9 @@ function App() {
           </Route>
           <Route path='/post'>
             <PostPhoto />
+          </Route>
+          <Route path='/manage/:photoId'>
+            <EditPhoto />
           </Route>
         </Switch>
       )}

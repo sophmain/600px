@@ -2,6 +2,8 @@ const LOAD_PHOTOS = 'photo/LOAD_PHOTOS'
 const LOAD_SINGLEPHOTO = 'photo/LOAD_SINGLEPHOTO'
 const POST_PHOTO = 'photo/POST_PHOTO'
 const EDIT_PHOTO = 'photo/EDIT_PHOTO'
+const DELETE_PHOTO = 'photo/DELETE_PHOTO'
+const SAVE_PHOTOID = 'photo/SAVE_PHOTOID'
 const CLEAN_UP_PHOTO = 'photo/CLEAN_UP_PHOTO'
 
 const actionLoadPhotos = (photos) => ({
@@ -22,6 +24,15 @@ const actionPostPhoto = (newphoto) => ({
 const actionEditPhoto = (updatedPhoto) => ({
     type: EDIT_PHOTO,
     updatedPhoto
+})
+// const actionSavePhotoId = (photoId) => ({
+//     type: SAVE_PHOTOID,
+//     photoId
+// })
+
+const actionDeletePhoto = (toDelete) => ({
+    type: DELETE_PHOTO,
+    toDelete
 })
 
 export const actionCleanUpPhoto = () => {
@@ -46,6 +57,7 @@ export const thunkLoadSinglePhoto = (photoId) => async (dispatch) => {
     if (response.ok) {
         const photo = await response.json()
         dispatch(actionLoadSinglePhoto(photo))
+        //dispatch(actionSavePhotoId(photoId))
         return photo
     }
 }
@@ -73,6 +85,7 @@ export const thunkPostPhoto = (payload) => async (dispatch) => {
 }
 
 export const thunkEditPhoto = (updatedPhoto) => async (dispatch) => {
+
     const response = await fetch(`/api/photos/${updatedPhoto.id}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
@@ -93,6 +106,18 @@ export const thunkEditPhoto = (updatedPhoto) => async (dispatch) => {
         return ["An error occurred. Please try again."];
     }
 
+}
+export const thunkDeletePhoto = (photoToDelete) => async (dispatch) => {
+    const response = await fetch(`/api/photos/${photoToDelete.id}`, {
+        method: "DELETE"
+    })
+    console.log('RESPONSE IN THUNK', response)
+    if (response.ok) {
+        const deleteMessage = await response.json()
+        console.log('DELETE MESSAGE', deleteMessage)
+        dispatch(actionDeletePhoto(photoToDelete.id))
+        return photoToDelete
+    }
 }
 
 
@@ -122,6 +147,15 @@ const photoReducer = (state = initialState, action) => {
             newState = { ...state }
             newState.allPhotos = { ...newState.allPhotos, [action.newphoto.id]: action.newphoto }
             newState.singlePhoto = { ...newState.singlePhoto, ...action.newphoto }
+            return newState
+        // case SAVE_PHOTOID:
+        //     newState = { ...state }
+        //     newState.photoId = action.photoId
+        //     return newState
+        case DELETE_PHOTO:
+            newState = { ...state }
+            delete newState.allPhotos[action.toDelete.id]
+            newState.allPhotos = { ...newState.allPhotos }
             return newState
         default:
             return state
