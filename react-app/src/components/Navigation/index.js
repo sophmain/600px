@@ -43,6 +43,7 @@ function Navigation({ isLoaded }) {
 				<div style={{ marginRight: '15px' }}>
 					<ProfileButton user={sessionUser} />
 				</div>
+				<button className='upload-photo-button' onClick={(e) => uploadPhoto(e)}><i className="fa-solid fa-arrow-up"></i>Upload</button>
 			</div>
 		);
 
@@ -54,10 +55,12 @@ function Navigation({ isLoaded }) {
 				</button>
 				<div className='nav-bar-login-modal-button'>
 					<OpenModalButton
+						className = 'log-in-modal'
 						buttonText="Log In"
 						modalComponent={<LoginFormModal />}
 					/>
 					<OpenModalButton
+					className= 'sign-up-modal'
                     buttonText="Sign Up"
                     modalComponent={<SignupFormModal />}
                 />
@@ -69,10 +72,13 @@ function Navigation({ isLoaded }) {
 	return (
 		<div className='nav-header-container'>
 			<NavLink exact to="/" className='home-logo'>600px</NavLink>
+			<div className = 'discover-dropdown'>
+
+			</div>
 			<div className='nav-bar-login-signup'>
 				{isLoaded && sessionLinks}
 			</div>
-			<button className='upload-photo-button' onClick={(e) => uploadPhoto(e)}>Upload</button>
+
 
 		</div>
 	);
