@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { thunkLoadAllUploads, thunkPostUpload } from "../../store/upload";
-
+import './UploadPhoto.css'
 
 const UploadPhoto = () => {
     const history = useHistory(); // so that we can redirect after the image upload is successful
@@ -52,15 +52,26 @@ const UploadPhoto = () => {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={updateImage}
-            />
-            <button type="submit">Submit</button>
-            {(imageLoading)&& <p>Loading...</p>}
-        </form>
+        <div className='upload-container'>
+            <h2> Upload</h2>
+
+            <div className='upload-arrow'>
+                <div><i class="fa-solid fa-arrow-up"></i></div>
+                <h3>Upload photo</h3>
+            </div>
+            <div className='upload-submit-buttons'>
+                <form onSubmit={handleSubmit} className='upload-form'>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={updateImage}
+                    />
+                    <button className='submit-upload' type="submit">Submit photo</button>
+                    {(imageLoading) && <p>Loading...</p>}
+                </form>
+            </div>
+
+        </div>
     )
 }
 
