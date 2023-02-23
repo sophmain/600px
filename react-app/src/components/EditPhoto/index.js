@@ -1,32 +1,58 @@
 import { useDispatch, useSelector } from "react-redux"
+import { useState, useEffect } from "react"
+import { thunkDeletePhoto, thunkEditPhoto, thunkLoadSinglePhoto } from "../../store/photo"
+import { useHistory, useParams } from "react-router-dom"
 
 const EditPhoto = () => {
 
     const categories = ['Abstract', 'Aerial', 'Animals', 'Black and White', 'Celebrities', 'City & Architecture', 'Commercial', 'Concert', 'Family', 'Fashion', 'Film', 'Fine Art', 'Food', 'Journalism', 'Landscapes', 'Macro', 'Nature', 'Night', 'People', 'Performing Arts', 'Sport', 'Still Life', 'Street', 'Transportation', 'Travel', 'Underwater', 'Urban Exploration', 'Wedding', 'Other']
     const privacyTypes = ['Public', 'Unlisted', 'Limited Access']
 
-    const dispatch = useDispatch()
-    const photoToEdit = useSelector((state) => state.photos.singlePhoto)
-    console.log('>>>>>>>>>PHOTO TO EDIT', photoToEdit)
+    function datetimeLocal(datetime) {
+        const dt = new Date(datetime);
+        const newDate = dt.toISOString().split('T')[0]
+        return newDate
+    }
 
-    const [takenDate, setTakenDate] = useState(photoToEdit.takenDate)
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const { photoId } = useParams()
+    //const photoId = useSelector((state) => state.photos.photoId)
+
+    useEffect(() => {
+        // const loadData = async () => {
+        dispatch(thunkLoadSinglePhoto(photoId))
+        // }
+        // loadData()
+    }, [dispatch, photoId])
+
+
+    const user = useSelector((state) => state.session.user)
+    const photoToEdit = useSelector((state) => state.photos.singlePhoto)
+    console.log('PHOTO TO EDIT', photoToEdit)
+
+
+    const [takenDate, setTakenDate] = useState(photoToEdit.takenDate ? datetimeLocal(photoToEdit.takenDate) : '')
     const [category, setCategory] = useState(photoToEdit.category)
-    const [cameraType, setCameraType] = useState(photoToEdit.cameraType)
-    const [lenseType, setLenseType] = useState(photoToEdit.lenseType)
+    const [cameraType, setCameraType] = useState(photoToEdit.cameraType ? photoToEdit.cameraType : '')
+    const [lenseType, setLenseType] = useState(photoToEdit.lenseType ? photoToEdit.lenseType : '')
     const [privacy, setPrivacy] = useState(photoToEdit.privacy)
-    const [title, setTitle] = useState(photoToEdit.title)
-    const [description, setDescription] = useState(photoToEdit.description)
-    const [location, setLocation] = useState(photoToEdit.location)
+    const [title, setTitle] = useState(photoToEdit.title ? photoToEdit.title : '')
+    const [description, setDescription] = useState(photoToEdit.description ? photoToEdit.description : '')
+    const [location, setLocation] = useState(photoToEdit.location ? photoToEdit.location : '')
     const [errors, setErrors] = useState([])
+
     // const [createdPhoto, setCreatedPhoto] = useState('')
+
+    // if (!photoToEdit) return null
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setErrors([])
 
         const payload = {
-            userId: user.id,
-            uploadId: latestUpload.id,
+            // userId: user.id,
+            ...photoToEdit,
             takenDate,
             category,
             cameraType,
@@ -48,11 +74,16 @@ const EditPhoto = () => {
             //  setCreatedPhoto(data)
         }
     }
+    const deletePhoto = (e) => {
+        e.preventDefault()
+        dispatch(thunkDeletePhoto(photoToEdit))
+        history.push('/')
+    }
 
     return (
         <>
         <div>
-            <img src={latestUpload.uploadUrl}></img>
+            <img className='image-size' src={photoToEdit.photoUrl}></img>
         </div>
         <form className='photo-form' onSubmit={handleSubmit}>
                 <ul className="validation-errors">
@@ -171,7 +202,8 @@ const EditPhoto = () => {
                     />
                 </label>
 
-                <button className="create-product-submit-button" type="submit">Submit</button>
+                <button className="create-photo-submit-button" type="submit">Submit</button>
+                <button className="delete-button" onClick={deletePhoto}>Delete photo</button>
             </form>
             </>
     )

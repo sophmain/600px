@@ -18,7 +18,6 @@ const AllPhotos = () => {
     if (!allPhotosObj) return null
 
     const photos = Object.values(allPhotosObj)
-    console.log('photos arr from store', photos)
 
     // takes user to the single photo page when clicking photo in all photos page
     const PhotoClick = (e, id) => {
@@ -28,10 +27,10 @@ const AllPhotos = () => {
 
     return (
         <div>
-            <ul className='all-photos'>
+            <ul className='all-photos' >
                 {photos.map((photo) => {
                     return (
-                        <div className='photo-card' onClick={(e) => PhotoClick(e, photo.id)}>
+                        <div className='photo-card' key={photo.id} onClick={(e) => PhotoClick(e, photo.id)}>
                             <img className='photo-size' src={photo.photoUrl}></img>
                         </div>
                     )

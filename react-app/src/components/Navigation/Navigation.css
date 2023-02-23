@@ -5,3 +5,18 @@
 .hidden {
   display: none;
 }
+.home-logo {
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+
+}
+.nav-header-container {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5rem 1rem 5rem;
+}
+.nav-right {
+  display: flex;
+  flex-direction: row;
+}

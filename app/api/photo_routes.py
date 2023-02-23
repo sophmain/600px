@@ -148,5 +148,6 @@ def delete_photo(id):
     if current_photo:
         db.session.delete(current_photo)
         db.session.commit()
+        return {'message':"successfully deleted"}
     else:
-        return {'error': 'Coult not delete photo'}
+        return {'error': 'Could not delete photo'}

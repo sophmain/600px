@@ -25,7 +25,7 @@ class Photo(db.Model):
 
     user = db.relationship('User', back_populates='photo')
     gallery = db.relationship('Gallery', back_populates='photo')
-    upload = db.relationship('Upload', back_populates='photo')
+    upload = db.relationship('Upload', cascade="all, delete-orphan", single_parent=True, uselist=False, back_populates='photo')
 
     def to_dict(self):
         return {
