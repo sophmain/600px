@@ -1,6 +1,7 @@
 const LOAD_PHOTOS = 'photo/LOAD_PHOTOS'
 const LOAD_SINGLEPHOTO = 'photo/LOAD_SINGLEPHOTO'
 const POST_PHOTO = 'photo/POST_PHOTO'
+const EDIT_PHOTO = 'photo/EDIT_PHOTO'
 const CLEAN_UP_PHOTO = 'photo/CLEAN_UP_PHOTO'
 
 const actionLoadPhotos = (photos) => ({
@@ -13,9 +14,14 @@ const actionLoadSinglePhoto = (photo) => ({
     photo
 })
 
-const actionPostPhoto = (photo) => ({
+const actionPostPhoto = (newphoto) => ({
     type: POST_PHOTO,
-    photo
+    newphoto
+})
+
+const actionEditPhoto = (updatedPhoto) => ({
+    type: EDIT_PHOTO,
+    updatedPhoto
 })
 
 export const actionCleanUpPhoto = () => {
@@ -43,6 +49,51 @@ export const thunkLoadSinglePhoto = (photoId) => async (dispatch) => {
         return photo
     }
 }
+export const thunkPostPhoto = (payload) => async (dispatch) => {
+    console.log('PAYLOADDDDD', payload)
+    const response = await fetch('/api/photos/', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    console.log('RESPONSE FROM INSIDE THUNK', response)
+    if (response.ok) {
+        const newPhoto = await response.json()
+        dispatch(actionPostPhoto(newPhoto))
+        return newPhoto;
+    } else if (response.status < 500) {
+
+        const newPhoto = await response.json()
+        if (newPhoto.errors) {
+			return newPhoto.errors;
+		}
+    } else {
+        return ["An error occurred. Please try again."];
+    }
+}
+
+export const thunkEditPhoto = (updatedPhoto) => async (dispatch) => {
+    const response = await fetch(`/api/photos/${updatedPhoto.id}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedPhoto)
+    })
+
+    if (response.ok) {
+        const updatedPhoto = await response.json()
+        dispatch(actionEditPhoto(updatedPhoto))
+        return updatedPhoto;
+
+    } else if (response.status < 500) {
+        const updatedPhoto = await response.json()
+        if (updatedPhoto.errors) {
+            return updatedPhoto.errors;
+		}
+    } else {
+        return ["An error occurred. Please try again."];
+    }
+
+}
 
 
 const normalize = (arr) => {
@@ -66,6 +117,11 @@ const photoReducer = (state = initialState, action) => {
             return newState
         case CLEAN_UP_PHOTO:
             newState = { ...initialState }
+            return newState
+        case POST_PHOTO:
+            newState = { ...state }
+            newState.allPhotos = { ...newState.allPhotos, [action.newphoto.id]: action.newphoto }
+            newState.singlePhoto = { ...newState.singlePhoto, ...action.newphoto }
             return newState
         default:
             return state

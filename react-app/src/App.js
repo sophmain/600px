@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SinglePhoto from './components/SinglePhoto';
 import AllPhotos from "./components/AllPhotos";
+import UploadPhoto from "./components/UploadPhoto";
+import PostPhoto from "./components/PostPhoto";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -23,6 +25,12 @@ function App() {
           </Route>
           <Route path='/photos/:photoId'>
             <SinglePhoto />
+          </Route>
+          <Route path='/upload'>
+            <UploadPhoto />
+          </Route>
+          <Route path='/post'>
+            <PostPhoto />
           </Route>
         </Switch>
       )}

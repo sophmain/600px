@@ -1,11 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
+	const history = useHistory()
+
+	const uploadPhoto = (e) => {
+		e.preventDefault()
+		history.push(`/upload`)
+	}
 
 	return (
 		<ul>
@@ -17,6 +23,7 @@ function Navigation({ isLoaded }){
 					<ProfileButton user={sessionUser} />
 				</li>
 			)}
+			<button className = 'upload-photo-button' onClick={(e) => uploadPhoto(e)}>Upload</button>
 		</ul>
 	);
 }
