@@ -1,0 +1,32 @@
+.post-photo-container {
+    max-width: 300px;
+    max-height: 350px;
+
+}
+.post-photo {
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    object-fit: cover;
+    image-resolution: from-image 300dpi;
+}
+
+.post-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 24px 0px;
+    margin: 0px 64px;
+
+}
+.post-form-box {
+    background-color: white;
+    border: 2px solid lightgray;
+    overflow-y: auto;
+}
+.upload-banner {
+    margin: 0px 64px;
+}
+.post-whole-page-container {
+    background-color: #f0f0f0;
+}
