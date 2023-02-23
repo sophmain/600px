@@ -1,0 +1,41 @@
+.single-photo-container {
+    display: flex;
+    flex-direction: row;
+    padding: 24px;
+    margin: 0px;
+    align-items: center;
+    justify-content: center;
+    min-height: 600px;
+}
+.single-photo-nav {
+    width: 33%;
+    cursor: pointer;
+}
+.photo-background {
+    background-color: rgb(47, 47, 47);
+}
+.single-photo-size {
+    image-resolution: from-image 300dpi;
+    width: 33%;
+}
+.single-photo {
+    width: 100%;
+
+}
+.fa-chevron-left, .fa-chevron-right {
+    color: white;
+    font-size: 24px;
+    font-weight: 100px;
+}
+.fa-chevron-right {
+    display: flex;
+    justify-content: flex-end;
+}
+.single-right-profile {
+    display: flex;
+    flex-direction: column;
+}
+.single-taken-updated {
+    display: flex;
+    flex-direction: row;
+}
