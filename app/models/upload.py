@@ -11,7 +11,7 @@ class Upload(db.Model):
     upload_url = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
 
-    photo = db.relationship('Photo', back_populates='upload')
+    photo = db.relationship('Photo', cascade="all, delete-orphan", back_populates='upload')
 
     def to_dict(self):
         return {
