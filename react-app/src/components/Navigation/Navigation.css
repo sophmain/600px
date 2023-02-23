@@ -5,3 +5,78 @@
 .hidden {
   display: none;
 }
+.home-logo {
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+
+}
+.nav-header-container {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5rem 1rem 5rem;
+}
+.nav-right {
+  display: flex;
+  flex-direction: row;
+}
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
+.log-in-modal, .demo-login {
+  background-color: white;
+  font-weight: bolder;
+  font-size: 16px;
+  border: none;
+}
+.log-in-modal:hover, .demo-login:hover {
+  color:  #1890ff;
+  cursor: pointer;
+}
+.sign-up-modal {
+  border: 2px solid rgb(34, 34, 34);
+  background-color: white;
+  font-size: 16px;
+  border-radius: 100px;
+  padding: 0px 16px;
+  font-weight: bolder;
+  line-height: 16px;
+  height: 32px;
+}
+.sign-up-modal:hover {
+  cursor: pointer;
+  color:  #1890ff;
+}
+.nav-bar-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.upload-photo-button {
+  border: 2px solid rgb(34, 34, 34);
+  color: rgb(34, 34, 34);
+  padding: 10px 22px;
+  background: white;
+  border-radius: 28px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+.fa-arrow-up {
+  margin-right: 10px;
+  font-weight: light;
+}
+.upload-photo-button:hover {
+  background-color: rgb(237, 237, 237);
+}
+.profile-button {
+  background-color: none;
+  border-radius: 50%;
+  border: none;
+  text-align: center;
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+}

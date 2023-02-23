@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
+import SinglePhoto from './components/SinglePhoto';
+import AllPhotos from "./components/AllPhotos";
+import UploadPhoto from "./components/UploadPhoto";
+import PostPhoto from "./components/PostPhoto";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import EditPhoto from "./components/EditPhoto";
+import { thunkLoadSinglePhoto } from "./store/photo";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,11 +22,20 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/login" >
-            <LoginFormPage />
+          <Route exact path='/'>
+            <AllPhotos />
           </Route>
-          <Route path="/signup">
-            <SignupFormPage />
+          <Route path='/photos/:photoId'>
+            <SinglePhoto />
+          </Route>
+          <Route path='/upload'>
+            <UploadPhoto />
+          </Route>
+          <Route path='/post'>
+            <PostPhoto />
+          </Route>
+          <Route path='/manage/:photoId'>
+            <EditPhoto />
           </Route>
         </Switch>
       )}
