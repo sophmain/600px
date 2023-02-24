@@ -55,7 +55,7 @@ def create_gallery():
     """
     res = request.get_json()
     gallery = GalleryForm()
-    gallery["csrf_token"].data = request.cookies["csrf_token"]
+    gallery['csrf_token'].data = request.cookies['csrf_token']
 
     if gallery.validate_on_submit():
         gallery = Gallery(
@@ -69,3 +69,32 @@ def create_gallery():
         return gallery.to_dict()
 
     return {'errors': validation_errors_to_error_messages(gallery.errors)}, 401
+
+@gallery_routes.route('/<int:id>', methods=['PUT'])
+def edit_gallery(id):
+    current_gallery = Gallery.query.get(id)
+
+    res = request.get_json()
+    gallery = GalleryForm()
+    photo['csrf_token'].data = request.cookies['csrf_token']
+    if gallery.validate_on_submit():
+        # gallery.populate_obj(current_gallery)
+        current_gallery.name = res['name']
+        current_gallery.description = res['description']
+        current_gallery.visible = res['visible']
+
+        db.session.commit()
+        gallery = current_gallery.to_dict()
+        return jsonify(photo)
+    return {'errors': validation_errors_to_error_messages(gallery.errors)}, 401
+
+@gallery_routes.route('/<int:id>', methods=['DELETE'])
+def delete_gallery(id):
+    current_gallery = Gallery.query.get(id)
+
+    if current_gallery:
+        db.session.delete(current_gallery)
+        db.session.commit()
+        return {'message': 'Successfully deleted'}
+    else:
+        return {'error': 'Could not delete photo'}
