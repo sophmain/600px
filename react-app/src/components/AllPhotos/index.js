@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, NavLink } from 'react-router-dom'
 import { thunkLoadPhotos } from '../../store/photo'
 import OpenModalButton from '../OpenModalButton'
 import './AllPhotos.css'
@@ -25,50 +25,39 @@ const AllPhotos = () => {
         history.push(`/photos/${id}`)
     }
 
-    // function getSpanEstimate(size) {
-    //     if (size > 290) {
-    //         return 2
-    //     }
-    //     return 1
+    // function randomImageSize(min, max) {
+    //     return Math.round(Math.random() * (max - min) + min)
     // }
-
-    // function GridItem(photo) {
-    //     const style = {
-    //         gridColumnEnd: `span ${getSpanEstimate(photo.width)}`,
-    //         gridRowEnd: `span ${getSpanEstimate(photo.height)}`,
-    //         maxHeight: `300px`,
-    //         // maxWidth: `900px`,
-    //         imageResolution: `from-image 300dpi`
+    // function setImageSize(photos, photo) {
+    //     let images = ''
+    //     for (let i = 0; i < photos.length; i++) {
+    //         let width = randomImageSize(200, 1000);
+    //         let height = randomImageSize(200, 500);
+    //         images += `<img src=${photo.photoUrl} + ${width} + '/' + ${height} + '"alt="grid">`
     //     }
-    //     return <img style={style} src={photo.photoUrl} alt='grid image' />
     // }
-
-    function randomImageSize (min, max) {
-        return Math.round(Math.random() * (max - min) + min)
-    }
-    function setImageSize(photos, photo){
-        let images = ''
-        for (let i = 0; i < photos.length; i++){
-            let width = randomImageSize(200, 1000);
-            let height = randomImageSize(200, 500);
-            images += `<img src=${photo.photoUrl} + ${width} + '/' + ${height} + '"alt="grid">`
-        }
-    }
-
 
     return (
         <div className='mapped-photo-container'>
-            <h1>Home Feed</h1>
+            <h1 className='photos-title'>Home Feed</h1>
             <h3 className='see-photos'>See photos and published Galleries.</h3>
+            <div className='subheader-home'>
+                <NavLink to={'/'} className='to-home'>Home</NavLink>
+            </div>
             <ul className='all-photos' >
                 {photos.map((photo) => {
                     return (
                         <div className='photo-card' key={photo.id} onClick={(e) => PhotoClick(e, photo.id)}>
-                            <div className='photo-size'>
+                            {/* <div className='all-photo-image'>
                                 {setImageSize(photos, photo)}
+                            </div> */}
+                            <div className='image-overlay-2'>
+                                <h4 className='overlay-2-text'>{photo.photoTitle}</h4>
                             </div>
-
                             <img className='photo-size' src={photo.photoUrl}></img>
+                            <div className='image-overlay'>
+                                <h4 className='overlay-2-text overlay-bottom-text'>{photo.photoFirstName} {photo.photoLastName}</h4>
+                            </div>
                         </div>
                     )
                 })}
