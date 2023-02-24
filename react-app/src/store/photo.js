@@ -52,9 +52,7 @@ export const thunkLoadPhotos = () => async (dispatch) => {
 }
 
 export const thunkLoadSinglePhoto = (photoId) => async (dispatch) => {
-    console.log('FROM THUNK')
     const response = await fetch(`/api/photos/${photoId}`)
-
     if (response.ok) {
         const photo = await response.json()
         dispatch(actionLoadSinglePhoto(photo))
@@ -75,7 +73,6 @@ export const thunkPostPhoto = (payload) => async (dispatch) => {
         dispatch(actionPostPhoto(newPhoto))
         return newPhoto;
     } else if (response.status < 500) {
-
         const newPhoto = await response.json()
         if (newPhoto.errors) {
 			return newPhoto.errors;
@@ -112,10 +109,9 @@ export const thunkDeletePhoto = (photoToDelete) => async (dispatch) => {
     const response = await fetch(`/api/photos/${photoToDelete.id}`, {
         method: "DELETE"
     })
-    console.log('RESPONSE IN THUNK', response)
+
     if (response.ok) {
-        const deleteMessage = await response.json()
-        console.log('DELETE MESSAGE', deleteMessage)
+        await response.json()
         dispatch(actionDeletePhoto(photoToDelete.id))
         return photoToDelete
     }
@@ -149,10 +145,11 @@ const photoReducer = (state = initialState, action) => {
             newState.allPhotos = { ...newState.allPhotos, [action.newphoto.id]: action.newphoto }
             newState.singlePhoto = { ...newState.singlePhoto, ...action.newphoto }
             return newState
-        // case GET_EDITPHOTO:
-        //     newState = { ...state }
-        //     newState.photoToEdit = action.photo
-        //     return newState
+        case EDIT_PHOTO:
+            newState = { ...state }
+            newState.allPhotos = { ...newState.allPhotos, [action.updatedPhoto.id]: action.updatedPhoto }
+            newState.singlePhoto = { ...newState.singlePhoto, ...action.updatedPhoto }
+            return newState
         case DELETE_PHOTO:
             newState = { ...state }
             delete newState.allPhotos[action.toDelete.id]

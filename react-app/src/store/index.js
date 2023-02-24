@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session'
 import photoReducer from './photo';
 import uploadReducer from './upload';
+import galleryReducer from './gallery';
 
 const rootReducer = combineReducers({
   session,
   photos: photoReducer,
-  uploads: uploadReducer
+  uploads: uploadReducer,
+  galleries: galleryReducer
 });
 
 

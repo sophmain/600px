@@ -42,6 +42,9 @@ def all_photos():
 
 @photo_routes.route('/upload', methods=['GET'])
 def load_uploads():
+    """
+    Route to query for all uploaded photos
+    """
     all_uploads = Upload.query.all()
     uploads = [upload.to_dict() for upload in all_uploads]
 
@@ -59,51 +62,57 @@ def load_uploads():
 @photo_routes.route('/upload', methods=['POST'])
 @login_required
 def upload_image():
-    if "image" not in request.files:
-        return {"errors": "image required"}, 400
+    """
+    Route to add an AWS S3 uploaded photo to the uploads table
+    """
+    if 'image' not in request.files:
+        return {'errors': 'image required'}, 400
 
-    image = request.files["image"]
+    image = request.files['image']
 
     if not allowed_file(image.filename):
-        return {"errors": "file type not permitted"}, 400
+        return {'errors': 'file type not permitted'}, 400
 
     image.filename = get_unique_filename(image.filename)
     upload = upload_file_to_s3(image)
 
-    if "url" not in upload:
+    if 'url' not in upload:
         # if the dictionary doesn't have a url key
         # it means that there was an error when we tried to upload
         # so we send back that error message
         return upload, 400
 
-    url = upload["url"]
+    url = upload['url']
 
     # flask_login allows us to get the current user from the request
     new_image = Upload(user_id=current_user.id, upload_url=url)
     db.session.add(new_image)
     db.session.commit()
-    return {"url": url}
+    return {'url': url}
 
 
 @photo_routes.route('/', methods=['POST'])
 def post_photo():
+    """
+    Route to post a photo with photo form data to the photos table
+    """
 
     res = request.get_json()
     photo = PhotoForm()
-    photo["csrf_token"].data = request.cookies["csrf_token"]
+    photo['csrf_token'].data = request.cookies['csrf_token']
 
     if photo.validate_on_submit():
         photo = Photo(
-            user_id=res["userId"],
-            upload_id=res["uploadId"],
-            taken_date=res["takenDate"],
-            category=res["category"],
-            camera_type=res["cameraType"],
-            lense_type=res["lenseType"],
-            privacy=res["privacy"],
-            title=res["title"],
-            description=res["description"],
-            location=res["location"],
+            user_id=res['userId'],
+            upload_id=res['uploadId'],
+            taken_date=res['takenDate'],
+            category=res['category'],
+            camera_type=res['cameraType'],
+            lense_type=res['lenseType'],
+            privacy=res['privacy'],
+            title=res['title'],
+            description=res['description'],
+            location=res['location'],
         )
         db.session.add(photo)
         db.session.commit()
@@ -113,6 +122,9 @@ def post_photo():
 
 @photo_routes.route('/<int:id>')
 def single_photo(id):
+    """
+    Route to query for single photo
+    """
     single_photo = Photo.query.get(id)
     photo = single_photo.to_dict()
     return jsonify(photo)
@@ -123,31 +135,31 @@ def edit_photo(id):
 
     res = request.get_json()
     photo = PhotoForm()
-    photo["csrf_token"].data = request.cookies["csrf_token"]
+    photo['csrf_token'].data = request.cookies['csrf_token']
     if photo.validate_on_submit():
-        photo.populate_obj(current_photo)
+        # photo.populate_obj(current_photo)
 
-        current_photo.taken_date = res["takenDate"]
-        current_photo.category = res["category"]
-        current_photo.camera_type = res["cameraType"]
-        current_photo.lense_type = res["lenseType"]
-        current_photo.privacy = res["privacy"]
-        current_photo.title = res["title"]
-        current_photo.description = res["description"]
-        current_photo.location = res["location"]
+        current_photo.taken_date = res['takenDate']
+        current_photo.category = res['category']
+        current_photo.camera_type = res['cameraType']
+        current_photo.lense_type = res['lenseType']
+        current_photo.privacy = res['privacy']
+        current_photo.title = res['title']
+        current_photo.description = res['description']
+        current_photo.location = res['location']
 
         db.session.commit()
         photo = current_photo.to_dict()
         return jsonify(photo)
     return {'errors': validation_errors_to_error_messages(photo.errors)}, 401
 
-@photo_routes.route('/<int:id>', methods=["DELETE"])
+@photo_routes.route('/<int:id>', methods=['DELETE'])
 def delete_photo(id):
     current_photo = Photo.query.get(id)
 
     if current_photo:
         db.session.delete(current_photo)
         db.session.commit()
-        return {'message':"successfully deleted"}
+        return {'message':'Successfully deleted'}
     else:
         return {'error': 'Could not delete photo'}
