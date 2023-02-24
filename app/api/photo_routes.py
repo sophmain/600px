@@ -89,11 +89,9 @@ def upload_image():
 def post_photo():
 
     res = request.get_json()
-    print('>>>>>>>>>>>RES', res)
     photo = PhotoForm()
-    print('>>>>>>>>>>>>>PHOTO FROM PHOTOFORM', photo)
     photo["csrf_token"].data = request.cookies["csrf_token"]
-    print('????????VALIDATED?', photo.validate_on_submit())
+
     if photo.validate_on_submit():
         photo = Photo(
             user_id=res["userId"],

@@ -101,6 +101,9 @@
 .single-taken-data {
     padding: 0px 10px 0px 0px;
 }
+.single-category-data {
+    padding: 1px 0px 0px 0px;
+}
 
 .single-camera-info, .single-lense-info, .single-category-info, .single-location {
     display: flex;
