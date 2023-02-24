@@ -6,6 +6,8 @@ from datetime import date, datetime
 
 def date_in_past(form, field):
     takenDate = field.data
+    if takenDate == '':
+        return
     today_date = datetime.today()
     if datetime.strptime(takenDate, '%Y-%m-%d') > today_date:
         raise ValidationError('Date must be in the past')
