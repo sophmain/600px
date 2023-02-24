@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Photo, Upload, db
-from ..forms.photo_form import PhotoForm
+from ..forms.post_form import PhotoForm
 from app.awsupload import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -29,7 +29,7 @@ def all_photos():
 
     photo_res = []
     for photo in photos:
-        print('>>>>>>>>photo', photo)
+
         photo_res.append({
             'id': photo['id'],
             'photoUrl': photo['photoUrl'],
@@ -87,13 +87,10 @@ def upload_image():
 
 @photo_routes.route('/', methods=['POST'])
 def post_photo():
-    print('>>>>>>>>>>hits post route')
-    print('<<<<<request', request.get_json())
+
     res = request.get_json()
-    print('res from post photo route', res)
     photo = PhotoForm()
     photo["csrf_token"].data = request.cookies["csrf_token"]
-    print('PHOTO FROM INSIDE ROUTE', photo)
 
     if photo.validate_on_submit():
         photo = Photo(

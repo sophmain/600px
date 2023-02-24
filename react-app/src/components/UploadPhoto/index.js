@@ -66,8 +66,13 @@ const UploadPhoto = () => {
                         accept="image/*"
                         onChange={updateImage}
                     />
-                    <button className='submit-upload' type="submit">Submit photo</button>
-                    {(imageLoading) && <p>Loading...</p>}
+                    {image && (
+                        <>
+                            <button className='submit-upload' type="submit">Submit photo</button>
+                            {(imageLoading) && <p>Loading...</p>}
+                        </>
+                    )}
+
                 </form>
             </div>
 
