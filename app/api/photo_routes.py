@@ -29,10 +29,13 @@ def all_photos():
 
     photo_res = []
     for photo in photos:
-        print('photo', photo)
+        print('>>>>>>>>photo', photo)
         photo_res.append({
             'id': photo['id'],
-            'photoUrl': photo['photoUrl']
+            'photoUrl': photo['photoUrl'],
+            'photoFirstName': photo['uploadedFirstName'],
+            'photoLastName': photo['uploadedLastName'],
+            'photoTitle': photo['title']
         })
 
     return jsonify(photo_res)

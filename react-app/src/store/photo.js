@@ -3,7 +3,7 @@ const LOAD_SINGLEPHOTO = 'photo/LOAD_SINGLEPHOTO'
 const POST_PHOTO = 'photo/POST_PHOTO'
 const EDIT_PHOTO = 'photo/EDIT_PHOTO'
 const DELETE_PHOTO = 'photo/DELETE_PHOTO'
-const SAVE_PHOTOID = 'photo/SAVE_PHOTOID'
+//const GET_EDITPHOTO = 'photo/GET_EDITPHOTO'
 const CLEAN_UP_PHOTO = 'photo/CLEAN_UP_PHOTO'
 
 const actionLoadPhotos = (photos) => ({
@@ -25,9 +25,9 @@ const actionEditPhoto = (updatedPhoto) => ({
     type: EDIT_PHOTO,
     updatedPhoto
 })
-// const actionSavePhotoId = (photoId) => ({
-//     type: SAVE_PHOTOID,
-//     photoId
+// const actionPhotoToEdit = (photo) => ({
+//     type:GET_EDITPHOTO,
+//     photo
 // })
 
 const actionDeletePhoto = (toDelete) => ({
@@ -52,12 +52,13 @@ export const thunkLoadPhotos = () => async (dispatch) => {
 }
 
 export const thunkLoadSinglePhoto = (photoId) => async (dispatch) => {
+    console.log('FROM THUNK')
     const response = await fetch(`/api/photos/${photoId}`)
 
     if (response.ok) {
         const photo = await response.json()
         dispatch(actionLoadSinglePhoto(photo))
-        //dispatch(actionSavePhotoId(photoId))
+        //dispatch(actionPhotoToEdit(photo))
         return photo
     }
 }
@@ -148,9 +149,9 @@ const photoReducer = (state = initialState, action) => {
             newState.allPhotos = { ...newState.allPhotos, [action.newphoto.id]: action.newphoto }
             newState.singlePhoto = { ...newState.singlePhoto, ...action.newphoto }
             return newState
-        // case SAVE_PHOTOID:
+        // case GET_EDITPHOTO:
         //     newState = { ...state }
-        //     newState.photoId = action.photoId
+        //     newState.photoToEdit = action.photo
         //     return newState
         case DELETE_PHOTO:
             newState = { ...state }

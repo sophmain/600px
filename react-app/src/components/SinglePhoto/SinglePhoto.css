@@ -5,14 +5,17 @@
     margin: 0px;
     align-items: center;
     justify-content: center;
-    min-height: 600px;
+    min-height: 650px;
 }
 .single-photo-nav {
     width: 33%;
     cursor: pointer;
 }
 .photo-background {
-    background-color: rgb(47, 47, 47);
+    background-color: rgb(40, 40, 40);
+}
+.page-background {
+    background-color: rgb(245, 245, 245);
 }
 .single-photo-size {
     image-resolution: from-image 300dpi;
@@ -38,4 +41,56 @@
 .single-taken-updated {
     display: flex;
     flex-direction: row;
+    font-size: 14px;
+}
+.single-lower-container {
+    padding: 24px 16px 16px;
+}
+.single-photo-about-container {
+    background-color: white;
+    width: 50%;
+    padding: 24px;
+}
+.fa-pen-to-square {
+    font-size: 20px;
+
+}
+.edit-photo-button {
+    background-color: white;
+    width: 35px;
+    height: 35px;
+    border: none;
+    padding: 0px;
+}
+.edit-photo-button:hover {
+    background-color: rgb(231, 231, 231);
+    border: none;
+    cursor: pointer;
+    border-radius: 100px;
+}
+.single-photo-title {
+    color: #222222;
+}
+.single-taken {
+    font-weight: bold;
+    padding: 0px 5px 0px 0px;
+}
+.single-taken-data {
+    padding: 1px 10px 0px 0px;
+}
+
+.fa-camera-retro {
+    color:  rgb(174, 174, 174);
+
+}
+.single-camera-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.camera-type-text {
+    margin: 0px 0px 0px 8px;
+}
+.lense-photo {
+    height: 30px;
 }

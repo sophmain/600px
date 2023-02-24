@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { thunkDeletePhoto, thunkEditPhoto, thunkLoadSinglePhoto } from "../../store/photo"
 import { useHistory, useParams } from "react-router-dom"
 import './EditPhoto.css'
+
 const EditPhoto = () => {
 
     const categories = ['Abstract', 'Aerial', 'Animals', 'Black and White', 'Celebrities', 'City & Architecture', 'Commercial', 'Concert', 'Family', 'Fashion', 'Film', 'Fine Art', 'Food', 'Journalism', 'Landscapes', 'Macro', 'Nature', 'Night', 'People', 'Performing Arts', 'Sport', 'Still Life', 'Street', 'Transportation', 'Travel', 'Underwater', 'Urban Exploration', 'Wedding', 'Other']
@@ -17,29 +18,28 @@ const EditPhoto = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { photoId } = useParams()
-    //const photoId = useSelector((state) => state.photos.photoId)
-
-    useEffect(() => {
-        // const loadData = async () => {
-        dispatch(thunkLoadSinglePhoto(photoId))
-        // }
-        // loadData()
-    }, [dispatch, photoId])
 
 
     const user = useSelector((state) => state.session.user)
     const photoToEdit = useSelector((state) => state.photos.singlePhoto)
+
     console.log('PHOTO TO EDIT', photoToEdit)
 
 
-    const [takenDate, setTakenDate] = useState(photoToEdit.takenDate ? datetimeLocal(photoToEdit.takenDate) : '')
-    const [category, setCategory] = useState(photoToEdit.category)
-    const [cameraType, setCameraType] = useState(photoToEdit.cameraType ? photoToEdit.cameraType : '')
-    const [lenseType, setLenseType] = useState(photoToEdit.lenseType ? photoToEdit.lenseType : '')
-    const [privacy, setPrivacy] = useState(photoToEdit.privacy)
-    const [title, setTitle] = useState(photoToEdit.title ? photoToEdit.title : '')
-    const [description, setDescription] = useState(photoToEdit.description ? photoToEdit.description : '')
-    const [location, setLocation] = useState(photoToEdit.location ? photoToEdit.location : '')
+    useEffect(() => {
+        console.log('INSIDE EDIT PAGE USE EFFECT')
+        dispatch(thunkLoadSinglePhoto(photoId))
+    }, [dispatch])
+
+
+    const [takenDate, setTakenDate] = useState(photoToEdit?.takenDate ? datetimeLocal(photoToEdit.takenDate) : '')
+    const [category, setCategory] = useState(photoToEdit?.category)
+    const [cameraType, setCameraType] = useState(photoToEdit?.cameraType ? photoToEdit.cameraType : '')
+    const [lenseType, setLenseType] = useState(photoToEdit?.lenseType ? photoToEdit.lenseType : '')
+    const [privacy, setPrivacy] = useState(photoToEdit?.privacy)
+    const [title, setTitle] = useState(photoToEdit?.title ? photoToEdit.title : '')
+    const [description, setDescription] = useState(photoToEdit?.description ? photoToEdit.description : '')
+    const [location, setLocation] = useState(photoToEdit?.location ? photoToEdit.location : '')
     const [errors, setErrors] = useState([])
 
     // const [createdPhoto, setCreatedPhoto] = useState('')
@@ -79,7 +79,7 @@ const EditPhoto = () => {
         dispatch(thunkDeletePhoto(photoToEdit))
         history.push('/')
     }
-
+    if (!photoToEdit) return null
     return (
         <>
             <div className="upload-banner">
@@ -212,7 +212,9 @@ const EditPhoto = () => {
                                 />
                             </label>
                             <button className='delete-photo-button' onClick={deletePhoto}>Delete photo</button>
-                                <button className="create-product-submit-button" type="submit">Save changes</button>
+                            <button className="create-product-submit-button" type="submit">Save changes</button>
+
+
                         </form>
                     </div>
                 </div>
