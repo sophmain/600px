@@ -42,6 +42,9 @@ def all_photos():
 
 @photo_routes.route('/upload', methods=['GET'])
 def load_uploads():
+    """
+    Route to query for all uploaded photos
+    """
     all_uploads = Upload.query.all()
     uploads = [upload.to_dict() for upload in all_uploads]
 
@@ -59,6 +62,9 @@ def load_uploads():
 @photo_routes.route('/upload', methods=['POST'])
 @login_required
 def upload_image():
+    """
+    Route to add an AWS S3 uploaded photo to the uploads table
+    """
     if "image" not in request.files:
         return {"errors": "image required"}, 400
 
@@ -87,6 +93,9 @@ def upload_image():
 
 @photo_routes.route('/', methods=['POST'])
 def post_photo():
+    """
+    Route to post a photo with photo form data to the photos table
+    """
 
     res = request.get_json()
     photo = PhotoForm()
@@ -113,6 +122,9 @@ def post_photo():
 
 @photo_routes.route('/<int:id>')
 def single_photo(id):
+    """
+    Route to query for single photo
+    """
     single_photo = Photo.query.get(id)
     photo = single_photo.to_dict()
     return jsonify(photo)
