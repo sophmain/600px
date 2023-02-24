@@ -23,11 +23,10 @@ const EditPhoto = () => {
     const user = useSelector((state) => state.session.user)
     const photoToEdit = useSelector((state) => state.photos.singlePhoto)
 
-    console.log('PHOTO TO EDIT', photoToEdit)
 
 
     useEffect(() => {
-        console.log('INSIDE EDIT PAGE USE EFFECT')
+
         dispatch(thunkLoadSinglePhoto(photoId))
     }, [dispatch])
 
@@ -51,7 +50,6 @@ const EditPhoto = () => {
         setErrors([])
 
         const payload = {
-            // userId: user.id,
             ...photoToEdit,
             takenDate,
             category,
@@ -71,7 +69,6 @@ const EditPhoto = () => {
             setErrors(data);
         } else {
             history.push(`/photos/${payload.id}`)
-            //  setCreatedPhoto(data)
         }
     }
     const deletePhoto = (e) => {
