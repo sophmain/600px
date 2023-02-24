@@ -25,5 +25,6 @@ class Gallery(db.Model):
             'visible': self.visible,
             'userFirstName': self.user.first_name,
             'userLastName': self.user.last_name,
-            'userProfImg': self.user.prof_photo_url
+            # 'galleryPreviewPhoto': self.photo.id
+            # 'userProfImg': self.user.prof_photo_url
         }

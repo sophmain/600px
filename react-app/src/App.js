@@ -9,6 +9,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import EditPhoto from "./components/EditPhoto";
 import { thunkLoadSinglePhoto } from "./store/photo";
+import AllGalleries from "./components/AllGalleries";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route path='/manage/:photoId'>
             <EditPhoto />
+          </Route>
+          <Route path='/galleries'>
+          <AllGalleries />
           </Route>
         </Switch>
       )}
