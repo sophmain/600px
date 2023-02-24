@@ -63,13 +63,13 @@ export const thunkLoadSinglePhoto = (photoId) => async (dispatch) => {
     }
 }
 export const thunkPostPhoto = (payload) => async (dispatch) => {
-    console.log('PAYLOADDDDD', payload)
+
     const response = await fetch('/api/photos/', {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     })
-    console.log('RESPONSE FROM INSIDE THUNK', response)
+
     if (response.ok) {
         const newPhoto = await response.json()
         dispatch(actionPostPhoto(newPhoto))
