@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Model
+from app.models import Gallery
 
 gallery_routes = Blueprint('gallery', __name__)
 
@@ -20,19 +20,24 @@ def all_galleries():
     Route to query for all galleries
     """
     all_galleries = Gallery.query.all()
+    # print('>>>>>>>>>>all galleries', all_galleries[0])
     galleries = [gallery.to_dict() for gallery in all_galleries]
     gallery_res = []
+    # print('galleries', galleries)
     for gallery in galleries:
+        # print('GALLERY PHOTO', gallery.photo)
+
         gallery_res.append({
             'id': gallery['id'],
             'name': gallery['name'],
             'description': gallery['description'],
             'visible': gallery['visible'],
             'userFirstName': gallery['userFirstName'],
-            'userLastName': gallery['userLastName']
+            'userLastName': gallery['userLastName'],
+            # 'galleryPreviewPhoto': gallery['galleryPreviewPhoto']
         })
 
-    return jsonify(photo_res)
+    return jsonify(gallery_res)
 
 @gallery_routes.route('/<int:id>')
 def single_gallery(id):
