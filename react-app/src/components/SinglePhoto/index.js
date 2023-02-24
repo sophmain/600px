@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams } from "react-router-dom"
-import { actionCleanUpPhoto, thunkLoadSinglePhoto } from "../../store/photo"
+import { actionCleanUpPhoto, thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
 import './SinglePhoto.css'
 
 const SinglePhoto = () => {
@@ -12,6 +12,7 @@ const SinglePhoto = () => {
 
     useEffect(() => {
         dispatch(thunkLoadSinglePhoto(photoId))
+        dispatch(thunkLoadPhotos())
         //return () => dispatch(actionCleanUpPhoto())
 
     }, [dispatch, photoId])
@@ -19,32 +20,47 @@ const SinglePhoto = () => {
     const user = useSelector((state) => state.session.user)
     const photo = useSelector((state) => state.photos.singlePhoto)
     const allPhotos = useSelector((state) => state.photos.allPhotos) //get length to prevent right arrow on last img
+    if (!allPhotos) return null
+    const allPhotosArr = Object.values(allPhotos)
     if (!photo) return null
 
     const editPhoto = () => {
         history.push(`/manage/${photo.id}`)
     }
     const prevPhoto = () => {
-        if (photo.id != 1) {
+        if (photo.id !== 1) {
             history.push(`/photos/${photo.id - 1}`)
         }
     }
     const nextPhoto = () => {
-        history.push(`/photos/${photo.id + 1}`)
+        if (allPhotosArr.length !== photo.id) {
+            history.push(`/photos/${photo.id + 1}`)
+        }
     }
     // const isoDate = () => {
     //     return photo.uploadDate.toISOString().split('T')[0]
     // }
 
+
     return (
         <div className='page-background'>
             <div className='photo-background'>
                 <div className='single-photo-container'>
-                    <div className='single-photo-nav' onClick={prevPhoto}><i className="fa-solid fa-chevron-left"></i></div>
+                    {photo.id !== 1 && (
+                        <div className='single-photo-nav' onClick={prevPhoto}><i className="fa-solid fa-chevron-left"></i></div>
+                    )}
+                    {(photo.id == 1 && (
+                        <div className='nav-placeholder'></div>
+                    ))}
                     <div className='single-photo-size'>
                         <img className='single-photo' src={photo.photoUrl}></img>
                     </div>
-                    <div className='single-photo-nav' onClick={nextPhoto}><i className="fa-solid fa-chevron-right"></i></div>
+                    {allPhotosArr.length !== photo.id && (
+                        <div className='single-photo-nav' onClick={nextPhoto}><i className="fa-solid fa-chevron-right"></i></div>
+                    )}
+                    {(allPhotosArr.length == photo.id && (
+                        <div className='nav-placeholder'></div>
+                    ))}
                 </div>
             </div>
             <div className='single-lower-container'>

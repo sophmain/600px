@@ -11,6 +11,9 @@
     width: 33%;
     cursor: pointer;
 }
+.nav-placeholder {
+    width: 33%;
+}
 .photo-background {
     background-color: rgb(40, 40, 40);
 }
@@ -29,10 +32,29 @@
     color: white;
     font-size: 24px;
     font-weight: 100px;
+    width: 45px;
+    height: 45px;
 }
 .fa-chevron-right {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 50px;
+    text-align: center;
+}
+.fa-chevron-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 50px;
+    text-align: center;
+}
+.fa-chevron-left:hover, .fa-chevron-right:hover {
+    border-radius: 50%;
+    background-color: rgba(229, 229, 229, 0.342);
+
 }
 .single-right-profile {
     display: flex;
@@ -70,6 +92,7 @@
 }
 .single-photo-title {
     color: #222222;
+    margin: 10px 0px;
 }
 .single-taken {
     font-weight: bold;
