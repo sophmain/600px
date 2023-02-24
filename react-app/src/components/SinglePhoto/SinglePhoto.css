@@ -76,21 +76,33 @@
     padding: 0px 5px 0px 0px;
 }
 .single-taken-data {
-    padding: 1px 10px 0px 0px;
+    padding: 0px 10px 0px 0px;
 }
 
-.fa-camera-retro {
-    color:  rgb(174, 174, 174);
-
-}
-.single-camera-info {
+.single-camera-info, .single-lense-info, .single-category-info, .single-location {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.camera-type-text {
-    margin: 0px 0px 0px 8px;
-}
+
 .lense-photo {
     height: 30px;
+    margin: 0px 8px 0px 0px;
+}
+.single-category {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0px 5px 0px 0px;
+}
+
+.fa-location-dot {
+    color: white;
+    text-shadow: -1px 1px 0 #555555,
+    1px 1px 0 #555555,
+   1px -1px 0 #555555,
+  -1px -1px 0 #555555;
+  margin-right: 8px;
+}
+.single-location {
+    font-size: 14px;
 }

@@ -18,6 +18,7 @@ const SinglePhoto = () => {
 
     const user = useSelector((state) => state.session.user)
     const photo = useSelector((state) => state.photos.singlePhoto)
+    const allPhotos = useSelector((state) => state.photos.allPhotos) //get length to prevent right arrow on last img
     if (!photo) return null
 
     const editPhoto = () => {
@@ -62,7 +63,11 @@ const SinglePhoto = () => {
                         </div>
                     </div>
                     <div className='single-location'>
-                        
+
+                    </div>
+                    <div className='single-location'>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>{photo.location}</p>
                     </div>
                     <div className='single-taken-updated'>
                         <p className='single-taken'>Taken: </p>
@@ -71,16 +76,19 @@ const SinglePhoto = () => {
                         <p className='single-taken-data'>{photo.uploadDate.slice(0, 16)}</p>
                     </div>
                     <div className='single-camera-info'>
-                    <img className='lense-photo' src='https://cdn-icons-png.flaticon.com/512/4584/4584897.png' alt='camera'></img>
-                        <p className='camera-type-text'>{photo.cameraType}</p>
+                        <img className='lense-photo' src='https://cdn-icons-png.flaticon.com/512/4584/4584897.png' alt='camera'></img>
+                        <p>{photo.cameraType}</p>
                     </div>
                     <div className='single-lense-info'>
                         <img className='lense-photo' src='https://as2.ftcdn.net/jpg/02/49/90/21/160_F_249902158_Nngbp2SO00lZyvnhEhXG4S2LtOaJDx5R.jpg' alt='lense'></img>
-                        {photo.lenseType}
+                        <p>{photo.lenseType}</p>
                     </div>
-                    <div className='single-category'>
-                        Category: {photo.category}
+                    <div className='single-category-info'>
+                        <div className='single-category'>Category: </div>
+                        <p>{photo.category}</p>
                     </div>
+
+
 
                 </div>
             </div>
