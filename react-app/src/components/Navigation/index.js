@@ -71,7 +71,7 @@ function Navigation({ isLoaded }) {
 
 	return (
 		<div className='nav-header-container'>
-			<NavLink exact to="/" className='home-logo'>600px</NavLink>
+			<NavLink exact to="/" className='home-logo'>6OO<sup>px</sup></NavLink>
 			<div className = 'discover-dropdown'>
 
 			</div>
