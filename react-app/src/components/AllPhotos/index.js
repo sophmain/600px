@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, NavLink } from 'react-router-dom'
 import { thunkLoadPhotos } from '../../store/photo'
+import CreateGalleryModal from '../CreateGalleryModal'
 import OpenModalButton from '../OpenModalButton'
 import './AllPhotos.css'
 
@@ -24,6 +25,7 @@ const AllPhotos = () => {
         e.preventDefault()
         history.push(`/photos/${id}`)
     }
+
 
     // function randomImageSize(min, max) {
     //     return Math.round(Math.random() * (max - min) + min)
@@ -56,7 +58,20 @@ const AllPhotos = () => {
                             </div>
                             <img className='photo-size' src={photo.photoUrl}></img>
                             <div className='image-overlay'>
-                                <h4 className='overlay-2-text overlay-bottom-text'>{photo.photoFirstName} {photo.photoLastName}</h4>
+                                <div className='overlay-2-text overlay-bottom-text'>
+                                    {photo.photoFirstName} {photo.photoLastName}
+                                </div>
+                                <div className='overlay-right'>
+                                    <button className='gallery-modal-button-container' onClick={e => e.stopPropagation()}>
+                                        <OpenModalButton
+                                            className='create-gallery-modal'
+                                            buttonText='+'
+                                            modalComponent={<CreateGalleryModal />}
+                                        />
+                                    </button>
+
+
+                                </div>
                             </div>
                         </div>
                     )

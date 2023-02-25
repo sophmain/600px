@@ -53,6 +53,9 @@
     margin: 0px 0px 8px;
 }
 .image-overlay {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     position: absolute;
     bottom: 0;
     background: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.7));
@@ -92,9 +95,42 @@
     align-self: left;
     margin: 0px;
     font-size: 16px;
+}
+.create-gallery-modal {
+    position: relative;
+    display: flex;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border: 2px solid white;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin: 0px 4px;
+    cursor: pointer;
+    z-index: 3;
 
+}
+.gallery-modal-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: transparent;
+    border: none;
 }
 .overlay-bottom-text {
     position: absolute;
     bottom: 10px;
+}
+.overlay-right{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.gallery-modal-button-container:hover {
+    border-radius: 50%;
+    background-color: rgba(229, 229, 229, 0.342);
 }
