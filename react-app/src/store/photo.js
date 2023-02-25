@@ -55,6 +55,7 @@ export const thunkLoadSinglePhoto = (photoId) => async (dispatch) => {
     const response = await fetch(`/api/photos/${photoId}`)
     if (response.ok) {
         const photo = await response.json()
+        console.log('photo in load all photos thunk', photo)
         dispatch(actionLoadSinglePhoto(photo))
         //dispatch(actionPhotoToEdit(photo))
         return photo

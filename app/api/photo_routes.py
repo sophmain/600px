@@ -35,7 +35,9 @@ def all_photos():
             'photoUrl': photo['photoUrl'],
             'photoFirstName': photo['uploadedFirstName'],
             'photoLastName': photo['uploadedLastName'],
-            'photoTitle': photo['title']
+            'photoTitle': photo['title'],
+            'userId': photo['userId'],
+            'galleryId': photo['galleryId']
         })
 
     return jsonify(photo_res)
