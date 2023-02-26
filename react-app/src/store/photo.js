@@ -55,6 +55,7 @@ export const thunkLoadSinglePhoto = (photoId) => async (dispatch) => {
     const response = await fetch(`/api/photos/${photoId}`)
     if (response.ok) {
         const photo = await response.json()
+
         dispatch(actionLoadSinglePhoto(photo))
         //dispatch(actionPhotoToEdit(photo))
         return photo
@@ -83,15 +84,16 @@ export const thunkPostPhoto = (payload) => async (dispatch) => {
 }
 
 export const thunkEditPhoto = (updatedPhoto) => async (dispatch) => {
-
+console.log('updated photo', updatedPhoto)
     const response = await fetch(`/api/photos/${updatedPhoto.id}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedPhoto)
     })
-
+    console.log('RESPONSE', response)
     if (response.ok) {
         const updatedPhoto = await response.json()
+        console.log('updatedPhoto', updatedPhoto)
         dispatch(actionEditPhoto(updatedPhoto))
         return updatedPhoto;
 
