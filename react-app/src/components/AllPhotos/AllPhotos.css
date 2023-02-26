@@ -65,7 +65,7 @@
     opacity:0;
     color: white;
     font-size: 20px;
-    padding: 0px 20px 10px 5px;
+    padding: 0px 20px 0px 5px;
     text-align: center;
     z-index: 1;
     margin-bottom: 24px;
@@ -98,6 +98,7 @@
 }
 .create-gallery-modal {
     position: relative;
+    bottom: 0px;
     display: flex;
     color: white;
     width: 22px;

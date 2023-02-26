@@ -11,6 +11,8 @@ import EditPhoto from "./components/EditPhoto";
 import { thunkLoadSinglePhoto } from "./store/photo";
 import AllGalleries from "./components/AllGalleries";
 import SingleGallery from './components/SingleGallery'
+import UserProfile from "./components/UserProfile";
+import UserProfileGalleries from './components/UserProfileGalleries'
 
 function App() {
   const dispatch = useDispatch();
@@ -43,7 +45,13 @@ function App() {
             <AllGalleries />
           </Route>
           <Route exact path='/galleries/:galleryId'>
-              <SingleGallery />
+            <SingleGallery />
+          </Route>
+          <Route exact path='/profile/:userId'>
+            <UserProfile />
+          </Route>
+          <Route path='/profile/:userId/galleries'>
+            <UserProfileGalleries />
           </Route>
         </Switch>
       )}
