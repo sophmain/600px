@@ -8,17 +8,25 @@
 .mapped-photo-container {
     padding: 0px 64px;
 }
-.to-home {
+.selected-subheader {
     color: #0870d1;
     text-decoration: none;
     padding-bottom: 5px;
-    border-bottom: 3px solid #0870d1;
+    border-bottom: 2px solid #0870d1;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: bold;
     cursor: pointer;
-
+}
+.not-selected-subheader {
+    color: rgb(132, 132, 132);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
 }
 .subheader-home {
+    display: flex;
+    flex-direction: row;
     background-color: white;
     width: 100%;
     position: sticky;
@@ -50,7 +58,7 @@
 .photos-title {
     font-size: 36px;
     color: rgb(34, 34, 34);
-    margin: 0px 0px 8px;
+    margin: 25px 0px 8px 0px;
 }
 .image-overlay {
     display: flex;

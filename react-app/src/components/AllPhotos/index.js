@@ -44,7 +44,8 @@ const AllPhotos = () => {
             <h1 className='photos-title'>Home Feed</h1>
             <h3 className='see-photos'>See photos and published Galleries.</h3>
             <div className='subheader-home'>
-                <NavLink to={'/'} className='to-home'>Home</NavLink>
+                <NavLink to={'/'} className='selected-subheader' style={{marginRight: '15px'}}>Home</NavLink>
+                <NavLink to={'/galleries'} className='not-selected-subheader'>Galleries</NavLink>
             </div>
             <ul className='all-photos' >
                 {photos.map((photo) => {
