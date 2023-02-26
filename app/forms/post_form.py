@@ -14,13 +14,13 @@ def date_in_past(form, field):
 
 def cameratype_length(form, field):
     cameraType = field.data
-    if cameraType and len(cameraType) > 50:
-        raise ValidationError('Camera type must be less than 50 characters.')
+    if cameraType and len(cameraType) > 100:
+        raise ValidationError('Camera type must be less than 100 characters.')
 
 def lensetype_length(form, field):
     lenseType = field.data
-    if lenseType and len(lenseType) > 50:
-        raise ValidationError('Lense type must be less than 50 characters.')
+    if lenseType and len(lenseType) > 100:
+        raise ValidationError('Lense type must be less than 100 characters.')
 
 def title_length(form, field):
     title = field.data
@@ -34,8 +34,8 @@ def description_length(form, field):
 
 def location_length(form, field):
     location = field.data
-    if location and len(location) > 50:
-        raise ValidationError("Location must be less than 50 characters.")
+    if location and len(location) > 100:
+        raise ValidationError("Location must be less than 100 characters.")
 
 class PhotoForm(FlaskForm):
     takenDate = StringField('takenDate', validators=[date_in_past])
@@ -46,4 +46,3 @@ class PhotoForm(FlaskForm):
     title = StringField('title', validators=[DataRequired(), title_length])
     description = StringField('description', validators=[description_length])
     location = StringField('location', validators=[location_length])
-
