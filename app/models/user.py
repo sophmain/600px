@@ -16,8 +16,13 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    city = db.Column(db.String(50))
+    country = db.Column(db.String(50))
+    about = db.Column(db.String(500))
+    prof_photo_url = db.Column(db.String(500))
+    cover_photo_url = db.Column(db.String(500))
 
-    profile = db.relationship('Profile', back_populates='user')
+    # profile = db.relationship('Profile', back_populates='user')
     gallery = db.relationship('Gallery', back_populates='user')
     photo = db.relationship('Photo', back_populates='user')
 
@@ -63,5 +68,9 @@ class User(db.Model, UserMixin):
             'lastName': self.last_name,
             'username': self.username,
             'email': self.email,
-
+            'city': self.city,
+            'country': self.country,
+            'about': self.about,
+            'prof_photo_url': self.prof_photo_url,
+            'cover_photo_url': self.cover_photo_url
         }

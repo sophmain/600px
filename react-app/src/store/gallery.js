@@ -36,9 +36,11 @@ export const thunkLoadGalleries = () => async (dispatch) => {
     }
 }
 export const thunkLoadSingleGallery = (galleryId) => async (dispatch) => {
+    console.log('INSIDE SINGLE GALLERY THUNK')
     const response = await fetch(`/api/galleries/${galleryId}`)
     if (response.ok){
         const gallery = await response.json()
+        console.log('gallery in thunk', gallery)
         dispatch(actionLoadSingleGallery(gallery))
         return gallery
     }
@@ -117,21 +119,22 @@ const galleryReducer = (state = initialState, action) => {
         case LOAD_SINGLEGALLERY:
             newState = { ...state }
             newState.singleGallery = action.gallery
-        case CREATE_GALLERY:
-            newState = { ...state }
-            newState.allGalleries = { ...newState.allGalleries, [action.newGallery.id]: action.newGallery }
-            newState.singleGallery = { ...newState.singleGallery, ...action.newGallery }
             return newState
-        case EDIT_GALLERY:
-            newState = { ...state }
-            newState.allGalleries = { ...newState.allGalleries, [action.editedGallery.id]: action.editedGallery }
-            newState.singleGallery = { ...newState.singleGallery, ...action.editedGallery }
-            return newState
-        case DELETE_GALLERY:
-            newState = { ...state }
-            delete newState.allGalleries[action.toDelete.id]
-            newState.allGalleries = { ...newState.allGalleries }
-            return newState
+        // case CREATE_GALLERY:
+        //     newState = { ...state }
+        //     newState.allGalleries = { ...newState.allGalleries, [action.newGallery.id]: action.newGallery }
+        //     newState.singleGallery = { ...newState.singleGallery, ...action.newGallery }
+        //     return newState
+        // case EDIT_GALLERY:
+        //     newState = { ...state }
+        //     newState.allGalleries = { ...newState.allGalleries, [action.editedGallery.id]: action.editedGallery }
+        //     newState.singleGallery = { ...newState.singleGallery, ...action.editedGallery }
+        //     return newState
+        // case DELETE_GALLERY:
+        //     newState = { ...state }
+        //     delete newState.allGalleries[action.toDelete.id]
+        //     newState.allGalleries = { ...newState.allGalleries }
+        //     return newState
         default:
             return state
     }

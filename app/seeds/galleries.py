@@ -2,25 +2,25 @@ from app.models import db, Gallery, environment, SCHEMA
 
 def seed_galleries():
     gallery1 = Gallery(
-        user_id=1, name='Trip to Jordan', description='Photos taken on my trip to Jordan in 2019', visible=True)
+        user_id=1, title='Trip to Jordan', description='Photos taken on my trip to Jordan in 2019', visible=True)
     gallery2 = Gallery(
-        user_id=2, name='Cityscapes', description='City shots only', visible=True)
+        user_id=2, title='Cityscapes', description='City shots only', visible=True)
     gallery3 = Gallery(
-        user_id=1, name='Vietnam', description='Photos taken on my trip to Vietnam', visible=True)
+        user_id=1, title='Vietnam', description='Photos taken on my trip to Vietnam', visible=True)
     gallery4 = Gallery(
-        user_id=3, name='Portraits', description='Portrait work done for clients', visible=True)
+        user_id=3, title='Portraits', description='Portrait work done for clients', visible=True)
     gallery5 = Gallery(
-        user_id=4, name='Summer Weddings', description='Photos taken from summer weddings I was hired to shoot', visible=True)
+        user_id=4, title='Summer Weddings', description='Photos taken from summer weddings I was hired to shoot', visible=True)
     gallery6 = Gallery(
-        user_id=1, name='Personal', description='Edits in progress', visible=False)
+        user_id=1, title='Personal', description='Edits in progress', visible=False)
     gallery7 = Gallery(
-        user_id=2, name='Drone Photos', description='All taken with my dji mavic pro. Some edits done but still sorting through them. Drop a comment on any you like!', visible=True)
+        user_id=2, title='Drone Photos', description='All taken with my dji mavic pro. Some edits done but still sorting through them. Drop a comment on any you like!', visible=True)
     gallery8 = Gallery(
-        user_id=1, name='Random Travels', description='Photos through the years of travelling to various spots. All taken with a sony alpha III. Leave a comment for more info!', visible=True)
+        user_id=1, title='Random Travels', description='Photos through the years of travelling to various spots. All taken with a sony alpha III. Leave a comment for more info!', visible=True)
     gallery9 = Gallery(
-        user_id=4, name='Black and White', description='Black and white photo inspiration', visible=True)
+        user_id=4, title='Black and White', description='Black and white photo inspiration', visible=True)
     gallery10 = Gallery(
-        user_id=2, name='Animals', description='Photos of animals I"ve seen from other photographers', visible=True)
+        user_id=2, title='Animals', description='Photos of animals I"ve seen from other photographers', visible=True)
 
 
 

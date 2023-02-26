@@ -35,7 +35,15 @@ def all_photos():
             'photoUrl': photo['photoUrl'],
             'photoFirstName': photo['uploadedFirstName'],
             'photoLastName': photo['uploadedLastName'],
-            'photoTitle': photo['title']
+            'title': photo['title'],
+            'userId': photo['userId'],
+            'category': photo['category'],
+            'cameraType': photo['cameraType'],
+            'lenseType': photo['lenseType'],
+            'privacy': photo['privacy'],
+            'description': photo['description'],
+            'location': photo['location'],
+            'takenDate': photo['takenDate']
         })
 
     return jsonify(photo_res)
@@ -98,6 +106,7 @@ def post_photo():
     """
 
     res = request.get_json()
+
     photo = PhotoForm()
     photo['csrf_token'].data = request.cookies['csrf_token']
 
@@ -134,7 +143,9 @@ def edit_photo(id):
     current_photo = Photo.query.get(id)
 
     res = request.get_json()
+    print('>>>>>>>RES', res)
     photo = PhotoForm()
+    print('photo......', photo.validate_on_submit())
     photo['csrf_token'].data = request.cookies['csrf_token']
     if photo.validate_on_submit():
         # photo.populate_obj(current_photo)
@@ -147,6 +158,8 @@ def edit_photo(id):
         current_photo.title = res['title']
         current_photo.description = res['description']
         current_photo.location = res['location']
+        # current_photo.gallery_id = res['galleryId']
+
 
         db.session.commit()
         photo = current_photo.to_dict()
