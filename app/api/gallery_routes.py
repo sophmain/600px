@@ -38,7 +38,8 @@ def all_galleries():
             'userLastName': gallery['userLastName'],
             'previewImage': gallery['previewImage'],
             'photos': gallery['photos'],
-            'userId': gallery['userId']
+            'userId': gallery['userId'],
+            'userProf': gallery['userProf']
             # 'galleryPreviewPhoto': gallery['galleryPreviewPhoto']
         })
 
