@@ -1,1 +1,0 @@
-const LOAD_GALLERYPHOTOS = 'galleryphotos/LOAD_GALLERYPHOTOS'
