@@ -1,0 +1,18 @@
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+.signup-modal-container {
+    padding: 24px;
+    overflow-y: auto;
+}
+.sign-up-title {
+    text-align: center;
+    font-size: 24px;
+    color: black;
+    font-weight: normal;
+}
+.discover-photos-text {
+    font-size: 16px;
+    color: rgba(176, 185, 194, 0.846);
+}

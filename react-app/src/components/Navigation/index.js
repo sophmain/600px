@@ -16,24 +16,11 @@ function Navigation({ isLoaded }) {
 	const dispatch = useDispatch()
 	const [errors, setErrors] = useState([]);
 
-	const email = 'demo@aa.io'
-	const password = 'password'
-
 	const uploadPhoto = (e) => {
 		e.preventDefault()
 		history.push(`/upload`)
 	}
 
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		const data = await dispatch(login(email, password));
-		if (data) {
-			setErrors(data);
-		} else {
-			closeModal()
-		}
-	};
 
 	let sessionLinks;
 	if (sessionUser) {
@@ -50,9 +37,6 @@ function Navigation({ isLoaded }) {
 	} else {
 		sessionLinks = (
 			<div className='button-container'>
-				<button className='demo-login' onClick={handleSubmit}>
-					Demo-Sign In
-				</button>
 				<div className='nav-bar-login-modal-button'>
 					<OpenModalButton
 						className = 'log-in-modal'
