@@ -1,29 +1,40 @@
 import { useEffect, useState } from "react"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom"
 import { useModal } from "../../context/Modal"
 import { thunkCreateGallery } from "../../store/gallery"
 import './CreateGalleryModal.css'
 
-const CreateGalleryModal = () => {
+const CreateGalleryModal = ({ photo }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { closeModal } = useModal()
     const [title, setTitle] = useState('')
-    const [isPrivate, setIsPrivate] = useState(false)
+    const [visible, setVisible] = useState(false)
     const [errors, setErrors] = useState([])
     const [createdGallery, setCreatedGallery] = useState('')
 
 
+    const user = useSelector(state => state.session.user)
+    //const photo = useSelector(state => state.photos.singlePhoto)
+    //const galleries = useSelector(state => state.galleries.allGalleries)
+    //const numGallery = galleries.length()
+    console.log('PHOTO', photo)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setErrors([])
+        const description= '' //empty for modal, can add from form
 
         const payload = {
+            userId: user.id,
             title,
-            isPrivate,
-
+            visible,
+            description,
+            previewImage: photo.id
         }
+
+
         const data = await dispatch(thunkCreateGallery(payload))
 
         if (Array.isArray(data)) {
@@ -70,13 +81,14 @@ const CreateGalleryModal = () => {
                             className="input-box-gallery"
                             id="checkbox"
                             type="checkbox"
-                            name="isPrivate"
-                            checked={isPrivate}
-                            value={isPrivate}
-                            onChange={(e) => setIsPrivate(e.target.checked)}
+                            name="visible"
+                            checked={visible}
+                            value={visible}
+                            onChange={(e) => setVisible(e.target.checked)}
                         />
                     </div>
                 </label>
+                <button className="create-gallery-submit-button" type="submit">Submit</button>
             </form>
         </div>
     )

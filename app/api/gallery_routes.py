@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Gallery
+from app.models import Gallery, db
+from ..forms.gallery_form import GalleryForm
 
 gallery_routes = Blueprint('gallery', __name__)
 
@@ -29,11 +30,12 @@ def all_galleries():
 
         gallery_res.append({
             'id': gallery['id'],
-            'name': gallery['name'],
+            'title': gallery['title'],
             'description': gallery['description'],
             'visible': gallery['visible'],
             'userFirstName': gallery['userFirstName'],
             'userLastName': gallery['userLastName'],
+            'previewImage': gallery['previewImage']
             # 'galleryPreviewPhoto': gallery['galleryPreviewPhoto']
         })
 
@@ -54,15 +56,17 @@ def create_gallery():
     Route to add created gallery to galleries table
     """
     res = request.get_json()
+    print('>>>>>>>.res', res)
     gallery = GalleryForm()
     gallery['csrf_token'].data = request.cookies['csrf_token']
-
+    
     if gallery.validate_on_submit():
         gallery = Gallery(
             user_id = res['userId'],
-            name = res['name'],
+            title = res['title'],
             description = res['description'],
-            visible = res['visible']
+            visible = res['visible'],
+            preview_image_id = res['previewImage']
         )
         db.session.add(gallery)
         db.session.commit()
@@ -79,9 +83,10 @@ def edit_gallery(id):
     photo['csrf_token'].data = request.cookies['csrf_token']
     if gallery.validate_on_submit():
         # gallery.populate_obj(current_gallery)
-        current_gallery.name = res['name']
+        current_gallery.title = res['title']
         current_gallery.description = res['description']
         current_gallery.visible = res['visible']
+        current_gallery.preview_image_id = res['previewImage']
 
         db.session.commit()
         gallery = current_gallery.to_dict()

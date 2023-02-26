@@ -20,7 +20,7 @@ const AllGalleries = () => {
                 {galleries.map((gallery) => {
                     return (
                         <div className='gallery-card' key={gallery.id}>
-                            {gallery.name}
+                            {gallery.title}
                         </div>
                     )
                 })}

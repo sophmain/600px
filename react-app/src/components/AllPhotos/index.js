@@ -54,7 +54,7 @@ const AllPhotos = () => {
                                 {setImageSize(photos, photo)}
                             </div> */}
                             <div className='image-overlay-2'>
-                                <h4 className='overlay-2-text'>{photo.photoTitle}</h4>
+                                <h4 className='overlay-2-text'>{photo.title}</h4>
                             </div>
                             <img className='photo-size' src={photo.photoUrl}></img>
                             <div className='image-overlay'>
@@ -62,11 +62,11 @@ const AllPhotos = () => {
                                     {photo.photoFirstName} {photo.photoLastName}
                                 </div>
                                 <div className='overlay-right'>
-                                    <button className='gallery-modal-button-container' onClick={e => e.stopPropagation()}>
+                                    <button className='gallery-modal-button' onClick={e => e.stopPropagation()}>
                                         <OpenModalButton
                                             className='create-gallery-modal'
                                             buttonText='+'
-                                            modalComponent={<CreateGalleryModal />}
+                                            modalComponent={<CreateGalleryModal photo={photo}/>}
                                         />
                                     </button>
 
