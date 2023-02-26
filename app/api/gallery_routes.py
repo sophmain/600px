@@ -35,7 +35,8 @@ def all_galleries():
             'visible': gallery['visible'],
             'userFirstName': gallery['userFirstName'],
             'userLastName': gallery['userLastName'],
-            'previewImage': gallery['previewImage']
+            'previewImage': gallery['previewImage'],
+            'photos': gallery['photos']
             # 'galleryPreviewPhoto': gallery['galleryPreviewPhoto']
         })
 
@@ -59,7 +60,7 @@ def create_gallery():
     print('>>>>>>>.res', res)
     gallery = GalleryForm()
     gallery['csrf_token'].data = request.cookies['csrf_token']
-    
+
     if gallery.validate_on_submit():
         gallery = Gallery(
             user_id = res['userId'],

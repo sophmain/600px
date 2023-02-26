@@ -13,6 +13,7 @@ const AllGalleries = () => {
     const allGalleriesObj = useSelector((state) => state.galleries.allGalleries)
     if (!allGalleriesObj) return null
     const galleries = Object.values(allGalleriesObj)
+    console.log('gallery photos', galleries[0].photos[0])
 
     return (
         <div>
@@ -20,7 +21,10 @@ const AllGalleries = () => {
                 {galleries.map((gallery) => {
                     return (
                         <div className='gallery-card' key={gallery.id}>
-                            {gallery.title}
+                            {gallery.photos && gallery.photos.length > 0 && (
+                                <img src={gallery.photos[0].photoUrl} alt='gallery'></img>
+                            )}
+
                         </div>
                     )
                 })}

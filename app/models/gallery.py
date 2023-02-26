@@ -28,7 +28,8 @@ class Gallery(db.Model):
             'visible': self.visible,
             'userFirstName': self.user.first_name,
             'userLastName': self.user.last_name,
-            'previewImage': self.preview_image_id
-            # 'galleryPreviewPhoto': self.photo.id
+            'previewImage': self.preview_image_id,
+            'photos': [photo.to_dict() for photo in self.photo]
+            # 'galleryPreviewPhoto': self.photo.photoUrl
             # 'userProfImg': self.user.prof_photo_url
         }
