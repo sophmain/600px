@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.orm import validates
-from .gallery_photos import gallery_photos
+from .gallery_photos import GalleryPhotos
 
 
 class Gallery(db.Model):
@@ -17,7 +17,14 @@ class Gallery(db.Model):
     preview_image_id = db.Column(db.Integer)
 
     user = db.relationship('User', back_populates='gallery')
-    photo = db.relationship('Photo', secondary=gallery_photos, back_populates='gallery')
+    if environment == "production":
+        __table_args__ = {"schema": SCHEMA}
+
+        photo = db.relationship('Photo', secondary=f"{SCHEMA}.galleries_photos")
+    else:
+        photo = db.relationship('Photo', secondary="galleries_photos")
+
+    # photo = db.relationship('Photo', secondary=gallery_photos, back_populates='gallery')
 
     def to_dict(self):
         return {

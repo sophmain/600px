@@ -49,3 +49,13 @@
     border: none;
 
 }
+.gallery-placeholder{
+    background-color: rgb(40, 40, 40);
+    width: 100%;
+    height: 370px;
+}
+.add-photos-gallery-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

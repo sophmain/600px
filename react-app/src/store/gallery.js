@@ -2,6 +2,7 @@ const LOAD_GALLERIES = 'gallery/LOAD_GALLERIES'
 const LOAD_SINGLEGALLERY = 'gallery/LOAD_SINGLEGALLERY'
 const CREATE_GALLERY = 'gallery/CREATE_GALLERY'
 const EDIT_GALLERY = 'gallery/EDIT_GALLERY'
+const POST_PHOTO = 'gallery/POST_PHOTO'
 const DELETE_GALLERY = 'gallery/DELETE_GALLERY'
 
 const actionLoadGalleries = (galleries) => ({
@@ -26,6 +27,7 @@ const actionDeleteGallery = (toDelete) => ({
     type: DELETE_GALLERY,
     toDelete
 })
+
 
 export const thunkLoadGalleries = () => async (dispatch) => {
     const response = await fetch('/api/galleries/')
@@ -103,6 +105,25 @@ export const thunkDeleteGallery = (galleryToDelete) => async (dispatch) => {
         return galleryToDelete
     }
 }
+// export const thunkPostPhoto = (photos, galleryId) => async (dispatch) => {
+//     const response = await fetch(`/api/galleries/${galleryId}/photos`, {
+//         method: "POST",
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(photos)
+//     })
+//     if (response.ok) {
+//         const newGallery = await response.json()
+//         dispatch(actionCreateGallery(newGallery))
+//         return newGallery
+//     } else if (response.status < 500) {
+//         const newGallery = await response.json()
+//         if (newGallery.errors) {
+// 			return newGallery.errors;
+// 		}
+//     } else {
+//         return ["An error occurred. Please try again."];
+//     }
+// }
 
 const normalize = (arr) => {
     const resObj = {}

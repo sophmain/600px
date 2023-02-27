@@ -3,9 +3,9 @@ const LOAD_SINGLEPHOTO = 'photo/LOAD_SINGLEPHOTO'
 const POST_PHOTO = 'photo/POST_PHOTO'
 const EDIT_PHOTO = 'photo/EDIT_PHOTO'
 const DELETE_PHOTO = 'photo/DELETE_PHOTO'
-const POST_GALLERYPHOTO = 'POST_GALLERYPHOTO'
-
-//const GET_EDITPHOTO = 'photo/GET_EDITPHOTO'
+const POST_GALLERYPHOTO = 'photo/POST_GALLERYPHOTO'
+const GET_GALLERYPHOTO = 'photo/GET_GALLERYPHOTO'
+// const GET_EDITPHOTO = 'photo/GET_EDITPHOTO'
 const CLEAN_UP_PHOTO = 'photo/CLEAN_UP_PHOTO'
 
 const actionLoadPhotos = (photos) => ({
@@ -37,14 +37,19 @@ const actionDeletePhoto = (toDelete) => ({
     toDelete
 })
 
-export const actionCreatePostGallery = (galleryId, postPhoto) => {
+
+
+const actionCreatePostGallery = (photoIds) => {
     return {
         type: POST_GALLERYPHOTO,
-        galleryId,
-        postPhoto
+        photoIds
     }
 };
 
+// const actionGetGalleryPhotos = (photos) => ({
+//     type: GET_GALLERYPHOTO,
+//     photos
+// })
 
 export const actionCleanUpPhoto = () => {
     return {
@@ -129,29 +134,42 @@ export const thunkDeletePhoto = (photoToDelete) => async (dispatch) => {
     }
 }
 
-export const thunkPostPhotoGallery = (galleryId, postPhoto) => async dispatch => {
+export const thunkPostPhotoGallery = (galleryId, photoIds) => async dispatch => {
+    console.log('INSIDE POST PHOTO THUNK')
     const response = await fetch(`/api/galleries/${galleryId}/photos`, {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(postPhoto),
+      body: JSON.stringify(photoIds),
     });
-
+    console.log('RESPONSE IN POST PHOTO THUNK')
     if (response.ok) {
-        const postedPhoto = await response.json()
-        dispatch(actionCreatePostGallery(postedPhoto))
-        return postedPhoto;
-    } else if (response.status < 500) {
-        const postedPhoto = await response.json()
-        if (postedPhoto.errors) {
-			return postedPhoto.errors;
-		}
-    } else {
-        return ["An error occurred. Please try again."];
+        const photoIds = await response.json()
+        console.log('photos response in thunk', photoIds)
+        dispatch(actionCreatePostGallery(photoIds))
+        return photoIds
     }
+    // } else if (response.status < 500) {
+    //     const photos = await response.json()
+    //     if (photos.errors) {
+	// 		return photos.errors;
+	// 	}
+    // } else {
+    //     return ["An error occurred. Please try again."];
+    // }
 
 };
+// export const thunkGetGalleryPhotos = (galleryId) => async (dispatch) => {
+//     const response = await fetch(`/api/galleries/${galleryId}/photos`)
+
+//     if (response.ok) {
+//         const photos = await response.json()
+//         dispatch(actionGetGalleryPhotos(photos))
+//         return photos
+//     }
+// }
 
 const normalize = (arr) => {
+    // console.log('arr in normalize function', arr)
     const resObj = {}
     arr.forEach((ele) => { resObj[ele.id] = ele })
     return resObj
@@ -188,6 +206,20 @@ const photoReducer = (state = initialState, action) => {
             delete newState.allPhotos[action.toDelete.id]
             newState.allPhotos = { ...newState.allPhotos }
             return newState
+        case POST_GALLERYPHOTO:
+            console.log('action.photos', action.photos)
+            // newState = { ...state }
+            // newState.galleryPhotos = normalize(action.photos)
+            // return newState
+            newState = { ...state }
+            action.photoIds.forEach((photo) => {
+                newState.galleryPhotos = {...newState.galleryPhotos, [photo]: photo}
+            })
+            return newState
+        // case GET_GALLERYPHOTO:
+        //     newState = { ...state }
+        //     newState.galleryPhotos = normalize(action.photos)
+        //     return newState
         default:
             return state
     }

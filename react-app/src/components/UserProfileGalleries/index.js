@@ -15,9 +15,11 @@ const UserProfileGalleries = () => {
     useEffect(() => {
         dispatch(thunkGetUser(userId))
         dispatch(thunkLoadGalleries())
+        dispatch(thunkLoadPhotos())
     }, [dispatch, userId])
 
     const user = useSelector((state) => state.session.singleUser)
+    const loggedInUser = useSelector((state) => state.session.user)
     const galleries = useSelector((state) => state.galleries.allGalleries)
 
     if (!user) return null
@@ -49,12 +51,14 @@ const UserProfileGalleries = () => {
             <div className='all-galleries-background'>
 
                 <ul className='all-galleries'>
-                    <div className='create-gallery-card gallery-card'>
-                        <i className="fa-regular fa-square-plus"></i>
-                        <h3 className='create-gallery-curate'>Curate photos using Galleries</h3>
-                        <NavLink className='create-button-gallery' to={`/profile/${user.id}/galleries/create`}>Create a new Gallery</NavLink>
+                    {loggedInUser.id == userId && (
+                        <div className='create-gallery-card gallery-card'>
+                            <i className="fa-regular fa-square-plus"></i>
+                            <h3 className='create-gallery-curate'>Curate photos using Galleries</h3>
+                            <NavLink className='create-button-gallery' to={`/profile/${user.id}/galleries/create`}>Create a new Gallery</NavLink>
 
-                    </div>
+                        </div>
+                    )}
                     {userGalleries.map((gallery) => {
 
                         return (
