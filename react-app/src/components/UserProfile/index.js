@@ -26,27 +26,28 @@ const UserProfile = () => {
     }
     const userPhotos = photoArr.filter((photo) => photo.userId == user.id)
 
-    console.log('user photos', userPhotos)
 
     return (
         <div className='profile-container'>
             <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover photo'></img>
             <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
             <div className='profile-info'>
-                <div className='profile-edit-buttons'></div>
+                <div className='profile-edit-buttons'>
+                    <button className='edit-profile-button'><i class="fa-regular fa-pen-to-square"></i></button>
+                </div>
                 <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
                 <div className='user-profile-location'><i class="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
             </div>
             <div className='profile-link-headers'>
-                <NavLink to={`/profile/${user.id}`} className='user-photos-title'>Photos</NavLink>
-                <NavLink to={`/profile/${user.id}/galleries`}>Galleries</NavLink>
+                <NavLink to={`/profile/${user.id}`} className='selected-subheader' style={{marginRight: '8px'}}>Photos</NavLink>
+                <NavLink to={`/profile/${user.id}/galleries`} className='not-selected-subheader'>Galleries</NavLink>
             </div>
             <div className='user-photos-container'>
 
                 <div className='user-photos-mapped'>
                     {userPhotos && userPhotos.map((photo) => {
                         return (
-                            <img src={photo.photoUrl} alt='user image'></img>
+                            <img src={photo.photoUrl} className='image-size' alt='user image'></img>
                         )
                     })}
                 </div>

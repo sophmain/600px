@@ -1,0 +1,22 @@
+.create-gallery-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.fa-square-plus {
+    font-size: 40px;
+}
+.create-gallery-curate {
+    font-size: 17px;
+    color: #222222;
+}
+.create-button-gallery {
+    text-decoration: none;
+    background-color: rgb(8, 112, 209);
+    border-radius: 28px;
+    color: white;
+    cursor: pointer;
+    padding: 12px 22px;
+    font-weight: 600;
+}
