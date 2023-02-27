@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useHistory } from "react-router-dom";
 import { thunkLoadGalleries } from "../../store/gallery";
 import { thunkLoadPhotos } from "../../store/photo";
 import { thunkGetUser } from "../../store/session";
@@ -9,6 +9,7 @@ import './UserProfile.css'
 
 const UserProfile = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const { userId } = useParams()
 
     useEffect(() => {
@@ -26,6 +27,9 @@ const UserProfile = () => {
     }
     const userPhotos = photoArr.filter((photo) => photo.userId == user.id)
 
+    const toSinglePhoto = (photo) => {
+        history.push(`/photos/${photo.id}`)
+    }
 
     return (
         <div className='profile-container'>
@@ -47,7 +51,7 @@ const UserProfile = () => {
                 <div className='user-photos-mapped'>
                     {userPhotos && userPhotos.map((photo) => {
                         return (
-                            <img src={photo.photoUrl} className='image-size' alt='user image'></img>
+                            <img src={photo.photoUrl} className='image-size' onClick={() => toSinglePhoto(photo)} style={{cursor: 'pointer'}} alt='user image'></img>
                         )
                     })}
                 </div>

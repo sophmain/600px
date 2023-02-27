@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Gallery, db
+from app.models import Gallery, db, GalleryPhotos
 from ..forms.gallery_form import GalleryForm
 from ..forms.post_form import PhotoForm
 
@@ -101,7 +101,7 @@ def edit_gallery(id):
 @gallery_routes.route('/<int:id>', methods=['DELETE'])
 def delete_gallery(id):
     current_gallery = Gallery.query.get(id)
-    print('CURRENT IN DELETE ROUTE', current_gallery)
+
     if current_gallery:
         db.session.delete(current_gallery)
         db.session.commit()
@@ -109,33 +109,48 @@ def delete_gallery(id):
     else:
         return {'error': 'Could not delete photo'}
 
-# @gallery_routes.route('/<int:id>/photos', methods=['POST'])
-# def create_post(id):
+@gallery_routes.route('/<int:id>/photos', methods=['POST'])
+def create_post(id):
+    """
+    Route to add photos to gallery
+    """
+    gallery = Gallery.query.get(id)
+    res = request.get_json()
+    for photoId in res:
+        new_gallery_photo = GalleryPhotos(
+            photo_id = photoId,
+            gallery_id = id
+        )
+        db.session.add(new_gallery_photo)
+        db.session.commit()
+    return jsonify(res)
+
+# @gallery_routes.route('/<int:id>/photos')
+# def all_gallery_photos(id):
 #     """
-#     Route to add created gallery to galleries table
+#     Route to query for all photos
 #     """
 #     gallery = Gallery.query.get(id)
-#     res = request.get_json()
-#     print('>>>>>>>.res', res)
-#     photo = PhotoForm()
-#     photo['csrf_token'].data = request.cookies['csrf_token']
+#     all_gallery_photos = Photo.query.all()
+#     photos = [photo.to_dict() for photo in all_gallery_photos if photo in gallery.photos]
 
-#     if photo.validate_on_submit():
-#         photo = Photo(
-#             user_id=res['userId'],
-#             upload_id=res['uploadId'],
-#             taken_date=res['takenDate'],
-#             category=res['category'],
-#             camera_type=res['cameraType'],
-#             lense_type=res['lenseType'],
-#             privacy=res['privacy'],
-#             title=res['title'],
-#             description=res['description'],
-#             location=res['location'],
-#         )
-#         gallery.photos.add(photo)
-#         db.session.add()
-#         db.session.commit()
-#         return gallery.to_dict()
+#     photo_res = []
+#     for photo in photos:
 
-#     return {'errors': validation_errors_to_error_messages(gallery.errors)}, 401
+#         photo_res.append({
+#             'id': photo['id'],
+#             'photoUrl': photo['photoUrl'],
+#             'photoFirstName': photo['uploadedFirstName'],
+#             'photoLastName': photo['uploadedLastName'],
+#             'title': photo['title'],
+#             'userId': photo['userId'],
+#             'category': photo['category'],
+#             'cameraType': photo['cameraType'],
+#             'lenseType': photo['lenseType'],
+#             'privacy': photo['privacy'],
+#             'description': photo['description'],
+#             'location': photo['location'],
+#             'takenDate': photo['takenDate']
+#         })
+
+#     return jsonify(photo_res)
