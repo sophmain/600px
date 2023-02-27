@@ -13,6 +13,8 @@ import AllGalleries from "./components/AllGalleries";
 import SingleGallery from './components/SingleGallery'
 import UserProfile from "./components/UserProfile";
 import UserProfileGalleries from './components/UserProfileGalleries'
+import EditGallery from "./components/EditGallery";
+import CreateGalleryForm from "./components/CreateGalleryForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,16 +31,16 @@ function App() {
           <Route exact path='/'>
             <AllPhotos />
           </Route>
-          <Route path='/photos/:photoId'>
+          <Route exact path='/photos/:photoId'>
             <SinglePhoto />
           </Route>
-          <Route path='/upload'>
+          <Route exact path='/upload'>
             <UploadPhoto />
           </Route>
-          <Route path='/post'>
+          <Route exact path='/post'>
             <PostPhoto />
           </Route>
-          <Route path='/manage/:photoId'>
+          <Route exact path='/manage/:photoId'>
             <EditPhoto />
           </Route>
           <Route exact path='/galleries'>
@@ -50,8 +52,14 @@ function App() {
           <Route exact path='/profile/:userId'>
             <UserProfile />
           </Route>
-          <Route path='/profile/:userId/galleries'>
+          <Route exact path='/profile/:userId/galleries'>
             <UserProfileGalleries />
+          </Route>
+          <Route exact path='/galleries/:galleryId/edit'>
+            <EditGallery />
+          </Route>
+          <Route exact path='/profile/:userId/galleries/create'>
+            <CreateGalleryForm />
           </Route>
         </Switch>
       )}

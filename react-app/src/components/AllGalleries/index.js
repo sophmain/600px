@@ -33,9 +33,10 @@ const AllGalleries = () => {
             <div className='all-galleries-background'>
                 <ul className='all-galleries'>
                     {galleries.map((gallery) => {
+
                         return (
                             <div>
-                                {gallery.photos.length > 0 && (
+                                {gallery.photos.length > 0 && /*gallery.visible &&*/ (
                                     <div className='gallery-card' key={gallery.id} onClick={() => toGallery(gallery)}>
                                         <img className='photo-size all-gallery-image' src={gallery.photos[0].photoUrl} alt='gallery'></img>
                                         <div className='all-gallery-curated'>

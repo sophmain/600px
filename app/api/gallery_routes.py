@@ -86,23 +86,22 @@ def edit_gallery(id):
 
     res = request.get_json()
     gallery = GalleryForm()
-    photo['csrf_token'].data = request.cookies['csrf_token']
+    gallery['csrf_token'].data = request.cookies['csrf_token']
     if gallery.validate_on_submit():
         # gallery.populate_obj(current_gallery)
         current_gallery.title = res['title']
         current_gallery.description = res['description']
         current_gallery.visible = res['visible']
-        current_gallery.preview_image_id = res['previewImage']
 
         db.session.commit()
         gallery = current_gallery.to_dict()
-        return jsonify(photo)
+        return jsonify(gallery)
     return {'errors': validation_errors_to_error_messages(gallery.errors)}, 401
 
 @gallery_routes.route('/<int:id>', methods=['DELETE'])
 def delete_gallery(id):
     current_gallery = Gallery.query.get(id)
-
+    print('CURRENT IN DELETE ROUTE', current_gallery)
     if current_gallery:
         db.session.delete(current_gallery)
         db.session.commit()

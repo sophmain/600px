@@ -30,13 +30,16 @@ const SingleGallery = () => {
 
     return (
         <div className='gallery-single-container'>
-            <img className='single-gallery-cover image-size' src={gallery.photos[0].photoUrl} alt='gallery cover'></img>
+            {gallery.photos.length > 0 && (
+                <img className='single-gallery-cover image-size' src={gallery.photos[0].photoUrl} alt='gallery cover'></img>
+            )}
+
             <div className='edit-gallery-buttons'>
-            {user && user.id === gallery.userId && (
-                        <div className='single-gallery-edit-buttons'>
-                            <button className='edit-gallery-button' onClick={editGallery}><i class="fa-regular fa-pen-to-square"></i></button>
-                        </div>
-                    )}
+                {user && user.id === gallery.userId && (
+                    <div className='single-gallery-edit-buttons'>
+                        <button className='edit-gallery-button' onClick={editGallery}><i class="fa-regular fa-pen-to-square"></i></button>
+                    </div>
+                )}
             </div>
             <h1 className='single-gallery-title'>{gallery.title} | Gallery</h1>
             <p className='single-gallery-description'>{gallery.description}</p>
