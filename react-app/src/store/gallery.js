@@ -36,7 +36,7 @@ export const thunkLoadGalleries = () => async (dispatch) => {
     }
 }
 export const thunkLoadSingleGallery = (galleryId) => async (dispatch) => {
-    console.log('INSIDE SINGLE GALLERY THUNK')
+    // console.log('INSIDE SINGLE GALLERY THUNK')
     const response = await fetch(`/api/galleries/${galleryId}`)
     if (response.ok){
         const gallery = await response.json()
@@ -66,20 +66,23 @@ export const thunkCreateGallery = (payload) => async (dispatch) => {
 }
 
 export const thunkEditGallery = (editedGallery) => async (dispatch) => {
+// console.log('HITS EDIT THUNK', editedGallery.id)
 
-    const response = await fetch(`/api/photos/${editedGallery.id}`, {
+    const response = await fetch(`/api/galleries/${editedGallery.id}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editedGallery)
     })
-
+    // console.log('RESPONSE', response)
     if (response.ok) {
         const editedGallery = await response.json()
+        console.log('updatedGal', editedGallery)
         dispatch(actionEditGallery(editedGallery))
         return editedGallery;
 
     } else if (response.status < 500) {
         const editedGallery = await response.json()
+        // console.log('edited gallery < 500', editedGallery)
         if (editedGallery.errors) {
             return editedGallery.errors;
 		}
@@ -90,7 +93,7 @@ export const thunkEditGallery = (editedGallery) => async (dispatch) => {
 }
 
 export const thunkDeleteGallery = (galleryToDelete) => async (dispatch) => {
-    const response = await fetch(`/api/photos/${galleryToDelete.id}`, {
+    const response = await fetch(`/api/galleries/${galleryToDelete.id}`, {
         method: "DELETE"
     })
 

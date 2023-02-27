@@ -1,0 +1,115 @@
+.create-gallery-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #eaeaea;
+    height: auto;
+    min-height: calc((100vh - 72px) - 56px)
+}
+
+.create-gallery-form-title {
+    text-align: center;
+    width: 100%;
+    background-color: white;
+    margin: 0px;
+}
+.create-gallery-form-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    /* box-shadow: 0px 5px 4px gray; */
+}
+.fa-arrow-left-long {
+    font-size: 22px;
+}
+.gallery-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    padding: 24px;
+    background-color: white;
+    width: 560px;
+    font-size: 14px;
+    margin-top: 60px;
+}
+.visible-container {
+    display: flex;
+    flex-direction: row;
+}
+.gallery-form-input {
+    border: 1px solid rgb(215, 216, 219);
+    height: 20px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    width: 500px;
+}
+.gallery-textarea-input {
+    border: 1px solid rgb(215, 216, 219);
+    height: 100px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    width: 500px;
+    resize: vertical;
+}
+.gallery-radio-input {
+    display: flex;
+    align-self: left;
+    width: 25px;
+    margin-right: 5px;
+}
+.visible-container {
+    width: 525px;
+}
+.button-text {
+    padding: 0px;
+    margin: 5px;
+}
+.gallery-form-label{
+    margin: 5px 0px;
+    color: rgb(109, 115, 120);
+}
+.fa-lock {
+    color: white;
+    text-shadow: -1px 1px 0 #000,
+    1px 1px 0 #000,
+   1px -1px 0 #000,
+  -1px -1px 0 #000;
+  font-size: 14px;
+}
+.fa-eye {
+    font-size: 14px;
+}
+.create-gallery-submit-button {
+    background-color: rgb(8, 112, 209);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 22px;
+    height: 48px;
+    border-radius: 28px;
+    border: none;
+    width: 120px;
+    cursor: pointer;
+}
+.cancel-gallery-button {
+    color: rgb(8, 112, 209);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 22px;
+    height: 48px;
+    border-radius: 28px;
+    border: none;
+    width: 120px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.create-gallery-form-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}

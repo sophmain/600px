@@ -10,6 +10,8 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const demoEmail = 'demo@aa.io'
+  const demoPassword = 'password'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,40 +19,67 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     } else {
-        closeModal()
+      closeModal()
+    }
+  };
+
+  const handleDemo = async (e) => {
+    e.preventDefault();
+    const data = await dispatch(login(demoEmail, demoPassword));
+    if (data) {
+      setErrors(data);
+    } else {
+      closeModal()
     }
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          Email
+    <div className='login-modal-container'>
+      <h1 className='login-title'>Log in to 600px</h1>
+      <form className='log-in-form' onSubmit={handleSubmit}>
+        {errors.length > 0 && (
+          <ul>
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
+        )}
+
+        <div className='form-error'>
+          {/* {errors && (
+          <li>{errors[0].split(':')[1]}</li>
+          )} */}
+
+        </div>
+        <label className='login-header'>
+          Email*
           <input
+            className='login-form-field'
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
-        <label>
-          Password
+        <div className='form-error'></div>
+        <label className='login-header'>
+          Password*
           <input
+            className='login-form-field'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <div className='form-error'></div>
+        <button className='login-button' type="submit">Log In</button>
+        <button className='demo-login' onClick={handleDemo}>
+          Log in with demo user
+        </button>
       </form>
-    </>
+    </div>
+
   );
 }
 

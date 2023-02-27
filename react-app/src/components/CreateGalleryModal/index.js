@@ -13,6 +13,7 @@ const CreateGalleryModal = ({ photo }) => {
     const [visible, setVisible] = useState(false)
     const [errors, setErrors] = useState([])
     const [createdGallery, setCreatedGallery] = useState('')
+    //const [photo, setPhoto] = useState([])
 
 
     const user = useSelector(state => state.session.user)
@@ -31,7 +32,7 @@ const CreateGalleryModal = ({ photo }) => {
             title,
             visible,
             description,
-            previewImage: photo.id
+            // photos: [{...photo}]
         }
 
 

@@ -3,6 +3,8 @@ const LOAD_SINGLEPHOTO = 'photo/LOAD_SINGLEPHOTO'
 const POST_PHOTO = 'photo/POST_PHOTO'
 const EDIT_PHOTO = 'photo/EDIT_PHOTO'
 const DELETE_PHOTO = 'photo/DELETE_PHOTO'
+const POST_GALLERYPHOTO = 'POST_GALLERYPHOTO'
+
 //const GET_EDITPHOTO = 'photo/GET_EDITPHOTO'
 const CLEAN_UP_PHOTO = 'photo/CLEAN_UP_PHOTO'
 
@@ -34,6 +36,15 @@ const actionDeletePhoto = (toDelete) => ({
     type: DELETE_PHOTO,
     toDelete
 })
+
+export const actionCreatePostGallery = (galleryId, postPhoto) => {
+    return {
+        type: POST_GALLERYPHOTO,
+        galleryId,
+        postPhoto
+    }
+};
+
 
 export const actionCleanUpPhoto = () => {
     return {
@@ -84,16 +95,15 @@ export const thunkPostPhoto = (payload) => async (dispatch) => {
 }
 
 export const thunkEditPhoto = (updatedPhoto) => async (dispatch) => {
-console.log('updated photo', updatedPhoto)
+
     const response = await fetch(`/api/photos/${updatedPhoto.id}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedPhoto)
     })
-    console.log('RESPONSE', response)
+
     if (response.ok) {
         const updatedPhoto = await response.json()
-        console.log('updatedPhoto', updatedPhoto)
         dispatch(actionEditPhoto(updatedPhoto))
         return updatedPhoto;
 
@@ -119,6 +129,27 @@ export const thunkDeletePhoto = (photoToDelete) => async (dispatch) => {
     }
 }
 
+export const thunkPostPhotoGallery = (galleryId, postPhoto) => async dispatch => {
+    const response = await fetch(`/api/galleries/${galleryId}/photos`, {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(postPhoto),
+    });
+
+    if (response.ok) {
+        const postedPhoto = await response.json()
+        dispatch(actionCreatePostGallery(postedPhoto))
+        return postedPhoto;
+    } else if (response.status < 500) {
+        const postedPhoto = await response.json()
+        if (postedPhoto.errors) {
+			return postedPhoto.errors;
+		}
+    } else {
+        return ["An error occurred. Please try again."];
+    }
+
+};
 
 const normalize = (arr) => {
     const resObj = {}

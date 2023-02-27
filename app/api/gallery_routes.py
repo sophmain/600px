@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Gallery, db
 from ..forms.gallery_form import GalleryForm
+from ..forms.post_form import PhotoForm
 
 gallery_routes = Blueprint('gallery', __name__)
 
@@ -36,7 +37,9 @@ def all_galleries():
             'userFirstName': gallery['userFirstName'],
             'userLastName': gallery['userLastName'],
             'previewImage': gallery['previewImage'],
-            'photos': gallery['photos']
+            'photos': gallery['photos'],
+            'userId': gallery['userId'],
+            'userProf': gallery['userProf']
             # 'galleryPreviewPhoto': gallery['galleryPreviewPhoto']
         })
 
@@ -67,8 +70,10 @@ def create_gallery():
             title = res['title'],
             description = res['description'],
             visible = res['visible'],
-            preview_image_id = res['previewImage']
+            # photos = res['photos']
+            # preview_image_id = res['previewImage']
         )
+        # gallery.photos.add(photo)
         db.session.add(gallery)
         db.session.commit()
         return gallery.to_dict()
@@ -81,26 +86,56 @@ def edit_gallery(id):
 
     res = request.get_json()
     gallery = GalleryForm()
-    photo['csrf_token'].data = request.cookies['csrf_token']
+    gallery['csrf_token'].data = request.cookies['csrf_token']
     if gallery.validate_on_submit():
         # gallery.populate_obj(current_gallery)
         current_gallery.title = res['title']
         current_gallery.description = res['description']
         current_gallery.visible = res['visible']
-        current_gallery.preview_image_id = res['previewImage']
 
         db.session.commit()
         gallery = current_gallery.to_dict()
-        return jsonify(photo)
+        return jsonify(gallery)
     return {'errors': validation_errors_to_error_messages(gallery.errors)}, 401
 
 @gallery_routes.route('/<int:id>', methods=['DELETE'])
 def delete_gallery(id):
     current_gallery = Gallery.query.get(id)
-
+    print('CURRENT IN DELETE ROUTE', current_gallery)
     if current_gallery:
         db.session.delete(current_gallery)
         db.session.commit()
         return {'message': 'Successfully deleted'}
     else:
         return {'error': 'Could not delete photo'}
+
+# @gallery_routes.route('/<int:id>/photos', methods=['POST'])
+# def create_post(id):
+#     """
+#     Route to add created gallery to galleries table
+#     """
+#     gallery = Gallery.query.get(id)
+#     res = request.get_json()
+#     print('>>>>>>>.res', res)
+#     photo = PhotoForm()
+#     photo['csrf_token'].data = request.cookies['csrf_token']
+
+#     if photo.validate_on_submit():
+#         photo = Photo(
+#             user_id=res['userId'],
+#             upload_id=res['uploadId'],
+#             taken_date=res['takenDate'],
+#             category=res['category'],
+#             camera_type=res['cameraType'],
+#             lense_type=res['lenseType'],
+#             privacy=res['privacy'],
+#             title=res['title'],
+#             description=res['description'],
+#             location=res['location'],
+#         )
+#         gallery.photos.add(photo)
+#         db.session.add()
+#         db.session.commit()
+#         return gallery.to_dict()
+
+#     return {'errors': validation_errors_to_error_messages(gallery.errors)}, 401

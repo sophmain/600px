@@ -23,3 +23,11 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route('/<int:id>')
+def single_user(id):
+    print('INSIDE ROUTE')
+    found_user = User.query.get(id)
+    print('FOUND USER', found_user)
+    user = found_user.to_dict()
+    return jsonify(user)

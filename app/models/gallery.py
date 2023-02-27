@@ -29,7 +29,8 @@ class Gallery(db.Model):
             'userFirstName': self.user.first_name,
             'userLastName': self.user.last_name,
             'previewImage': self.preview_image_id,
-            'photos': [photo.to_dict() for photo in self.photo]
+            'photos': [photo.to_dict() for photo in self.photo],
+            'userProf': self.user.prof_photo_url
             # 'galleryPreviewPhoto': self.photo.photoUrl
             # 'userProfImg': self.user.prof_photo_url
         }
