@@ -4,7 +4,7 @@ import { useParams, NavLink, useHistory } from "react-router-dom";
 import { thunkLoadGalleries } from "../../store/gallery";
 import { thunkLoadPhotos } from "../../store/photo";
 import { thunkGetUser } from "../../store/session";
-
+import './UserProfileGalleries.css'
 
 
 const UserProfileGalleries = () => {
@@ -27,8 +27,7 @@ const UserProfileGalleries = () => {
     }
     const userGalleries = galleryArr.filter((gallery) => gallery.userId == user.id)
 
-    const toGallery = (e, gallery) => {
-        e.preventDefault()
+    const toGallery = (gallery) => {
         history.push(`/galleries/${gallery.id}`)
     }
 
@@ -37,28 +36,60 @@ const UserProfileGalleries = () => {
             <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover photo'></img>
             <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
             <div className='profile-info'>
-                <div className='profile-edit-buttons'></div>
+                <div className='profile-edit-buttons'>
+                    <button className='edit-profile-button'><i class="fa-regular fa-pen-to-square"></i></button>
+                </div>
                 <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
                 <div className='user-profile-location'><i class="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
             </div>
             <div className='profile-link-headers'>
-                <NavLink to={`/profile/${user.id}`} className='user-photos-title'>Photos</NavLink>
-                <NavLink to={`/profile/${user.id}/galleries`}>Galleries</NavLink>
+                <NavLink to={`/profile/${user.id}`} className='not-selected-subheader' style={{ marginRight: '8px' }}>Photos</NavLink>
+                <NavLink to={`/profile/${user.id}/galleries`} className='selected-subheader'>Galleries</NavLink>
             </div>
-            <div className='user-photos-container'>
+            <div className='all-galleries-background'>
 
-                <div className='user-photos-mapped'>
-                    {userGalleries && userGalleries.map((gallery) => {
+                <ul className='all-galleries'>
+                    <div className='create-gallery-card gallery-card'>
+                        <i className="fa-regular fa-square-plus"></i>
+                        <h3 className='create-gallery-curate'>Curate photos using Galleries</h3>
+                        <NavLink className='create-button-gallery' to={`/profile/${user.id}/galleries/create`}>Create a new Gallery</NavLink>
+
+                    </div>
+                    {userGalleries.map((gallery) => {
+
                         return (
-                            <div className='gallery-card' onClick={(e) => toGallery(e, gallery)} key={gallery.id}>
-                            {gallery.photos && gallery.photos.length > 0 && (
-                                <img src={gallery.photos[0].photoUrl} alt='gallery'></img>
-                            )}
+                            <>
+                                {gallery && (
+                                    <div>
+                                        <div className='gallery-card' key={gallery.id} onClick={() => toGallery(gallery)}>
+                                            {gallery.photos.length > 0 && (
+                                                <img className='photo-size all-gallery-image' src={gallery.photos[0].photoUrl} alt='gallery'></img>
+                                            )}
+                                            {gallery.photos.length == 0 && (
+                                                <img className='photo-size all-gallery-image' src='https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png' alt='gallery'></img>
+                                            )}
 
-                        </div>
+                                            <div className='all-gallery-curated'>
+                                                <h2 className='all-gallery-owner'>{gallery.title} | Gallery</h2>
+                                                <div className='all-gallery-lower'>
+                                                    <img src={gallery.userProf} alt='profile of curator' className='all-gallery-prof'></img>
+                                                    <p style={{ margin: '10px 0px 10px 0px' }}>Curated by
+                                                        <button className='to-profile-button' onClick={(e) => e.stopPropagation()}>
+                                                            <NavLink className='all-gallery-to-profile' to={`/profile/${gallery.userId}`}>  {gallery.userFirstName} {gallery.userLastName}</NavLink>
+                                                        </button>
+                                                    </p>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                )}
+                            </>
                         )
                     })}
-                </div>
+                </ul>
             </div>
         </div>
     )

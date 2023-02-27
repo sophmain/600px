@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, NavLink } from 'react-router-dom'
 import { thunkDeleteGallery, thunkEditGallery, thunkLoadSingleGallery } from '../../store/gallery'
 import './EditGallery.css'
 
@@ -56,61 +55,88 @@ const EditGallery = () => {
     if (!galleryEdit) return null
     return (
         <div>
-            <form className='gallery-form' onSubmit={handleSubmit}>
-                <ul className="validation-errors">
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
-                <label>
-                    <p>
-                        Title*
-                    </p>
-                    <input
-                        id="title"
-                        type="text"
-                        name="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                </label>
-                <label>
-                    <p>
-                        Description
-                    </p>
-                    <textarea
-                        id="description"
-                        type="textarea"
-                        name="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                </label>
-                <label>
-                    <div className='visible-container'>
+            <div className='create-gallery-form-header'>
+                <NavLink to={`/profile/${user.id}/galleries`}>
+                    <i class="fa-solid fa-arrow-left-long"></i>
+                </NavLink>
+                <h2 className='create-gallery-form-title'>Create gallery</h2>
+            </div>
+            <div className='create-gallery-form-container'>
+
+                <form className='gallery-form' onSubmit={handleSubmit}>
+                    {errors.length > 0 && (
+                        <ul className="validation-errors">
+                            {errors.map((error, idx) => (
+                                <li key={idx}>{error}</li>
+                            ))}
+                        </ul>
+                    )}
+                    <label>
+                        <p className='gallery-form-label'>
+                            Title*
+                        </p>
                         <input
-                            id="visible"
-                            type="radio"
-                            checked={visible == true}
-                            name="visible"
-                            onChange={(e) => setVisible(true)}
-                            value={true}
-                        /><p className='button-text'>Visible to everyone</p>
+                            className='gallery-form-input'
+                            id="title"
+                            type="text"
+                            name="title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </label>
+                    <div className='form-error'></div>
+                    <label>
+                        <p className='gallery-form-label'>
+                            Description
+                        </p>
+                        <textarea
+                            className='gallery-textarea-input'
+                            id="description"
+                            type="textarea"
+                            name="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </label>
+                    <div className='form-error'></div>
+                    <label>
+                        <p className='gallery-form-label'>
+                            Visibility
+                        </p>
+                        <div className='visible-container'>
+                            <input
+                                className='gallery-radio-input'
+                                id="visible"
+                                type="radio"
+                                checked={visible == true}
+                                name="visible"
+                                onChange={(e) => setVisible(true)}
+                                value={true}
+                            /><p className='button-text'><i class="fa-regular fa-eye"></i> Visible to everyone</p>
+                        </div>
+                        <div className='visible-container'>
+                            <input
+                                className='gallery-radio-input'
+                                id="notvisible"
+                                type="radio"
+                                checked={visible == false}
+                                name="notvisible"
+                                onChange={(e) => setVisible(false)}
+                                value={false}
+                            /><p className='button-text'><i class="fa-solid fa-lock"></i>  Only visible to me</p>
+                        </div>
+                    </label>
+                    <div className='edit-gallery-bottom-buttons'>
+                        <button className='delete-gallery-button' onClick={deleteGallery}>Delete gallery</button>
+                        <div className='create-gallery-form-buttons'>
+                            <div>
+                                <NavLink to={`/profile/${user.id}/galleries`} className='cancel-gallery-button'>Cancel</NavLink>
+                            </div>
+                            <button className="edit-gallery-submit-button" type="submit">Save changes</button>
+                        </div>
                     </div>
-                    <div className='visible-container'>
-                        <input
-                            id="notvisible"
-                            type="radio"
-                            checked={visible == false}
-                            name="notvisible"
-                            onChange={(e) => setVisible(false)}
-                            value={false}
-                        /><p className='button-text'>Only visible to me</p>
-                    </div>
-                </label>
-                <button className='delete-gallery-button' onClick={deleteGallery}>Delete</button>
-                <button className="edit-gallery-submit-button" type="submit">Submit</button>
-            </form>
+                </form>
+            </div>
         </div>
     )
 }

@@ -132,3 +132,8 @@
 .single-location {
     font-size: 14px;
 }
+.single-photo-owner {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}

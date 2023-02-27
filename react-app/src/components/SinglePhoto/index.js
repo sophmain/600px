@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useHistory, useParams } from "react-router-dom"
+import { useHistory, useParams, NavLink } from "react-router-dom"
 import { actionCleanUpPhoto, thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
 import './SinglePhoto.css'
 
@@ -74,7 +74,9 @@ const SinglePhoto = () => {
                         <div className='single-left-right-profile'>
                             <div className='single-right-profile'>
                                 <h2 className='single-photo-title'>{photo.title}</h2>
-                                <div className='single-photo-owner'>by {photo.uploadedFirstName} {photo.uploadedLastName}</div>
+                                <div>by
+                                <NavLink to={`/profile/${photo.userId}`} className='single-photo-owner'> {photo.uploadedFirstName} {photo.uploadedLastName}</NavLink>
+                                </div>
                             </div>
                         </div>
                     </div>

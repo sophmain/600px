@@ -4,14 +4,17 @@
     height: 370px;
 }
 .prof-photo {
+    display: flex;
+    align-items: center;
     width: 100px;
     height: 100px;
     position: absolute;
-    right: 45%;
+    right: 46%;
     top: 390px;
     border-radius: 50%;
     background-color: white;
     padding: 2px;
+    object-fit: cover;
 }
 .profile-info {
     display: flex;
@@ -21,23 +24,29 @@
 .profile-edit-buttons {
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    justify-content: right;
     margin-bottom: 16px;
+    width: 100%;
 }
 .user-profile-name {
     font-size: 24px;
     font-weight: bold;
 
 }
-.user-photos-title {
-    color: rgb(8, 112, 209);
-    text-decoration:none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: 2px solid rgb(8, 112, 209);
-}
+
 .user-photos-container {
     background-color: rgb(247, 248, 250);
-    padding-top: 52px;
+    column-count: 3;
+    gap: 8px;
+    margin: 0px;
+    padding: 60px 5px;
+    width: 100%;
+    margin-top: 10px;
+}
+.edit-profile-button {
+    align-self: flex-end;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 20px 25px 0px 0px;
 }
