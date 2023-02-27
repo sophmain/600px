@@ -50,7 +50,7 @@ def seed_galleries_photos():
     image9 = Photo(
         user_id=1, taken_date= datetime.strptime('2018-02-17','%Y-%m-%d'), upload_id=9, category='Travel', camera_type='Sony Alpha a7R III', lense_type='Sony FE 24-70mm f/2.8 GM', privacy='Public', title='Through the Lily Pads', description='This temple is located in the gorgeous Tam Coc Valley. We were lucky to be the only visitors there at the time! The giant lily pads look almost fake.', location='Tam Coc Valley, Vietnam')
     image10 = Photo(
-        user_id=1, taken_date= datetime.strptime('2018-02-18','%Y-%m-%d'), upload_id=10, category='Travel', camera_type='Nikon D5200', lense_type='Nikon AF-S DX VR Zoom-Nikkor 55-200mm f/4-5.6G IF-ED', privacy='Public', title='Wadi Rum Fun', location='Wadi Rum, Jordan')
+        user_id=1, taken_date= datetime.strptime('2018-02-18','%Y-%m-%d'), upload_id=10, category='Travel', camera_type='Nikon D5200', lense_type='Nikon AF-S DX VR Zoom-Nikkor 55-200mm', privacy='Public', title='Wadi Rum Fun', location='Wadi Rum, Jordan')
     image11 = Photo(
         user_id=1, taken_date= datetime.strptime('2019-02-23','%Y-%m-%d'), upload_id=11, category='Travel', camera_type='Nikon D7000', lense_type='18.0-200.0 mm f/3.5-5.6', privacy='Public', title='Bali Rice Fields', location='Bali, Indonesia')
     image12 = Photo(
