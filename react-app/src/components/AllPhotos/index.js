@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, NavLink } from 'react-router-dom'
 import { thunkLoadPhotos } from '../../store/photo'
 import CreateGalleryModal from '../CreateGalleryModal'
+import AddToGalleryModal from '../AddToGalleryModal'
 import OpenModalButton from '../OpenModalButton'
 import './AllPhotos.css'
 
@@ -57,7 +58,7 @@ const AllPhotos = () => {
                             <div className='image-overlay-2'>
                                 <h4 className='overlay-2-text'>{photo.title}</h4>
                             </div>
-                            <img className='photo-size' src={photo.photoUrl}></img>
+                            <img className='photo-size' src={photo.photoUrl} alt='main page'></img>
                             <div className='image-overlay'>
                                 <div className='overlay-2-text overlay-bottom-text'>
                                     {photo.photoFirstName} {photo.photoLastName}
@@ -65,9 +66,9 @@ const AllPhotos = () => {
                                 <div className='overlay-right'>
                                     <button className='gallery-modal-button' onClick={e => e.stopPropagation()}>
                                         <OpenModalButton
-                                            className='create-gallery-modal'
+                                            className='add-gallery-modal'
                                             buttonText='+'
-                                            modalComponent={<CreateGalleryModal photo={photo} />}
+                                            modalComponent={<AddToGalleryModal photo={photo} />}
                                         />
                                     </button>
 
