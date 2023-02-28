@@ -15,6 +15,7 @@ const AllGalleries = () => {
     const allGalleriesObj = useSelector((state) => state.galleries.allGalleries)
     if (!allGalleriesObj) return null
     const galleries = Object.values(allGalleriesObj)
+    const galleryShow = galleries.filter((gallery) => gallery.photos.length > 0)
 
     const toGallery = (gallery) => {
         history.push(`/galleries/${gallery.id}`)
@@ -31,13 +32,13 @@ const AllGalleries = () => {
                 </div>
             </div>
             <div className='all-galleries-background'>
-                <ul className='all-galleries'>
-                    {galleries.map((gallery) => {
+                <div className='all-galleries'>
+                    {galleryShow.map((gallery) => {
 
                         return (
                             <div>
                                 {gallery.photos.length > 0 && /*gallery.visible &&*/ (
-                                    <div className='gallery-card' key={gallery.id} onClick={() => toGallery(gallery)}>
+                                    <div className='gallery-card' onClick={() => toGallery(gallery)}>
                                         <img className='photo-size all-gallery-image' src={gallery.photos[0].photoUrl} alt='gallery'></img>
                                         <div className='all-gallery-curated'>
                                             <h2 className='all-gallery-owner'>{gallery.title} | Gallery</h2>
@@ -57,7 +58,7 @@ const AllGalleries = () => {
 
                         )
                     })}
-                </ul>
+                </div>
             </div>
         </div>
     )

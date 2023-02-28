@@ -84,3 +84,15 @@
   width: 32px;
   cursor: pointer;
 }
+/* .profile-dropdown {
+  background-color: white;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0px;
+  padding: 10px;
+  height: auto;
+  width: 150px;
+  border-radius: 10px;
+} */
