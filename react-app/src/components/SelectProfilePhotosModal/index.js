@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { thunkLoadPhotos, thunkPostPhotoGallery } from "../../store/photo";
 import './SelectProfilePhotosModal.css'
@@ -26,7 +25,7 @@ const SelectProfilePhotosModal = ({ gallery }) => {
     const photosArr = Object.values(photosObj)
 
 
-    const myPhotos = photosArr.filter((photo) => photo.userId == user.id && !gallery.photos.map(galleryphoto => galleryphoto.id).includes(photo.id))
+    const myPhotos = photosArr.filter((photo) => photo.userId === user.id && !gallery.photos.map(galleryphoto => galleryphoto.id).includes(photo.id))
 
 
     const addPhoto = (e, photo) => {
@@ -89,7 +88,7 @@ const SelectProfilePhotosModal = ({ gallery }) => {
                         return (
                             <div className='my-modal-photo-container' key={photo.id}>
                                 <button className={`my-modal-photo-button ${clickBorder[photo.id] || ""}`} onClick={(e) => addPhoto(e, photo)}>
-                                    <img className='my-modal-photo' src={photo.photoUrl} alt='my photo'></img>
+                                    <img className='my-modal-photo' src={photo.photoUrl} alt='users upload'></img>
                                 </button>
 
                             </div>

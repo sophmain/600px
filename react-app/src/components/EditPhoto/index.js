@@ -28,7 +28,7 @@ const EditPhoto = () => {
     useEffect(() => {
 
         dispatch(thunkLoadSinglePhoto(photoId))
-    }, [dispatch])
+    }, [dispatch, photoId])
 
 
     const [takenDate, setTakenDate] = useState(photoToEdit?.takenDate ? datetimeLocal(photoToEdit.takenDate) : '')
@@ -86,7 +86,7 @@ const EditPhoto = () => {
 
                 <div className="post-container">
                     <div className='post-photo-container'>
-                        <img className='post-photo' src={photoToEdit.photoUrl}></img>
+                        <img className='post-photo' src={photoToEdit.photoUrl} alt='posted'></img>
                     </div>
                     <div className='post-form-box'>
 

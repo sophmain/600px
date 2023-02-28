@@ -108,7 +108,7 @@ const EditGallery = () => {
                                 className='gallery-radio-input'
                                 id="visible"
                                 type="radio"
-                                checked={visible == true}
+                                checked={visible === true}
                                 name="visible"
                                 onChange={(e) => setVisible(true)}
                                 value={true}
@@ -119,7 +119,7 @@ const EditGallery = () => {
                                 className='gallery-radio-input'
                                 id="notvisible"
                                 type="radio"
-                                checked={visible == false}
+                                checked={visible === false}
                                 name="notvisible"
                                 onChange={(e) => setVisible(false)}
                                 value={false}

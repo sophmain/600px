@@ -120,6 +120,7 @@ def create_post(id):
 
     gallery = Gallery.query.get(id)
     res = request.get_json()
+    print('>>>>>res', res)
     for photoId in res:
         print ('>>>>>>query', GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).all())
         if GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).all():

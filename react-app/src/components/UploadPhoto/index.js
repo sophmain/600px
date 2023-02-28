@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { thunkLoadAllUploads, thunkPostUpload } from "../../store/upload";
 import './UploadPhoto.css'
 
 const UploadPhoto = () => {
     const history = useHistory(); // so that we can redirect after the image upload is successful
-    const dispatch = useDispatch()
     const [image, setImage] = useState(null);
     const [imageLoading, setImageLoading] = useState(false);
-
-    // useEffect(() => {
-    //     dispatch(thunkLoadAllUploads())
-    // }, [dispatch])
-
-    // const uploadsObj = useSelector((state) => state.uploads.allUploads)
-    // if (!uploadsObj) return null
-    // const uploads = Object.values(uploadsObj)
-    // const latestUpload = uploads[uploads.length-1]
-    // console.log('>>>>>UPLOADS', uploads)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", image);
 
-        // aws uploads can be a bit slow—displaying
-        // some sort of loading message is a good idea
+        // loading message for slow displaying aws upload
         setImageLoading(true);
 
         const res = await fetch('/api/photos/upload', {
