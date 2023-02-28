@@ -56,10 +56,10 @@ const EditGallery = () => {
     return (
         <div>
             <div className='create-gallery-form-header'>
-                <NavLink to={`/profile/${user.id}/galleries`}>
-                    <i class="fa-solid fa-arrow-left-long"></i>
+                <NavLink to={`/galleries/${galleryEdit.id}`}>
+                    <i className="fa-solid fa-arrow-left-long"></i>
                 </NavLink>
-                <h2 className='create-gallery-form-title'>Create gallery</h2>
+                <h2 className='create-gallery-form-title'>Edit {galleryEdit.title}</h2>
             </div>
             <div className='create-gallery-form-container'>
 
@@ -112,7 +112,7 @@ const EditGallery = () => {
                                 name="visible"
                                 onChange={(e) => setVisible(true)}
                                 value={true}
-                            /><p className='button-text'><i class="fa-regular fa-eye"></i> Visible to everyone</p>
+                            /><p className='button-text'><i className="fa-regular fa-eye"></i> Visible to everyone</p>
                         </div>
                         <div className='visible-container'>
                             <input
@@ -123,7 +123,7 @@ const EditGallery = () => {
                                 name="notvisible"
                                 onChange={(e) => setVisible(false)}
                                 value={false}
-                            /><p className='button-text'><i class="fa-solid fa-lock"></i>  Only visible to me</p>
+                            /><p className='button-text'><i className="fa-solid fa-lock"></i>  Only visible to me</p>
                         </div>
                     </label>
                     <div className='edit-gallery-bottom-buttons'>

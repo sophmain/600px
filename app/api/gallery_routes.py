@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import Gallery, db, GalleryPhotos
 from ..forms.gallery_form import GalleryForm
 from ..forms.post_form import PhotoForm
+from sqlalchemy import and_
 
 gallery_routes = Blueprint('gallery', __name__)
 
@@ -125,32 +126,13 @@ def create_post(id):
         db.session.commit()
     return jsonify(res)
 
-# @gallery_routes.route('/<int:id>/photos')
-# def all_gallery_photos(id):
-#     """
-#     Route to query for all photos
-#     """
-#     gallery = Gallery.query.get(id)
-#     all_gallery_photos = Photo.query.all()
-#     photos = [photo.to_dict() for photo in all_gallery_photos if photo in gallery.photos]
-
-#     photo_res = []
-#     for photo in photos:
-
-#         photo_res.append({
-#             'id': photo['id'],
-#             'photoUrl': photo['photoUrl'],
-#             'photoFirstName': photo['uploadedFirstName'],
-#             'photoLastName': photo['uploadedLastName'],
-#             'title': photo['title'],
-#             'userId': photo['userId'],
-#             'category': photo['category'],
-#             'cameraType': photo['cameraType'],
-#             'lenseType': photo['lenseType'],
-#             'privacy': photo['privacy'],
-#             'description': photo['description'],
-#             'location': photo['location'],
-#             'takenDate': photo['takenDate']
-#         })
-
-#     return jsonify(photo_res)
+@gallery_routes.route('/<int:id>/<int:photoId>', methods=['DELETE'])
+def delete_gallery_photo(id, photoId):
+    current_gallery_photo = GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).one()
+    print('>>>>>>>', current_gallery_photo)
+    if current_gallery_photo:
+        db.session.delete(current_gallery_photo)
+        db.session.commit()
+        return {'message': 'Successfully deleted'}
+    else:
+        return {'error': 'Could not delete photo'}

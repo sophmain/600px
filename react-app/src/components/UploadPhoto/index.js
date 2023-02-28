@@ -56,7 +56,7 @@ const UploadPhoto = () => {
             <h2> Upload</h2>
 
             <div className='upload-arrow'>
-                <div><i class="fa-solid fa-arrow-up"></i></div>
+                <div><i className="fa-solid fa-arrow-up"></i></div>
                 <h3>Upload photo</h3>
             </div>
             <div className='upload-submit-buttons'>

@@ -39,10 +39,10 @@ const UserProfileGalleries = () => {
             <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
             <div className='profile-info'>
                 <div className='profile-edit-buttons'>
-                    <button className='edit-profile-button'><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button className='edit-profile-button'><i className="fa-regular fa-pen-to-square"></i></button>
                 </div>
                 <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
-                <div className='user-profile-location'><i class="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
+                <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
             </div>
             <div className='profile-link-headers'>
                 <NavLink to={`/profile/${user.id}`} className='not-selected-subheader' style={{ marginRight: '8px' }}>Photos</NavLink>

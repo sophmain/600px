@@ -2,7 +2,6 @@ const LOAD_GALLERIES = 'gallery/LOAD_GALLERIES'
 const LOAD_SINGLEGALLERY = 'gallery/LOAD_SINGLEGALLERY'
 const CREATE_GALLERY = 'gallery/CREATE_GALLERY'
 const EDIT_GALLERY = 'gallery/EDIT_GALLERY'
-const POST_PHOTO = 'gallery/POST_PHOTO'
 const DELETE_GALLERY = 'gallery/DELETE_GALLERY'
 
 const actionLoadGalleries = (galleries) => ({

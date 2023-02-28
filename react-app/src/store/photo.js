@@ -4,7 +4,8 @@ const POST_PHOTO = 'photo/POST_PHOTO'
 const EDIT_PHOTO = 'photo/EDIT_PHOTO'
 const DELETE_PHOTO = 'photo/DELETE_PHOTO'
 const POST_GALLERYPHOTO = 'photo/POST_GALLERYPHOTO'
-const GET_GALLERYPHOTO = 'photo/GET_GALLERYPHOTO'
+const DELETE_GALLERYPHOTO = 'photo/DELETE_GALLERYPHOTO'
+// const GET_GALLERYPHOTO = 'photo/GET_GALLERYPHOTO'
 // const GET_EDITPHOTO = 'photo/GET_EDITPHOTO'
 const CLEAN_UP_PHOTO = 'photo/CLEAN_UP_PHOTO'
 
@@ -37,7 +38,10 @@ const actionDeletePhoto = (toDelete) => ({
     toDelete
 })
 
-
+const actionDeleteGalleryPhoto = (toDelete) => ({
+    type: DELETE_GALLERYPHOTO,
+    toDelete
+})
 
 const actionCreatePostGallery = (photoIds) => {
     return {
@@ -158,15 +162,17 @@ export const thunkPostPhotoGallery = (galleryId, photoIds) => async dispatch => 
     // }
 
 };
-// export const thunkGetGalleryPhotos = (galleryId) => async (dispatch) => {
-//     const response = await fetch(`/api/galleries/${galleryId}/photos`)
+export const thunkDeleteGalleryPhoto = (deleteId, galleryId) => async (dispatch) => {
+    const response = await fetch(`/api/galleries/${galleryId}/${deleteId}`, {
+        method: "DELETE"
+    })
 
-//     if (response.ok) {
-//         const photos = await response.json()
-//         dispatch(actionGetGalleryPhotos(photos))
-//         return photos
-//     }
-// }
+    if (response.ok) {
+        await response.json()
+        dispatch(actionDeleteGalleryPhoto(deleteId))
+        return deleteId
+    }
+}
 
 const normalize = (arr) => {
     // console.log('arr in normalize function', arr)
@@ -216,6 +222,12 @@ const photoReducer = (state = initialState, action) => {
                 newState.galleryPhotos = {...newState.galleryPhotos, [photo]: photo}
             })
             return newState
+        // case DELETE_GALLERYPHOTO:
+        //     newState = { ...state }
+        //     delete newState.singleGallery.photos[indexOf(action.deleteId)]
+        //     newState.galleryPhotos = { ...newState.galleryPhotos }
+        //     return newState
+
         // case GET_GALLERYPHOTO:
         //     newState = { ...state }
         //     newState.galleryPhotos = normalize(action.photos)
