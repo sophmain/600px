@@ -69,11 +69,12 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('galleries_photos',
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('gallery_id', sa.Integer(), nullable=False),
     sa.Column('photo_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['gallery_id'], ['galleries.id'], ),
     sa.ForeignKeyConstraint(['photo_id'], ['photos.id'], ),
-    sa.PrimaryKeyConstraint('gallery_id', 'photo_id')
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

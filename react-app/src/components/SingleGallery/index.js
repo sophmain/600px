@@ -4,7 +4,9 @@ import { useParams, NavLink, useHistory } from 'react-router-dom'
 import { thunkLoadSingleGallery } from '../../store/gallery'
 import OpenModalButton from '../OpenModalButton'
 import SelectProfilePhotosModal from '../SelectProfilePhotosModal'
+import CreateGalleryModal from '../CreateGalleryModal'
 import './SingleGallery.css'
+import { thunkDeleteGalleryPhoto } from '../../store/photo'
 
 
 const SingleGallery = () => {
@@ -14,7 +16,7 @@ const SingleGallery = () => {
     const history = useHistory()
 
     const galleryPhotos = useSelector((state) => state.photos.galleryPhotos)
-    
+
     useEffect(() => {
         dispatch(thunkLoadSingleGallery(galleryId))
     }, [dispatch, galleryPhotos])
@@ -24,7 +26,7 @@ const SingleGallery = () => {
 
 
     if (!gallery) return null
-    if(!gallery.photos) return null
+    if (!gallery.photos) return null
     const photos = (gallery.photos)
 
 
@@ -35,11 +37,16 @@ const SingleGallery = () => {
     const editGallery = () => {
         history.push(`/galleries/${gallery.id}/edit`)
     }
+    const deleteFromGallery = (photo) => {
+        console.log('photo id inside delete funciton', photo.id)
+        console.log('gallery id inside delete funciton', gallery.id)
+        dispatch(thunkDeleteGalleryPhoto(photo.id, gallery.id))
+    }
 
     return (
         <div className='gallery-single-container'>
             {gallery.photos.length > 0 && (
-                <img className='single-gallery-cover image-size' src={gallery.photos[0].photoUrl} alt='gallery cover'></img>
+                <img className='single-gallery-cover' style={{ objectFit: 'cover' }} src={gallery.photos[0].photoUrl} alt='gallery cover'></img>
             )}
             {gallery.photos.length == 0 && (
                 <div className='single-gallery-cover image-size gallery-placeholder' ></div>
@@ -48,7 +55,13 @@ const SingleGallery = () => {
             <div className='edit-gallery-buttons'>
                 {user && user.id === gallery.userId && (
                     <div className='single-gallery-edit-buttons'>
-                        <button className='edit-gallery-button' onClick={editGallery}><i class="fa-regular fa-pen-to-square"></i></button>
+                        <OpenModalButton
+                            className='add-to-gallery-modal'
+                            buttonText=<i className="fa-regular fa-square-plus" style={{ fontSize: '22px', marginRight: '0px', marginTop: '1px' }}></i>
+                            modalComponent={<SelectProfilePhotosModal galleryId={galleryId} />}
+                        />
+
+                        <button className='edit-gallery-button' onClick={editGallery}><i className="fa-regular fa-pen-to-square"></i></button>
                     </div>
                 )}
             </div>
@@ -60,26 +73,48 @@ const SingleGallery = () => {
                     <NavLink className='all-gallery-to-profile' to={`/profile/${gallery.userId}`}>  {gallery.userFirstName} {gallery.userLastName}</NavLink>
                 </button>
             </p>
-            {photos.length == 0 && (
-                    <div className='add-photos-gallery-prompt'>
-                        <div>
-                            <i className="fa-regular fa-square-plus"></i>
-                        </div>
-                        <h2>Add photos to this Gallery</h2>
-                        <p>Curate inspirational photos, or tell a story with your own photos.</p>
-                        <OpenModalButton
-                            className='add-to-gallery-modal'
-                            buttonText='Add photos from my Profile'
-                            modalComponent={<SelectProfilePhotosModal galleryId={galleryId} />}
-                        />
+            {photos.length == 0 && user.id === gallery.userId && (
+                <div className='add-photos-gallery-prompt'>
+                    <div>
+                        <i className="fa-regular fa-square-plus"></i>
                     </div>
-                )}
+                    <h2>Add photos to this Gallery</h2>
+                    <p>Curate inspirational photos, or tell a story with your own photos.</p>
+                    <OpenModalButton
+                        // className='add-to-gallery-modal'
+                        buttonText='Add photos from my Profile'
+                        modalComponent={<SelectProfilePhotosModal galleryId={galleryId} />}
+                    />
+                </div>
+            )}
             <div className='single-gallery-photo-container'>
 
                 {photos && photos.map((photo) => {
                     return (
-                        <div className='photo-card' key={photo.id} onClick={(e) => PhotoClick(e, photo.id)}>
+                        <div className='photo-card' key={photo} onClick={(e) => PhotoClick(e, photo.id)}>
+                            <div className='image-overlay-3'>
+                                <button className='delete-from-gallery-button' onClick={(e)=>{e.stopPropagation(); deleteFromGallery(photo)}}>
+                                    <i className="fa-regular fa-trash-can"></i>
+                                </button>
+                                <h4 className='overlay-2-text'>{photo.title}</h4>
+                            </div>
                             <img className='image-size' src={photo.photoUrl}></img>
+                            <div className='image-overlay-4'>
+                                <div className='overlay-2-text overlay-bottom-text'>
+                                    {photo.photoFirstName} {photo.photoLastName}
+                                </div>
+                                <div className='overlay-right'>
+                                    <button className='gallery-modal-button' onClick={e => e.stopPropagation()}>
+                                        <OpenModalButton
+                                            className='create-gallery-modal'
+                                            buttonText='+'
+                                            modalComponent={<CreateGalleryModal photo={photo} />}
+                                        />
+                                    </button>
+
+
+                                </div>
+                            </div>
                         </div>
                     )
                 })}

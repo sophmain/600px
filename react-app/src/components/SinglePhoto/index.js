@@ -67,7 +67,7 @@ const SinglePhoto = () => {
                 <div className='single-photo-about-container'>
                     {user && user.id === photo.userId && (
                         <div className='single-photo-edit-buttons'>
-                            <button className='edit-photo-button' onClick={editPhoto}><i class="fa-regular fa-pen-to-square"></i></button>
+                            <button className='edit-photo-button' onClick={editPhoto}><i className="fa-regular fa-pen-to-square"></i></button>
                         </div>
                     )}
                     <div className='single-photo-profile-info'>
@@ -85,7 +85,7 @@ const SinglePhoto = () => {
                     </div>
                     {photo.location && (
                         <div className='single-location'>
-                            <i class="fa-solid fa-location-dot"></i>
+                            <i className="fa-solid fa-location-dot"></i>
                             <p>{photo.location}</p>
                         </div>
                     )}
