@@ -8,7 +8,6 @@ import PostPhoto from "./components/PostPhoto";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import EditPhoto from "./components/EditPhoto";
-import { thunkLoadSinglePhoto } from "./store/photo";
 import AllGalleries from "./components/AllGalleries";
 import SingleGallery from './components/SingleGallery'
 import UserProfile from "./components/UserProfile";

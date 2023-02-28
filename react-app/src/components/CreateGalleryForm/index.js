@@ -12,14 +12,8 @@ const CreateGalleryForm = () => {
     const [description, setDescription] = useState('')
     const [errors, setErrors] = useState([])
     const [createdGallery, setCreatedGallery] = useState('')
-    //const [photo, setPhoto] = useState([])
-
 
     const user = useSelector(state => state.session.user)
-    //const photo = useSelector(state => state.photos.singlePhoto)
-    //const galleries = useSelector(state => state.galleries.allGalleries)
-    //const numGallery = galleries.length()
-
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -31,7 +25,6 @@ const CreateGalleryForm = () => {
             title,
             description,
             visible,
-            description,
         }
 
 
@@ -101,7 +94,7 @@ const CreateGalleryForm = () => {
                                 className='gallery-radio-input'
                                 id="visible"
                                 type="radio"
-                                checked={visible == true}
+                                checked={visible === true}
                                 name="visible"
                                 onChange={(e) => setVisible(true)}
                                 value={true}
@@ -112,7 +105,7 @@ const CreateGalleryForm = () => {
                                 className='gallery-radio-input'
                                 id="notvisible"
                                 type="radio"
-                                checked={visible == false}
+                                checked={visible === false}
                                 name="notvisible"
                                 onChange={(e) => setVisible(false)}
                                 value={false}

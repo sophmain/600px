@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams, NavLink } from "react-router-dom"
-import { actionCleanUpPhoto, thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
+import { thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
 import './SinglePhoto.css'
 
 const SinglePhoto = () => {
@@ -13,7 +13,6 @@ const SinglePhoto = () => {
     useEffect(() => {
         dispatch(thunkLoadSinglePhoto(photoId))
         dispatch(thunkLoadPhotos())
-        //return () => dispatch(actionCleanUpPhoto())
 
     }, [dispatch, photoId])
 
@@ -49,16 +48,16 @@ const SinglePhoto = () => {
                     {photo.id !== 1 && (
                         <div className='single-photo-nav' onClick={prevPhoto}><i className="fa-solid fa-chevron-left"></i></div>
                     )}
-                    {(photo.id == 1 && (
+                    {(photo.id === 1 && (
                         <div className='nav-placeholder'></div>
                     ))}
                     <div className='single-photo-size'>
-                        <img className='single-photo' src={photo.photoUrl}></img>
+                        <img className='single-photo' src={photo.photoUrl} alt='selected'></img>
                     </div>
                     {allPhotosArr.length !== photo.id && (
                         <div className='single-photo-nav' onClick={nextPhoto}><i className="fa-solid fa-chevron-right"></i></div>
                     )}
-                    {(allPhotosArr.length == photo.id && (
+                    {(allPhotosArr.length === photo.id && (
                         <div className='nav-placeholder'></div>
                     ))}
                 </div>

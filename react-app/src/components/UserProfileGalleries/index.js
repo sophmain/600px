@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink, useHistory } from "react-router-dom";
 import { thunkLoadGalleries } from "../../store/gallery";
@@ -27,7 +27,7 @@ const UserProfileGalleries = () => {
     if (galleries) {
         galleryArr = Object.values(galleries)
     }
-    const userGalleries = galleryArr.filter((gallery) => gallery.userId == user.id)
+    const userGalleries = galleryArr.filter((gallery) => gallery.userId === user.id)
 
     const toGallery = (gallery) => {
         history.push(`/galleries/${gallery.id}`)
@@ -35,7 +35,7 @@ const UserProfileGalleries = () => {
 
     return (
         <div className='profile-container'>
-            <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover photo'></img>
+            <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover'></img>
             <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
             <div className='profile-info'>
                 <div className='profile-edit-buttons'>
@@ -51,7 +51,7 @@ const UserProfileGalleries = () => {
             <div className='all-galleries-background'>
 
                 <ul className='all-galleries'>
-                    {loggedInUser.id == userId && (
+                    {loggedInUser.id === userId && (
                         <div className='create-gallery-card gallery-card'>
                             <i className="fa-regular fa-square-plus"></i>
                             <h3 className='create-gallery-curate'>Curate photos using Galleries</h3>
@@ -69,7 +69,7 @@ const UserProfileGalleries = () => {
                                             {gallery.photos.length > 0 && (
                                                 <img className='photo-size all-gallery-image' src={gallery.photos[0].photoUrl} alt='gallery'></img>
                                             )}
-                                            {gallery.photos.length == 0 && (
+                                            {gallery.photos.length === 0 && (
                                                 <img className='photo-size all-gallery-image' src='https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png' alt='gallery'></img>
                                             )}
 

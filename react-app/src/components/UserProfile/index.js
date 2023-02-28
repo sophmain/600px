@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink, useHistory } from "react-router-dom";
-import { thunkLoadGalleries } from "../../store/gallery";
 import { thunkLoadPhotos } from "../../store/photo";
 import { thunkGetUser } from "../../store/session";
 import './UserProfile.css'
@@ -25,7 +24,7 @@ const UserProfile = () => {
     if (photos) {
         photoArr = Object.values(photos)
     }
-    const userPhotos = photoArr.filter((photo) => photo.userId == user.id)
+    const userPhotos = photoArr.filter((photo) => photo.userId === user.id)
 
     const toSinglePhoto = (photo) => {
         history.push(`/photos/${photo.id}`)
@@ -33,7 +32,7 @@ const UserProfile = () => {
 
     return (
         <div className='profile-container'>
-            <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover photo'></img>
+            <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover'></img>
             <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
             <div className='profile-info'>
                 <div className='profile-edit-buttons'>
@@ -51,7 +50,7 @@ const UserProfile = () => {
                 <div className='user-photos-mapped'>
                     {userPhotos && userPhotos.map((photo) => {
                         return (
-                            <img src={photo.photoUrl} className='image-size' onClick={() => toSinglePhoto(photo)} style={{cursor: 'pointer'}} alt='user image'></img>
+                            <img src={photo.photoUrl} className='image-size' onClick={() => toSinglePhoto(photo)} style={{cursor: 'pointer'}} alt='user'></img>
                         )
                     })}
                 </div>

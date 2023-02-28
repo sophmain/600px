@@ -77,7 +77,7 @@ const PostPhoto = () => {
 
                 <div className="post-container">
                     <div className='post-photo-container'>
-                        <img className='post-photo' src={latestUpload.uploadUrl}></img>
+                        <img className='post-photo' src={latestUpload.uploadUrl} alt='latest upload'></img>
                     </div>
                     <div className='post-form-box'>
                         <h3 className='edit-form-title'>1 photo selected</h3>

@@ -4,7 +4,6 @@ import { useParams, NavLink, useHistory } from 'react-router-dom'
 import { thunkLoadSingleGallery } from '../../store/gallery'
 import OpenModalButton from '../OpenModalButton'
 import SelectProfilePhotosModal from '../SelectProfilePhotosModal'
-import CreateGalleryModal from '../CreateGalleryModal'
 import './SingleGallery.css'
 import { thunkDeleteGalleryPhoto } from '../../store/photo'
 
@@ -49,7 +48,7 @@ const SingleGallery = () => {
             {gallery.photos.length > 0 && (
                 <img className='single-gallery-cover' style={{ objectFit: 'cover' }} src={gallery.photos[0].photoUrl} alt='gallery cover'></img>
             )}
-            {gallery.photos.length == 0 && (
+            {gallery.photos.length === 0 && (
                 <div className='single-gallery-cover image-size gallery-placeholder' ></div>
             )}
 
@@ -76,7 +75,7 @@ const SingleGallery = () => {
             </p>
 
             <div className='single-gallery-photo-container'>
-                {photos.length == 0 && user.id === gallery.userId && (
+                {photos.length === 0 && user.id === gallery.userId && (
                     <div className='add-photos-gallery-prompt'>
                         <div>
                             <i className="fa-regular fa-square-plus"></i>
@@ -102,7 +101,7 @@ const SingleGallery = () => {
                                 )}
 
                             </div>
-                            <img className='image-size' src={photo.photoUrl}></img>
+                            <img className='image-size' src={photo.photoUrl} alt='one in gallery'></img>
                             <div className='image-overlay-4'>
                                 <div className='overlay-2-text overlay-bottom-text'>
                                     {photo.photoFirstName} {photo.photoLastName}

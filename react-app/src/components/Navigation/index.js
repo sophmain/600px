@@ -1,26 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import { useModal } from "../../context/Modal";
-import { login } from "../../store/session";
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const history = useHistory()
-	const { closeModal } = useModal();
-	const dispatch = useDispatch()
-	const [errors, setErrors] = useState([]);
 
 	const uploadPhoto = (e) => {
 		e.preventDefault()
 		history.push(`/upload`)
 	}
-
 
 	let sessionLinks;
 	if (sessionUser) {
