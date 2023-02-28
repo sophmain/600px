@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
@@ -74,7 +75,7 @@ const SelectProfilePhotosModal = ({ gallery }) => {
 
 
         <div className='photos-modal-container'>
-            <h1>Select photos</h1>
+            <h1 className='select-photos-modal-title'>Select photos</h1>
             <form onSubmit={handleSubmit}>
                 {errors.length > 0 && (
                     <ul>
@@ -96,7 +97,7 @@ const SelectProfilePhotosModal = ({ gallery }) => {
                     })}
                 </div>
 
-                <button className='add-photos-gallery-button' type="submit">Add photos</button>
+                <button className='add-photos-gallery-button' type="submit">Add selected</button>
             </form>
         </div>
     )

@@ -17,6 +17,7 @@ class Gallery(db.Model):
     preview_image_id = db.Column(db.Integer)
 
     user = db.relationship('User', back_populates='gallery')
+    # galleryphoto = db.relationship('GalleryPhotos', back_populates='gallery')
     if environment == "production":
         __table_args__ = {"schema": SCHEMA}
 

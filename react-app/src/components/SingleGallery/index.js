@@ -74,28 +74,29 @@ const SingleGallery = () => {
                     <NavLink className='all-gallery-to-profile' to={`/profile/${gallery.userId}`}>  {gallery.userFirstName} {gallery.userLastName}</NavLink>
                 </button>
             </p>
-            {photos.length == 0 && user.id === gallery.userId && (
-                <div className='add-photos-gallery-prompt'>
-                    <div>
-                        <i className="fa-regular fa-square-plus"></i>
-                    </div>
-                    <h2>Add photos to this Gallery</h2>
-                    <p>Curate inspirational photos, or tell a story with your own photos.</p>
-                    <OpenModalButton
-                        // className='add-to-gallery-modal'
-                        buttonText='Add photos from my Profile'
-                        modalComponent={<SelectProfilePhotosModal gallery={gallery} />}
-                    />
-                </div>
-            )}
+
             <div className='single-gallery-photo-container'>
+                {photos.length == 0 && user.id === gallery.userId && (
+                    <div className='add-photos-gallery-prompt'>
+                        <div>
+                            <i className="fa-regular fa-square-plus"></i>
+                        </div>
+                        <h2>Add photos to this Gallery</h2>
+                        <p>Curate inspirational photos, or tell a story with your own photos.</p>
+                        <OpenModalButton
+                            className='add-to-gallery-button'
+                            buttonText='Add photos from my Profile'
+                            modalComponent={<SelectProfilePhotosModal gallery={gallery} />}
+                        />
+                    </div>
+                )}
                 {photos && photos.map((photo, index) => {
                     return (
                         <div className='photo-card' key={index} onClick={(e) => PhotoClick(e, photo.id)}>
                             <div className='image-overlay-3'>
                                 <h4 className='overlay-2-text'>{photo.title}</h4>
                                 {user.id === gallery.userId && (
-                                    <button className='delete-from-gallery-button' onClick={(e) => {e.stopPropagation(); deleteFromGallery(photo)}}>
+                                    <button className='delete-from-gallery-button' onClick={(e) => { e.stopPropagation(); deleteFromGallery(photo) }}>
                                         <i className="fa-regular fa-trash-can"></i>
                                     </button>
                                 )}
@@ -105,15 +106,6 @@ const SingleGallery = () => {
                             <div className='image-overlay-4'>
                                 <div className='overlay-2-text overlay-bottom-text'>
                                     {photo.photoFirstName} {photo.photoLastName}
-                                </div>
-                                <div className='overlay-right'>
-                                    <button className='gallery-modal-button' onClick={e => e.stopPropagation()}>
-                                        <OpenModalButton
-                                            className='create-gallery-modal'
-                                            buttonText='+'
-                                            modalComponent={<CreateGalleryModal photo={photo} />}
-                                        />
-                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -22,6 +22,7 @@ def all_galleries():
     """
     Route to query for all galleries
     """
+    print('>>>>>>>>> in get all thunk')
     all_galleries = Gallery.query.all()
     # print('>>>>>>>>>>all galleries', all_galleries[0])
     galleries = [gallery.to_dict() for gallery in all_galleries]
@@ -51,6 +52,7 @@ def single_gallery(id):
     """
     Route to query for single gallery
     """
+    print('>>>>>>>>>>>>in single gallery route')
     single_gallery = Gallery.query.get(id)
     gallery = single_gallery.to_dict()
     return jsonify(gallery)
@@ -140,3 +142,10 @@ def delete_gallery_photo(id, photoId):
         return {'message': 'Successfully deleted'}
     else:
         return {'error': 'Could not delete photo'}
+
+@gallery_routes.route('/<int:galleryId>/get', methods=['GET'])
+def get_gallery_photos(galleryId):
+    all_gallery_photos = GalleryPhotos.query.filter(GalleryPhotos.gallery_id == galleryId).all()
+    print('>>>>>>>>>>>>>>> all gallery photos', all_gallery_photos)
+    gallery_photos = [gallery_photo.to_dict() for gallery_photo in all_gallery_photos]
+    return jsonify(gallery_photos)

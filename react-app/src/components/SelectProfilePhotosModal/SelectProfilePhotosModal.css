@@ -19,6 +19,7 @@
     overflow-y: auto;
     padding: 16px;
     text-align: center;
+    font-size: 14px;
 }
 .modal-photo-button {
     background-color: transparent;
@@ -32,4 +33,21 @@
 }
 .border-click-on {
     border: 2px solid blue;
+}
+.add-photos-gallery-button {
+    background-color: rgb(8, 112, 209);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 22px;
+    height: 48px;
+    border-radius: 28px;
+    border: none;
+    width: 150px;
+    cursor: pointer;
+    text-align: center;
+    margin: 15px;
+}
+.select-photos-modal-title {
+    font-size: 20px;
 }
