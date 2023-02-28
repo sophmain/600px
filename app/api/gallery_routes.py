@@ -115,9 +115,13 @@ def create_post(id):
     """
     Route to add photos to gallery
     """
+
     gallery = Gallery.query.get(id)
     res = request.get_json()
     for photoId in res:
+        print ('>>>>>>query', GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).all())
+        if GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).all():
+            continue
         new_gallery_photo = GalleryPhotos(
             photo_id = photoId,
             gallery_id = id
@@ -128,7 +132,7 @@ def create_post(id):
 
 @gallery_routes.route('/<int:id>/<int:photoId>', methods=['DELETE'])
 def delete_gallery_photo(id, photoId):
-    current_gallery_photo = GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).one()
+    current_gallery_photo = GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).first()
     print('>>>>>>>', current_gallery_photo)
     if current_gallery_photo:
         db.session.delete(current_gallery_photo)

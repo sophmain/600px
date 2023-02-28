@@ -8,6 +8,6 @@ class GalleryPhotos(db.Model):
 
     if environment == 'production':
         __table_args__ = {"schema": SCHEMA}
-    id= db.Column(db.Integer, primary_key=True)
-    gallery_id= db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("galleries.id")), nullable=False)
-    photo_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("photos.id")), nullable=False)
+    # id= db.Column(db.Integer, primary_key=True)
+    gallery_id= db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("galleries.id")), primary_key=True)
+    photo_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("photos.id")), primary_key=True)

@@ -224,14 +224,10 @@ const photoReducer = (state = initialState, action) => {
             return newState
         // case DELETE_GALLERYPHOTO:
         //     newState = { ...state }
-        //     delete newState.singleGallery.photos[indexOf(action.deleteId)]
-        //     newState.galleryPhotos = { ...newState.galleryPhotos }
+        //     newState.singleGallery.photos.filter((photo) => photo.id != action.toDelete)
+
         //     return newState
 
-        // case GET_GALLERYPHOTO:
-        //     newState = { ...state }
-        //     newState.galleryPhotos = normalize(action.photos)
-        //     return newState
         default:
             return state
     }

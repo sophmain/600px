@@ -5,13 +5,13 @@ import { useModal } from "../../context/Modal";
 import { thunkLoadPhotos, thunkPostPhotoGallery } from "../../store/photo";
 import './SelectProfilePhotosModal.css'
 
-const SelectProfilePhotosModal = ({ galleryId }) => {
+const SelectProfilePhotosModal = ({ gallery }) => {
     const dispatch = useDispatch()
     const { closeModal } = useModal();
 
     const [selectedPhotos, setSelectedPhotos] = useState([])
     const [errors, setErrors] = useState([])
-    const [clickBorder, setClickBorder] = useState('border-click-off')
+    const [clickBorder, setClickBorder] = useState({})
     // const [selectedPhotos, setSelectedPhotos] = useState([])
 
     useEffect(() => {
@@ -20,42 +20,41 @@ const SelectProfilePhotosModal = ({ galleryId }) => {
 
     const user = useSelector((state) => state.session.user)
     const photosObj = useSelector((state) => state.photos.allPhotos)
+
     if (!photosObj) return null
     const photosArr = Object.values(photosObj)
 
-    const myPhotos = photosArr.filter((photo) => photo.userId == user.id)
 
-    let selectedPhotosId = selectedPhotos
+    const myPhotos = photosArr.filter((photo) => photo.userId == user.id && !gallery.photos.map(galleryphoto => galleryphoto.id).includes(photo.id))
+
+
     const addPhoto = (e, photo) => {
         e.preventDefault()
-        // setIsSelected([selet])
-        // console.log('is selected?', isSelected)
-        if (!selectedPhotosId.includes(+photo.id)){
-            console.log(selectedPhotosId.includes(+photo.id))
-            // setSelectedPhotos([...selectedPhotos, photo.id])
-            console.log('selected before add', selectedPhotosId)
-            selectedPhotosId.push(photo.id)
-            // selectedPhotos.push(photo)
-            setSelectedPhotos(selectedPhotosId)
-            console.log('selected after add', selectedPhotosId)
-        } else {
-            selectedPhotosId.splice(selectedPhotosId.indexOf(photo.id), 1)
-            setSelectedPhotos(selectedPhotosId)
-        }
-        // } else {
-        //     let index = 0
-        //     for (let selectedPhoto of selectedPhotos) {
-        //         console.log('selected id', selectedPhoto.id)
-        //         if (photo.id == selectedPhoto.id){
-        //             index = selectedPhotos.indexOf(selectedPhoto)
-        //             console.log('index', index)
-        //         }
-        //     }
-        //     selectedPhotos.splice(index, 1)
 
+        // if (!selectedPhotosId.includes(+photo.id)){
+        //     selectedPhotosId.push(photo.id)
+        //     setSelectedPhotos(selectedPhotosId)
+
+        // } else {
+        //     selectedPhotosId.splice(selectedPhotosId.indexOf(photo.id), 1)
+        //     setSelectedPhotos(selectedPhotosId)
         // }
-        // return selectedPhotos
-        // setClickBorder(`border-click-on {photo.id}`)
+        const updatedSelectedPhotos = (selectedPhotos.includes(+photo.id))
+        ? selectedPhotos.filter((id)=> id !== photo.id)
+        : [...selectedPhotos, photo.id]
+        setSelectedPhotos(updatedSelectedPhotos)
+
+        setClickBorder((prevClickBorder) => {
+            const updatedClickBorder = { ...prevClickBorder };
+            if (selectedPhotos.includes(+photo.id)) {
+              delete updatedClickBorder[photo.id];
+              console.log('updatedbored', updatedClickBorder)
+            } else {
+              updatedClickBorder[photo.id] = "border-click-on";
+              console.log('updatedbored', updatedClickBorder)
+            }
+            return updatedClickBorder;
+          });
 
     }
     console.log('SELECTED', selectedPhotos)
@@ -63,7 +62,7 @@ const SelectProfilePhotosModal = ({ galleryId }) => {
         e.preventDefault()
         setErrors([])
 
-        await dispatch(thunkPostPhotoGallery(galleryId, selectedPhotos))
+        await dispatch(thunkPostPhotoGallery(gallery.id, selectedPhotos))
 
 
         closeModal();
@@ -88,7 +87,7 @@ const SelectProfilePhotosModal = ({ galleryId }) => {
                     {myPhotos.map((photo) => {
                         return (
                             <div className='my-modal-photo-container' key={photo.id}>
-                                <button className={clickBorder} onClick={(e) => addPhoto(e, photo)}>
+                                <button className={`my-modal-photo-button ${clickBorder[photo.id] || ""}`} onClick={(e) => addPhoto(e, photo)}>
                                     <img className='my-modal-photo' src={photo.photoUrl} alt='my photo'></img>
                                 </button>
 
