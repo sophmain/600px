@@ -74,7 +74,7 @@
     padding: 24px;
 }
 .fa-pen-to-square {
-    font-size: 20px;
+    font-size: 22px;
 
 }
 .edit-photo-button {
@@ -136,4 +136,9 @@
     text-decoration: none;
     color: black;
     cursor: pointer;
+}
+.single-gallery-edit-buttons {
+    display: flex;
+    align-items: center;
+
 }

@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Gallery, db
+from app.models import Gallery, db, GalleryPhotos
 from ..forms.gallery_form import GalleryForm
 from ..forms.post_form import PhotoForm
+from sqlalchemy import and_
 
 gallery_routes = Blueprint('gallery', __name__)
 
@@ -21,6 +22,7 @@ def all_galleries():
     """
     Route to query for all galleries
     """
+    print('>>>>>>>>> in get all thunk')
     all_galleries = Gallery.query.all()
     # print('>>>>>>>>>>all galleries', all_galleries[0])
     galleries = [gallery.to_dict() for gallery in all_galleries]
@@ -50,6 +52,7 @@ def single_gallery(id):
     """
     Route to query for single gallery
     """
+    print('>>>>>>>>>>>>in single gallery route')
     single_gallery = Gallery.query.get(id)
     gallery = single_gallery.to_dict()
     return jsonify(gallery)
@@ -101,7 +104,7 @@ def edit_gallery(id):
 @gallery_routes.route('/<int:id>', methods=['DELETE'])
 def delete_gallery(id):
     current_gallery = Gallery.query.get(id)
-    print('CURRENT IN DELETE ROUTE', current_gallery)
+
     if current_gallery:
         db.session.delete(current_gallery)
         db.session.commit()
@@ -109,33 +112,40 @@ def delete_gallery(id):
     else:
         return {'error': 'Could not delete photo'}
 
-# @gallery_routes.route('/<int:id>/photos', methods=['POST'])
-# def create_post(id):
-#     """
-#     Route to add created gallery to galleries table
-#     """
-#     gallery = Gallery.query.get(id)
-#     res = request.get_json()
-#     print('>>>>>>>.res', res)
-#     photo = PhotoForm()
-#     photo['csrf_token'].data = request.cookies['csrf_token']
+@gallery_routes.route('/<int:id>/photos', methods=['POST'])
+def create_post(id):
+    """
+    Route to add photos to gallery
+    """
 
-#     if photo.validate_on_submit():
-#         photo = Photo(
-#             user_id=res['userId'],
-#             upload_id=res['uploadId'],
-#             taken_date=res['takenDate'],
-#             category=res['category'],
-#             camera_type=res['cameraType'],
-#             lense_type=res['lenseType'],
-#             privacy=res['privacy'],
-#             title=res['title'],
-#             description=res['description'],
-#             location=res['location'],
-#         )
-#         gallery.photos.add(photo)
-#         db.session.add()
-#         db.session.commit()
-#         return gallery.to_dict()
+    gallery = Gallery.query.get(id)
+    res = request.get_json()
+    for photoId in res:
+        print ('>>>>>>query', GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).all())
+        if GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).all():
+            continue
+        new_gallery_photo = GalleryPhotos(
+            photo_id = photoId,
+            gallery_id = id
+        )
+        db.session.add(new_gallery_photo)
+        db.session.commit()
+    return jsonify(res)
 
-#     return {'errors': validation_errors_to_error_messages(gallery.errors)}, 401
+@gallery_routes.route('/<int:id>/<int:photoId>', methods=['DELETE'])
+def delete_gallery_photo(id, photoId):
+    current_gallery_photo = GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).first()
+    print('>>>>>>>', current_gallery_photo)
+    if current_gallery_photo:
+        db.session.delete(current_gallery_photo)
+        db.session.commit()
+        return {'message': 'Successfully deleted'}
+    else:
+        return {'error': 'Could not delete photo'}
+
+@gallery_routes.route('/<int:galleryId>/get', methods=['GET'])
+def get_gallery_photos(galleryId):
+    all_gallery_photos = GalleryPhotos.query.filter(GalleryPhotos.gallery_id == galleryId).all()
+    print('>>>>>>>>>>>>>>> all gallery photos', all_gallery_photos)
+    gallery_photos = [gallery_photo.to_dict() for gallery_photo in all_gallery_photos]
+    return jsonify(gallery_photos)

@@ -3,6 +3,7 @@ const LOAD_SINGLEGALLERY = 'gallery/LOAD_SINGLEGALLERY'
 const CREATE_GALLERY = 'gallery/CREATE_GALLERY'
 const EDIT_GALLERY = 'gallery/EDIT_GALLERY'
 const DELETE_GALLERY = 'gallery/DELETE_GALLERY'
+const DELETE_GALLERYPHOTO = 'photo/DELETE_GALLERYPHOTO'
 
 const actionLoadGalleries = (galleries) => ({
     type: LOAD_GALLERIES,
@@ -26,6 +27,11 @@ const actionDeleteGallery = (toDelete) => ({
     type: DELETE_GALLERY,
     toDelete
 })
+// const actionDeleteGalleryPhoto = (toDelete) => ({
+//     type: DELETE_GALLERYPHOTO,
+//     toDelete
+// })
+
 
 export const thunkLoadGalleries = () => async (dispatch) => {
     const response = await fetch('/api/galleries/')
@@ -103,6 +109,18 @@ export const thunkDeleteGallery = (galleryToDelete) => async (dispatch) => {
         return galleryToDelete
     }
 }
+// export const thunkDeleteGalleryPhoto = (deleteId, galleryId) => async (dispatch) => {
+//     const response = await fetch(`/api/galleries/${galleryId}/${deleteId}`, {
+//         method: "DELETE"
+//     })
+
+//     if (response.ok) {
+//         await response.json()
+//         dispatch(actionDeleteGalleryPhoto(deleteId))
+//         return deleteId
+//     }
+// }
+
 
 const normalize = (arr) => {
     const resObj = {}
@@ -123,6 +141,7 @@ const galleryReducer = (state = initialState, action) => {
             newState = { ...state }
             newState.singleGallery = action.gallery
             return newState
+
         // case CREATE_GALLERY:
         //     newState = { ...state }
         //     newState.allGalleries = { ...newState.allGalleries, [action.newGallery.id]: action.newGallery }
@@ -137,6 +156,14 @@ const galleryReducer = (state = initialState, action) => {
         //     newState = { ...state }
         //     delete newState.allGalleries[action.toDelete.id]
         //     newState.allGalleries = { ...newState.allGalleries }
+        //     return newState
+        // case DELETE_GALLERYPHOTO:
+        //     newState = { ...state }
+        //     console.log('action', action.toDelete)
+        //     console.log('newState.singleGallery.photos', newState.singleGallery.photos)
+        //     newState.singleGallery.photos.filter((photo) => photo.id != action.toDelete)
+        //     console.log('newState.singleGallery.photos after filter', newState.singleGallery.photos)
+        //     newState.singleGallery = {...newState.singleGallery}
         //     return newState
         default:
             return state

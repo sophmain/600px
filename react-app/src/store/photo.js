@@ -3,9 +3,10 @@ const LOAD_SINGLEPHOTO = 'photo/LOAD_SINGLEPHOTO'
 const POST_PHOTO = 'photo/POST_PHOTO'
 const EDIT_PHOTO = 'photo/EDIT_PHOTO'
 const DELETE_PHOTO = 'photo/DELETE_PHOTO'
-const POST_GALLERYPHOTO = 'POST_GALLERYPHOTO'
-
-//const GET_EDITPHOTO = 'photo/GET_EDITPHOTO'
+const POST_GALLERYPHOTO = 'photo/POST_GALLERYPHOTO'
+const DELETE_GALLERYPHOTO = 'photo/DELETE_GALLERYPHOTO'
+const GET_GALLERYPHOTO = 'photo/GET_GALLERYPHOTO'
+// const GET_EDITPHOTO = 'photo/GET_EDITPHOTO'
 const CLEAN_UP_PHOTO = 'photo/CLEAN_UP_PHOTO'
 
 const actionLoadPhotos = (photos) => ({
@@ -37,14 +38,23 @@ const actionDeletePhoto = (toDelete) => ({
     toDelete
 })
 
-export const actionCreatePostGallery = (galleryId, postPhoto) => {
+const actionDeleteGalleryPhoto = (toDelete) => ({
+    type: DELETE_GALLERYPHOTO,
+    toDelete
+})
+
+const actionCreatePostGallery = (photoIds) => {
     return {
         type: POST_GALLERYPHOTO,
-        galleryId,
-        postPhoto
+        photoIds
     }
 };
 
+export const actionGetGalleryPhotos = (photos) => ({
+    type: GET_GALLERYPHOTO,
+    photos
+
+})
 
 export const actionCleanUpPhoto = () => {
     return {
@@ -87,8 +97,8 @@ export const thunkPostPhoto = (payload) => async (dispatch) => {
     } else if (response.status < 500) {
         const newPhoto = await response.json()
         if (newPhoto.errors) {
-			return newPhoto.errors;
-		}
+            return newPhoto.errors;
+        }
     } else {
         return ["An error occurred. Please try again."];
     }
@@ -111,7 +121,7 @@ export const thunkEditPhoto = (updatedPhoto) => async (dispatch) => {
         const updatedPhoto = await response.json()
         if (updatedPhoto.errors) {
             return updatedPhoto.errors;
-		}
+        }
     } else {
         return ["An error occurred. Please try again."];
     }
@@ -129,29 +139,45 @@ export const thunkDeletePhoto = (photoToDelete) => async (dispatch) => {
     }
 }
 
-export const thunkPostPhotoGallery = (galleryId, postPhoto) => async dispatch => {
+export const thunkPostPhotoGallery = (galleryId, photoIds) => async dispatch => {
+
     const response = await fetch(`/api/galleries/${galleryId}/photos`, {
-      method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(postPhoto),
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(photoIds),
     });
 
     if (response.ok) {
-        const postedPhoto = await response.json()
-        dispatch(actionCreatePostGallery(postedPhoto))
-        return postedPhoto;
-    } else if (response.status < 500) {
-        const postedPhoto = await response.json()
-        if (postedPhoto.errors) {
-			return postedPhoto.errors;
-		}
-    } else {
-        return ["An error occurred. Please try again."];
+        const photoIds = await response.json()
+        dispatch(actionCreatePostGallery(photoIds))
+        return photoIds
     }
 
 };
+export const thunkDeleteGalleryPhoto = (deleteId, galleryId) => async (dispatch) => {
+    const response = await fetch(`/api/galleries/${galleryId}/${deleteId}`, {
+        method: "DELETE"
+    })
+
+    if (response.ok) {
+        await response.json()
+        dispatch(actionDeleteGalleryPhoto(deleteId))
+        return deleteId
+    }
+}
+export const thunkGetGalleryPhotos = (galleryId) => async (dispatch) => {
+    const response = await fetch(`/api/galleries/${galleryId}/get`)
+    console.log('RESPONSE IN GET THUNK', response)
+    if (response.ok) {
+        const photos = await response.json()
+        console.log("PHOTOS IN GET THUNK", photos)
+        dispatch(actionGetGalleryPhotos(photos))
+        return photos
+    }
+}
 
 const normalize = (arr) => {
+    // console.log('arr in normalize function', arr)
     const resObj = {}
     arr.forEach((ele) => { resObj[ele.id] = ele })
     return resObj
@@ -187,6 +213,30 @@ const photoReducer = (state = initialState, action) => {
             newState = { ...state }
             delete newState.allPhotos[action.toDelete.id]
             newState.allPhotos = { ...newState.allPhotos }
+            return newState
+        case POST_GALLERYPHOTO:
+            newState = { ...state }
+            action.photoIds.forEach((photo) => {
+                newState.galleryPhotos = { ...newState.galleryPhotos, [photo]: photo }
+            })
+            return newState
+        case DELETE_GALLERYPHOTO:
+            newState = { ...state }
+            // console.log('action', action.toDelete)
+            // console.log('newState.singleGallery.photos', newState.galleryPhotos)
+            newState.galleryPhotos = { ...newState.galleryPhotos }
+            delete newState.galleryPhotos[action.toDelete]
+            return newState
+        case GET_GALLERYPHOTO:
+            newState = { ...state }
+            console.log('gallery action', action.photos)
+            newState.galleryPhotos = { ...newState.galleryPhotos}
+            action.photos.forEach((photo)=> {
+                console.log('newstate', newState.galleryPhotos)
+                console.log('current photo', photo)
+                newState.galleryPhotos = { ...newState.galleryPhotos, [photo.photoId]: photo.photoUrl }
+                // console.log('newstate', newState.galleryPhotos)
+            })
             return newState
         default:
             return state

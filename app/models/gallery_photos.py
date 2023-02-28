@@ -3,10 +3,19 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 
-gallery_photos = db.Table(
-    "galleries_photos",
-    db.Column("gallery_id", db.ForeignKey(add_prefix_for_prod("galleries.id")), primary_key=True),
-    db.Column("photo_id", db.ForeignKey(add_prefix_for_prod("photos.id")), primary_key=True)
-)
-if environment == 'production':
-    gallery_photos.schema = SCHEMA
+class GalleryPhotos(db.Model):
+    __tablename__ = "galleries_photos"
+
+    if environment == 'production':
+        __table_args__ = {"schema": SCHEMA}
+    # id= db.Column(db.Integer, primary_key=True)
+    gallery_id= db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("galleries.id")), primary_key=True)
+    photo_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("photos.id")), primary_key=True)
+
+    photo = db.relationship('Photo', back_populates='galleryphoto')
+    def to_dict(self):
+        return {
+            'galleryId':self.gallery_id,
+            'photoId': self.photo_id,
+            'photoUrl': self.photo.upload.upload_url
+        }

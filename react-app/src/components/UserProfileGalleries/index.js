@@ -15,9 +15,11 @@ const UserProfileGalleries = () => {
     useEffect(() => {
         dispatch(thunkGetUser(userId))
         dispatch(thunkLoadGalleries())
+        dispatch(thunkLoadPhotos())
     }, [dispatch, userId])
 
     const user = useSelector((state) => state.session.singleUser)
+    const loggedInUser = useSelector((state) => state.session.user)
     const galleries = useSelector((state) => state.galleries.allGalleries)
 
     if (!user) return null
@@ -37,10 +39,10 @@ const UserProfileGalleries = () => {
             <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
             <div className='profile-info'>
                 <div className='profile-edit-buttons'>
-                    <button className='edit-profile-button'><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button className='edit-profile-button'><i className="fa-regular fa-pen-to-square"></i></button>
                 </div>
                 <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
-                <div className='user-profile-location'><i class="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
+                <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
             </div>
             <div className='profile-link-headers'>
                 <NavLink to={`/profile/${user.id}`} className='not-selected-subheader' style={{ marginRight: '8px' }}>Photos</NavLink>
@@ -49,12 +51,14 @@ const UserProfileGalleries = () => {
             <div className='all-galleries-background'>
 
                 <ul className='all-galleries'>
-                    <div className='create-gallery-card gallery-card'>
-                        <i className="fa-regular fa-square-plus"></i>
-                        <h3 className='create-gallery-curate'>Curate photos using Galleries</h3>
-                        <NavLink className='create-button-gallery' to={`/profile/${user.id}/galleries/create`}>Create a new Gallery</NavLink>
+                    {loggedInUser.id == userId && (
+                        <div className='create-gallery-card gallery-card'>
+                            <i className="fa-regular fa-square-plus"></i>
+                            <h3 className='create-gallery-curate'>Curate photos using Galleries</h3>
+                            <NavLink className='create-button-gallery' to={`/profile/${user.id}/galleries/create`}>Create a new Gallery</NavLink>
 
-                    </div>
+                        </div>
+                    )}
                     {userGalleries.map((gallery) => {
 
                         return (
