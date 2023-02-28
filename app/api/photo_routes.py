@@ -181,27 +181,32 @@ def delete_photo(id):
 
 @photo_routes.route('/<int:id>/comments', methods=['GET'])
 def all_comments(id):
+    print('>>>>>>>> in get comments route', id)
     found_photo = Photo.query.get(id)
+    print('>>>>>>>> found photo', found_photo)
     all_comments = found_photo.comments
+    print('>>>>>>>>>>>>all comments', all_comments)
     comments = [comm.to_dict() for comm in all_comments]
-
+    print('??????????? comments', comments)
     comment_res = []
-    for commment in comments:
-
+    for comment in comments:
+        print('................comment', comment)
+        print('>>>>>>>>>>>>>>', comment_res)
         comment_res.append({
             'id': comment['id'],
             'userId': comment['userId'],
-            'photoId': comment['productId'],
-            'comment': comment['review'],
-            'createdAt': commment['createdAt'],
+            'photoId': comment['photoId'],
+            'comment': comment['comment'],
+            'createdAt': comment['createdAt'],
             'updatedAt': comment['updatedAt'],
-            # 'userFirstName': comment['user'],
+            'userFirstName': comment['userFirstName'],
+            'userLastName': comment['userLastName']
         })
 
     return jsonify(comment_res)
 
 
-@product_routes.route('/<int:id>/comments', methods=['POST'])
+@photo_routes.route('/<int:id>/comments', methods=['POST'])
 @login_required
 def post_comment(id):
     found_photo = Photo.query.get(id)

@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams, NavLink } from "react-router-dom"
+import { thunkLoadAllComments } from "../../store/comment"
 import { thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
 import './SinglePhoto.css'
 
@@ -13,12 +14,16 @@ const SinglePhoto = () => {
     useEffect(() => {
         dispatch(thunkLoadSinglePhoto(photoId))
         dispatch(thunkLoadPhotos())
+        dispatch(thunkLoadAllComments(photoId))
 
     }, [dispatch, photoId])
 
     const user = useSelector((state) => state.session.user)
     const photo = useSelector((state) => state.photos.singlePhoto)
+    const comments = useSelector((state) => state.comments.photoComments)
     const allPhotos = useSelector((state) => state.photos.allPhotos) //get length to prevent right arrow on last img
+    if (!comments) return null
+    const commentsArr = Object.values(comments)
     if (!allPhotos) return null
     const allPhotosArr = Object.values(allPhotos)
     if (!photo) return null
