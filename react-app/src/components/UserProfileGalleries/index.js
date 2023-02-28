@@ -51,7 +51,7 @@ const UserProfileGalleries = () => {
             <div className='all-galleries-background'>
 
                 <ul className='all-galleries'>
-                    {loggedInUser.id === userId && (
+                    {loggedInUser.id === +userId && (
                         <div className='create-gallery-card gallery-card'>
                             <i className="fa-regular fa-square-plus"></i>
                             <h3 className='create-gallery-curate'>Curate photos using Galleries</h3>
