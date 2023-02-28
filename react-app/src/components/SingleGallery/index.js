@@ -30,6 +30,7 @@ const SingleGallery = () => {
     const photos = (gallery.photos)
 
 
+
     const PhotoClick = (e, id) => {
         e.preventDefault()
         history.push(`/photos/${id}`)
@@ -58,7 +59,7 @@ const SingleGallery = () => {
                         <OpenModalButton
                             className='add-to-gallery-modal'
                             buttonText=<i className="fa-regular fa-square-plus" style={{ fontSize: '22px', marginRight: '0px', marginTop: '1px' }}></i>
-                            modalComponent={<SelectProfilePhotosModal galleryId={galleryId} />}
+                            modalComponent={<SelectProfilePhotosModal gallery={gallery} />}
                         />
 
                         <button className='edit-gallery-button' onClick={editGallery}><i className="fa-regular fa-pen-to-square"></i></button>
@@ -83,20 +84,22 @@ const SingleGallery = () => {
                     <OpenModalButton
                         // className='add-to-gallery-modal'
                         buttonText='Add photos from my Profile'
-                        modalComponent={<SelectProfilePhotosModal galleryId={galleryId} />}
+                        modalComponent={<SelectProfilePhotosModal gallery={gallery} />}
                     />
                 </div>
             )}
             <div className='single-gallery-photo-container'>
-
-                {photos && photos.map((photo) => {
+                {photos && photos.map((photo, index) => {
                     return (
-                        <div className='photo-card' key={photo} onClick={(e) => PhotoClick(e, photo.id)}>
+                        <div className='photo-card' key={index} onClick={(e) => PhotoClick(e, photo.id)}>
                             <div className='image-overlay-3'>
-                                <button className='delete-from-gallery-button' onClick={(e)=>{e.stopPropagation(); deleteFromGallery(photo)}}>
-                                    <i className="fa-regular fa-trash-can"></i>
-                                </button>
                                 <h4 className='overlay-2-text'>{photo.title}</h4>
+                                {user.id === gallery.userId && (
+                                    <button className='delete-from-gallery-button' onClick={(e) => {e.stopPropagation(); deleteFromGallery(photo)}}>
+                                        <i className="fa-regular fa-trash-can"></i>
+                                    </button>
+                                )}
+
                             </div>
                             <img className='image-size' src={photo.photoUrl}></img>
                             <div className='image-overlay-4'>
@@ -111,8 +114,6 @@ const SingleGallery = () => {
                                             modalComponent={<CreateGalleryModal photo={photo} />}
                                         />
                                     </button>
-
-
                                 </div>
                             </div>
                         </div>
