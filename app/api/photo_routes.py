@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Photo, Upload, db
+from app.models import Photo, Upload, Comment, db
 from ..forms.post_form import PhotoForm
+from ..forms.comment_form import CommentForm
 from app.awsupload import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -176,3 +177,46 @@ def delete_photo(id):
         return {'message':'Successfully deleted'}
     else:
         return {'error': 'Could not delete photo'}
+
+
+@photo_routes.route('/<int:id>/comments', methods=['GET'])
+def all_comments(id):
+    found_photo = Photo.query.get(id)
+    all_comments = found_photo.comments
+    comments = [comm.to_dict() for comm in all_comments]
+
+    comment_res = []
+    for commment in comments:
+
+        comment_res.append({
+            'id': comment['id'],
+            'userId': comment['userId'],
+            'photoId': comment['productId'],
+            'comment': comment['review'],
+            'createdAt': commment['createdAt'],
+            'updatedAt': comment['updatedAt'],
+            # 'userFirstName': comment['user'],
+        })
+
+    return jsonify(comment_res)
+
+
+@product_routes.route('/<int:id>/comments', methods=['POST'])
+@login_required
+def post_comment(id):
+    found_photo = Photo.query.get(id)
+    res = request.get_json()
+    form = CommentForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        comment = Comment(
+            photo_id=found_photo.id,
+            user_id=current_user.id,
+            comment=res['comment'],
+        )
+
+        db.session.add(comment)
+        db.session.commit()
+        return comment.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
