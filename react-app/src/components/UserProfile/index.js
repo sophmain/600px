@@ -32,25 +32,39 @@ const UserProfile = () => {
 
     return (
         <div className='profile-container'>
-            <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover'></img>
-            <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
-            <div className='profile-info'>
-                <div className='profile-edit-buttons'>
-                    <button className='edit-profile-button'><i className="fa-regular fa-pen-to-square"></i></button>
+            <div className='prof-images-container'>
+                {user.cover_photo_url && (
+                    <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover'></img>
+                )}
+                <div className='prof-cover-photo'></div>
+                <div className='prof-photo-container'>
+                    {user.prof_photo_url && (
+                        <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
+                    )}
+
+                    <i class="fa-solid fa-user-plus prof-photo"></i>
                 </div>
-                <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
-                <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
+                <div className='profile-info'>
+                    <div className='profile-edit-buttons'>
+                        <button className='edit-profile-button'><i className="fa-regular fa-pen-to-square"></i></button>
+                    </div>
+                    <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
+                    {user.city && (
+                        <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
+                    )}
+                </div>
             </div>
             <div className='profile-link-headers'>
-                <NavLink to={`/profile/${user.id}`} className='selected-subheader' style={{marginRight: '8px'}}>Photos</NavLink>
+                <NavLink to={`/profile/${user.id}`} className='selected-subheader' style={{ marginRight: '8px' }}>Photos</NavLink>
                 <NavLink to={`/profile/${user.id}/galleries`} className='not-selected-subheader'>Galleries</NavLink>
             </div>
+
             <div className='user-photos-container'>
 
                 <div className='user-photos-mapped'>
                     {userPhotos && userPhotos.map((photo) => {
                         return (
-                            <img src={photo.photoUrl} className='image-size' onClick={() => toSinglePhoto(photo)} style={{cursor: 'pointer'}} alt='user'></img>
+                            <img src={photo.photoUrl} className='image-size' onClick={() => toSinglePhoto(photo)} style={{ cursor: 'pointer' }} alt='user'></img>
                         )
                     })}
                 </div>
