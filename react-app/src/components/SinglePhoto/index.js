@@ -31,6 +31,9 @@ const SinglePhoto = () => {
     const allPhotos = useSelector((state) => state.photos.allPhotos) //get length to prevent right arrow on last img
     if (!comments) return null
     const commentsArr = Object.values(comments)
+    // sort the comments by ascending time posted
+    const sortedComments = commentsArr.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+
     if (!allPhotos) return null
     const allPhotosArr = Object.values(allPhotos)
     if (!photo) return null
@@ -76,9 +79,36 @@ const SinglePhoto = () => {
         setEditPostButton(false)
         setEditComment('')
     }
-
+    // function to delete a user's comment
     const deleteComment = (commentId) => {
         dispatch(thunkDeleteComment(commentId))
+    }
+    // function to format the date a user posted a comment
+    const postDate = (postDate) => {
+        const now = new Date()
+        const seconds = Math.floor((now - new Date(postDate)) / 1000)
+        let timeInt = Math.floor(seconds / 31536000) // seconds in year
+        if (timeInt >= 1) {
+            return timeInt + " over a year ago"
+        }
+        timeInt = Math.floor(seconds / 604800) // seconds in week
+        if (timeInt >= 1) {
+            return timeInt + " w"
+        }
+        timeInt = Math.floor(seconds / 86400) // seconds in day
+        if (timeInt >= 1) {
+            return timeInt + " d"
+        }
+        timeInt = Math.floor(seconds / 3600)
+        if (timeInt >= 1) {
+            return timeInt + " h"
+        }
+        timeInt = Math.floor(seconds / 60)
+        if (timeInt >= 1) {
+            return timeInt + " m"
+        }
+        return Math.floor(seconds) + " s"
+
     }
 
     return (
@@ -160,25 +190,37 @@ const SinglePhoto = () => {
                 </div>
                 <div className='single-photo-comments-container'>
                     {user && user.prof_photo_url && (
-                        <div className='post-comment-box'>
-                            <div className='comment-poster-prof'>
-                                <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                        <div className='new-comment-box'>
+                            <div className='post-comment-box'>
+                                <div className='comment-poster-prof'>
+                                    <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                                </div>
+                                <form className='post-comment-form'>
+                                    <label className='comment-form-data'>
+                                        <input
+                                            className='comment-text'
+                                            placeholder='Add a comment'
+                                            type="text"
+                                            value={newComment}
+                                            onChange={(e) => setNewComment(e.target.value)}
+                                            onClick={(e) => { e.preventDefault(); setPostButton(true) }}
+                                        />
+                                    </label>
+
+                                </form>
                             </div>
-                            <form className='post-comment-form'>
-                                <label className='comment-form-data'>
-                                    <input
-                                        className='comment-text'
-                                        placeholder='Add a comment'
-                                        type="text"
-                                        value={newComment}
-                                        onChange={(e) => setNewComment(e.target.value)}
-                                        onClick={(e) => { e.preventDefault(); setPostButton(true) }}
-                                    />
-                                </label>
+                            <div className='submit-cancel-comment'>
                                 {postButton && (
+                                    <button className='cancel-comment-button' onClick={(e) => { e.preventDefault(); setPostButton(false) }}>Cancel</button>
+                                )}
+
+                                {postButton && newComment !== '' && (
                                     <button className='comment-post-button' onClick={sendComment}>Post</button>
                                 )}
-                            </form>
+                                {postButton && newComment === '' && (
+                                    <button className='comment-post-button-disabled' onClick={(e) => e.preventDefault()}>Post</button>
+                                )}
+                            </div>
                         </div>
                     )}
 
@@ -186,44 +228,52 @@ const SinglePhoto = () => {
                         <h3 className='posted-comments-header'>
                             {commentsArr.length} Comments
                         </h3>
-                        {commentsArr.length > 0 && commentsArr.map((comment) => {
+                        {commentsArr.length > 0 && sortedComments.map((comment) => {
                             return (
                                 <div className='single-comment'>
                                     <img className='small-profile-icon' src={comment.userProfile} alt='commenter profile'></img>
-                                    <h3 className='commenter-name'>
-                                        <div>{comment.userFirstName} {comment.userLastName}</div>
-                                        <div className='comment-date'>{comment.updatedAt.slice(0, 12)}</div>
-                                    </h3>
-                                    {!showEditForm && (
-                                        <p className='comment-text'>
-                                            {comment.comment}
-                                        </p>
-                                    )}
+                                    <div className='single-comment-text'>
+                                        <div className='commenter-name-box'>
+                                            <div className='commenter-name'>{comment.userFirstName} {comment.userLastName}</div>
+                                            <div className='comment-date'>{postDate(comment.createdAt)}</div>
+                                        </div>
+                                        {!showEditForm && (
+                                            <p className='edit-comment-text'>
+                                                {comment.comment}
+                                                {user.id === comment.userId && (
+                                                    <div className='edit-delete-button-parent'>
+                                                        <button className='edit-comment-button' onClick={() => { setShowEditForm(!showEditForm); setCurrentComment(comment.id); setEditComment(comment.comment) }}>Edit</button>
+                                                        <button className='delete-comment-button' onClick={() => deleteComment(comment.id)}>Delete</button>
+                                                    </div>
+                                                )}
 
-                                    {user !== null && user.id === comment.userId && (
-                                        <>
-                                            {showEditForm && currentComment === comment.id && (
-                                                <form className='post-comment-form'>
-                                                    <label className='comment-form-data'>
-                                                        <input
-                                                            className='comment-text'
-                                                            // placeholder={comment.comment}
-                                                            type="text"
-                                                            value={editComment}
-                                                            onChange={(e) => setEditComment(e.target.value)}
-                                                            onClick={(e) => { e.preventDefault(); setEditPostButton(true) }}
-                                                        />
-                                                    </label>
-                                                    {editPostButton && (
-                                                        <button className='comment-post-button' onClick={() => updateComment(comment.id)}>Post</button>
-                                                    )}
-                                                </form>
-                                            )}
-                                            <button className='edit-comment-button' onClick={() => { setShowEditForm(!showEditForm); setCurrentComment(comment.id); setEditComment(comment.comment) }}>Edit</button>
-                                            <button className='delete-comment-button' onClick={() => deleteComment(comment.id)}>Delete</button>
-                                        </>
-                                    )}
+                                            </p>
+                                        )}
 
+
+                                        {user !== null && user.id === comment.userId && (
+                                            <>
+                                                {showEditForm && currentComment === comment.id && (
+                                                    <form className='edit-comment-form'>
+                                                        <label className='edit-comment-form-data'>
+                                                            <input
+                                                                className='edit-comment-text'
+                                                                // placeholder={comment.comment}
+                                                                type="text"
+                                                                value={editComment}
+                                                                onChange={(e) => setEditComment(e.target.value)}
+                                                                onClick={(e) => { e.preventDefault(); setEditPostButton(true) }}
+                                                            />
+                                                        </label>
+                                                        {editPostButton && (
+                                                            <button className='comment-post-button' onClick={() => updateComment(comment.id)}>Post</button>
+                                                        )}
+                                                    </form>
+                                                )}
+
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
                             )
                         })}
