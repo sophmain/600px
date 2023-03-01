@@ -78,7 +78,7 @@ function Navigation({ isLoaded }) {
 	return (
 		<div className='nav-header-container'>
 			<NavLink exact to="/" className='home-logo'>6OO<sup>px</sup></NavLink>
-			<div className='discover-dropdown'>
+			{/* <div className='discover-dropdown'>
 				<button onClick={openMenu} className='discover-button'>
 					Discover
 				</button>
@@ -89,7 +89,7 @@ function Navigation({ isLoaded }) {
 						</li>
 					</>
 				</ul>
-			</div>
+			</div> */}
 			<div className='nav-bar-login-signup'>
 				{isLoaded && sessionLinks}
 			</div>

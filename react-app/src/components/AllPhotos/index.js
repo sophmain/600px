@@ -6,6 +6,7 @@ import CreateGalleryModal from '../CreateGalleryModal'
 import AddToGalleryModal from '../AddToGalleryModal'
 import OpenModalButton from '../OpenModalButton'
 import './AllPhotos.css'
+import { thunkGetAllUser } from '../../store/session'
 
 const AllPhotos = () => {
     const dispatch = useDispatch()
@@ -13,10 +14,13 @@ const AllPhotos = () => {
 
     useEffect(() => {
         dispatch(thunkLoadPhotos())
+        dispatch(thunkGetAllUser())
     }, [dispatch])
 
     const allPhotosObj = useSelector((state) => state.photos.allPhotos)
-
+    const sessionUser = useSelector((state) => state.session.user)
+    // const users = useSelector((state) => state.session.allUsers)
+    // console.log('all users in all photos component', users)
     if (!allPhotosObj) return null
 
     const photos = Object.values(allPhotosObj)
@@ -51,17 +55,18 @@ const AllPhotos = () => {
                                 <div className='overlay-2-text overlay-bottom-text'>
                                     {photo.photoFirstName} {photo.photoLastName}
                                 </div>
-                                <div className='overlay-right'>
-                                    <button className='gallery-modal-button' onClick={e => e.stopPropagation()}>
-                                        <OpenModalButton
-                                            className='add-gallery-modal'
-                                            buttonText='+'
-                                            modalComponent={<AddToGalleryModal photo={photo} />}
-                                        />
-                                    </button>
+                                {sessionUser && (
+                                    <div className='overlay-right'>
+                                        <div className='gallery-modal-button' onClick={e => e.stopPropagation()}>
+                                            <OpenModalButton
+                                                className='add-gallery-modal'
+                                                buttonText='+'
+                                                modalComponent={<AddToGalleryModal photo={photo} />}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
 
-
-                                </div>
                             </div>
                         </div>
                     )
