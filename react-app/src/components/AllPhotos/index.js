@@ -28,18 +28,6 @@ const AllPhotos = () => {
     }
 
 
-    // function randomImageSize(min, max) {
-    //     return Math.round(Math.random() * (max - min) + min)
-    // }
-    // function setImageSize(photos, photo) {
-    //     let images = ''
-    //     for (let i = 0; i < photos.length; i++) {
-    //         let width = randomImageSize(200, 1000);
-    //         let height = randomImageSize(200, 500);
-    //         images += `<img src=${photo.photoUrl} + ${width} + '/' + ${height} + '"alt="grid">`
-    //     }
-    // }
-
     return (
         <div className='mapped-photo-container'>
             <h1 className='photos-title'>Home Feed</h1>

@@ -173,7 +173,7 @@
     border: 1px solid lightgray;
     border-radius: 4px;
     width: 300px;
-    height: 30px;
+    height: 25px;
     margin-left: 8px;
 }
 .post-comment-form {
@@ -199,6 +199,7 @@
     cursor: pointer;
     width: 150px;
     height: 30px;
+
 }
 .comment-post-button-disabled {
     background-color:  lightgray;
@@ -218,6 +219,7 @@
     font-size: 16px;
     width: 100px;
     height: 30px;
+    cursor: pointer;
 
 }
 .posted-comments-container {
@@ -254,12 +256,13 @@
 .comment-date {
     font-size: 12px;
 }
-.edit-comment-text {
+.edit-comment-text-box {
     margin: 0px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
 }
 .edit-comment-button, .delete-comment-button {
     background-color: transparent;
@@ -271,9 +274,17 @@
     margin: 0px 0px 0px 10px;
     padding: 0px;
 }
-/* .edit-delete-button-parent {
-    display: flex;
-    flex-direction: row;
-    margin-top: 5px;
+.edit-comment-form-data {
+    border-radius: 4px;
+    color: lightgray;
 
-} */
+}
+.edit-comment-text {
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    height: 25px;
+    padding: 10px 16px 10px 20px;
+    font-size: 18px;
+    width: 300px;
+    margin-top: 5px;
+}

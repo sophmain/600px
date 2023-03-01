@@ -14,8 +14,8 @@ const SinglePhoto = () => {
     const [editComment, setEditComment] = useState('')
     const [postButton, setPostButton] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
-    const [editPostButton, setEditPostButton] = useState(false)
     const [currentComment, setCurrentComment] = useState('')
+
 
     useEffect(() => {
         dispatch(thunkLoadSinglePhoto(photoId))
@@ -25,7 +25,6 @@ const SinglePhoto = () => {
     }, [dispatch, photoId])
 
     const user = useSelector((state) => state.session.user)
-    console.log('user', user)
     const photo = useSelector((state) => state.photos.singlePhoto)
     const comments = useSelector((state) => state.comments.photoComments)
     const allPhotos = useSelector((state) => state.photos.allPhotos) //get length to prevent right arrow on last img
@@ -54,14 +53,10 @@ const SinglePhoto = () => {
 
     //comment object to send to thunk
     const commentPayload = {
-        // userId: user.id,
-        // photoId: +photoId,
         comment: newComment
     }
     //edited comment to send to thunk
     const editedCommentPayload = {
-        // userId: user.id,
-        // photoId: +photoId,
         comment: editComment
     }
     //function to send comment, hide post button and clear comment box
@@ -76,7 +71,6 @@ const SinglePhoto = () => {
 
         dispatch(thunkEditComment(editedCommentPayload, commentId))
         setShowEditForm(false)
-        setEditPostButton(false)
         setEditComment('')
     }
     // function to delete a user's comment
@@ -228,9 +222,9 @@ const SinglePhoto = () => {
                         <h3 className='posted-comments-header'>
                             {commentsArr.length} Comments
                         </h3>
-                        {commentsArr.length > 0 && sortedComments.map((comment) => {
+                        {sortedComments.map((comment) => {
                             return (
-                                <div className='single-comment'>
+                                <div key={comment.id} className='single-comment'>
                                     <img className='small-profile-icon' src={comment.userProfile} alt='commenter profile'></img>
                                     <div className='single-comment-text'>
                                         <div className='commenter-name-box'>
@@ -238,7 +232,7 @@ const SinglePhoto = () => {
                                             <div className='comment-date'>{postDate(comment.createdAt)}</div>
                                         </div>
                                         {!showEditForm && (
-                                            <p className='edit-comment-text'>
+                                            <p className='edit-comment-text-box'>
                                                 {comment.comment}
                                                 {user.id === comment.userId && (
                                                     <div className='edit-delete-button-parent'>
@@ -258,16 +252,17 @@ const SinglePhoto = () => {
                                                         <label className='edit-comment-form-data'>
                                                             <input
                                                                 className='edit-comment-text'
-                                                                // placeholder={comment.comment}
                                                                 type="text"
                                                                 value={editComment}
                                                                 onChange={(e) => setEditComment(e.target.value)}
-                                                                onClick={(e) => { e.preventDefault(); setEditPostButton(true) }}
+                                                                onClick={(e) => { e.preventDefault(); }}
                                                             />
                                                         </label>
-                                                        {editPostButton && (
-                                                            <button className='comment-post-button' onClick={() => updateComment(comment.id)}>Post</button>
-                                                        )}
+
+                                                            <div className='submit-cancel-comment'>
+                                                                <button className='cancel-comment-button' onClick={() => {  setShowEditForm(false)}}>Cancel</button>
+                                                                <button className='comment-post-button' onClick={() => updateComment(comment.id)}>Post</button>
+                                                            </div>
                                                     </form>
                                                 )}
 
