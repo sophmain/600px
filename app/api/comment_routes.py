@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
+from ..forms.comment_form import CommentForm
 from app.models import Comment, db
 
 comment_routes = Blueprint('comment', __name__)

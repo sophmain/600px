@@ -67,6 +67,8 @@
 }
 .single-lower-container {
     padding: 24px 16px 16px;
+    display: flex;
+    flex-direction: row;
 }
 .single-photo-about-container {
     background-color: white;
@@ -140,5 +142,17 @@
 .single-gallery-edit-buttons {
     display: flex;
     align-items: center;
-
+}
+.single-photo-comments-container {
+    background-color: white;
+    width: 50%;
+    padding: 24px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.small-profile-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }

@@ -1,7 +1,7 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams, NavLink } from "react-router-dom"
-import { thunkLoadAllComments } from "../../store/comment"
+import { thunkLoadAllComments, thunkPostComment, thunkEditComment } from "../../store/comment"
 import { thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
 import './SinglePhoto.css'
 
@@ -10,6 +10,12 @@ const SinglePhoto = () => {
     const { photoId } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
+    const [newComment, setNewComment] = useState('')
+    const [editComment, setEditComment] = useState('')
+    const [postButton, setPostButton] = useState(false)
+    const [showEditForm, setShowEditForm] = useState(false)
+    const [editPostButton, setEditPostButton] = useState(false)
+    const [currentComment, setCurrentComment] = useState('')
 
     useEffect(() => {
         dispatch(thunkLoadSinglePhoto(photoId))
@@ -41,10 +47,34 @@ const SinglePhoto = () => {
             history.push(`/photos/${photo.id + 1}`)
         }
     }
-    // const isoDate = () => {
-    //     return photo.uploadDate.toISOString().split('T')[0]
-    // }
 
+    //comment object to send to thunk
+    const commentPayload = {
+        // userId: user.id,
+        // photoId: +photoId,
+        comment: newComment
+    }
+    //edited comment to send to thunk
+    const editedCommentPayload = {
+        // userId: user.id,
+        // photoId: +photoId,
+        comment: editComment
+    }
+    //function to send comment, hide post button and clear comment box
+    const sendComment = () => {
+        dispatch(thunkPostComment(commentPayload, photoId))
+        setPostButton(false)
+        setNewComment('')
+    }
+
+    //function to edit comment user has already posted
+    const updateComment = (commentId) => {
+
+        dispatch(thunkEditComment(editedCommentPayload, commentId))
+        setShowEditForm(false)
+        setEditPostButton(false)
+        setEditComment('')
+    }
 
     return (
         <div className='page-background'>
@@ -79,7 +109,7 @@ const SinglePhoto = () => {
                             <div className='single-right-profile'>
                                 <h2 className='single-photo-title'>{photo.title}</h2>
                                 <div>by
-                                <NavLink to={`/profile/${photo.userId}`} className='single-photo-owner'> {photo.uploadedFirstName} {photo.uploadedLastName}</NavLink>
+                                    <NavLink to={`/profile/${photo.userId}`} className='single-photo-owner'> {photo.uploadedFirstName} {photo.uploadedLastName}</NavLink>
                                 </div>
                             </div>
                         </div>
@@ -122,6 +152,75 @@ const SinglePhoto = () => {
 
 
 
+                </div>
+                <div className='single-photo-comments-container'>
+                    <div className='post-comment-box'>
+                        <div className='comment-poster-prof'>
+                            <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                        </div>
+                        <form className='post-comment-form'>
+                            <label className='comment-form-data'>
+                                <input
+                                    className='comment-text'
+                                    placeholder='Add a comment'
+                                    type="text"
+                                    value={newComment}
+                                    onChange={(e) => setNewComment(e.target.value)}
+                                    onClick={(e) => { e.preventDefault(); setPostButton(true) }}
+                                />
+                            </label>
+                            {postButton && (
+                                <button className='comment-post-button' onClick={sendComment}>Post</button>
+                            )}
+                        </form>
+                    </div>
+
+                    <div className='posted-comments-container'>
+                        <h3 className='posted-comments-header'>
+                            {commentsArr.length} Comments
+                        </h3>
+                        {commentsArr.length > 0 && commentsArr.map((comment) => {
+                            return (
+                                <div className='single-comment'>
+                                    <img className='small-profile-icon' src={comment.userProfile} alt='commenter profile'></img>
+                                    <h3 className='commenter-name'>
+                                        <div>{comment.userFirstName} {comment.userLastName}</div>
+                                        <div className='comment-date'>{comment.updatedAt.slice(0, 12)}</div>
+                                    </h3>
+                                    {!showEditForm && (
+                                        <p className='comment-text'>
+                                            {comment.comment}
+                                        </p>
+                                    )}
+
+                                    {user.id === comment.userId && (
+                                        <>
+                                            {showEditForm && currentComment === comment.id && (
+                                                <form className='post-comment-form'>
+                                                    <label className='comment-form-data'>
+                                                        <input
+                                                            className='comment-text'
+                                                            // placeholder={comment.comment}
+                                                            type="text"
+                                                            value={editComment}
+                                                            onChange={(e) => setEditComment(e.target.value)}
+                                                            onClick={(e) => { e.preventDefault(); setEditPostButton(true) }}
+                                                        />
+                                                    </label>
+                                                    {editPostButton && (
+                                                        <button className='comment-post-button' onClick={()=> updateComment(comment.id)}>Post</button>
+                                                    )}
+                                                </form>
+                                            )}
+                                            <button className='edit-comment-button' onClick={() => {setShowEditForm(!showEditForm); setCurrentComment(comment.id)}}>Edit</button>
+
+                                        </>
+                                    )}
+
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
         </div>

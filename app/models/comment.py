@@ -28,5 +28,6 @@ class Comment(db.Model):
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
             'userFirstName': self.user.first_name,
-            'userLastName': self.user.last_name
+            'userLastName': self.user.last_name,
+            'userProfile': self.user.prof_photo_url
         }
