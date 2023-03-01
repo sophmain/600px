@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams, NavLink } from "react-router-dom"
-import { thunkLoadAllComments, thunkPostComment, thunkEditComment } from "../../store/comment"
+import { thunkLoadAllComments, thunkPostComment, thunkEditComment, thunkDeleteComment } from "../../store/comment"
 import { thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
 import './SinglePhoto.css'
 
@@ -74,6 +74,10 @@ const SinglePhoto = () => {
         setShowEditForm(false)
         setEditPostButton(false)
         setEditComment('')
+    }
+
+    const deleteComment = (commentId) => {
+        dispatch(thunkDeleteComment(commentId))
     }
 
     return (
@@ -212,8 +216,8 @@ const SinglePhoto = () => {
                                                     )}
                                                 </form>
                                             )}
-                                            <button className='edit-comment-button' onClick={() => {setShowEditForm(!showEditForm); setCurrentComment(comment.id)}}>Edit</button>
-
+                                            <button className='edit-comment-button' onClick={() => {setShowEditForm(!showEditForm); setCurrentComment(comment.id); setEditComment(comment.comment)}}>Edit</button>
+                                            <button className='delete-comment-button' onClick={() => deleteComment(comment.id)}>Delete</button>
                                         </>
                                     )}
 

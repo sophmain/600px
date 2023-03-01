@@ -1,8 +1,7 @@
-import EditGallery from "../components/EditGallery"
-
 const LOAD_ALL_COMMENTS = 'comments/LOAD_COMMENTS'
 const POST_COMMENT = 'comments/POST_COMMENT'
 const EDIT_COMMENT = 'comments/EDIT_COMMENT'
+const DELETE_COMMENT = 'comments/DELETE_COMMENT'
 
 //action creators
 const actionLoadComments = (comments, photoId)=> ({
@@ -18,6 +17,11 @@ const actionPostComment = (comment)=> ({
 
 const actionEditComment = (comment)=> ({
     type: EDIT_COMMENT,
+    comment
+})
+
+const actionDeleteComment = (comment) => ({
+    type: DELETE_COMMENT,
     comment
 })
 
@@ -75,6 +79,17 @@ export const thunkEditComment = (updatedComment, commentId) => async (dispatch) 
     }
 }
 
+export const thunkDeleteComment = (commentId) => async (dispatch) => {
+    const response = await fetch(`/api/comments/${commentId}`, {
+        method: "DELETE"
+    })
+    if (response.ok) {
+        const comment = await response.json()
+        dispatch(actionDeleteComment(comment))
+        return comment
+    }
+}
+
 //normalize function to make key the id
 const normalize = (arr) => {
     const resObj = {}
@@ -94,11 +109,17 @@ const commentsReducer = (state = initialState, action) => {
         case POST_COMMENT:
             newState = { ...state }
             newState.photoComments = { ...newState.photoComments, [action.comment.id]: action.comment }
-            newState.singleComment = { ...newState.singleComment, ...action.comment }
+            // newState.singleComment = { ...newState.singleComment, ...action.comment }
             return newState
         case EDIT_COMMENT:
             newState = { ...state }
             newState.photoComments = {...newState.photoComments, [action.comment.id]: action.comment }
+            return newState
+        case DELETE_COMMENT:
+            console.log('action.comment', action.comment)
+            newState = { ...state }
+            delete newState.photoComments[action.comment.id]
+            newState.photoComments = { ...newState.photoComments}
             return newState
         default:
             return state
