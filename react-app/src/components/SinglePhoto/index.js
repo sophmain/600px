@@ -25,6 +25,7 @@ const SinglePhoto = () => {
     }, [dispatch, photoId])
 
     const user = useSelector((state) => state.session.user)
+    console.log('user', user)
     const photo = useSelector((state) => state.photos.singlePhoto)
     const comments = useSelector((state) => state.comments.photoComments)
     const allPhotos = useSelector((state) => state.photos.allPhotos) //get length to prevent right arrow on last img
@@ -158,26 +159,28 @@ const SinglePhoto = () => {
 
                 </div>
                 <div className='single-photo-comments-container'>
-                    <div className='post-comment-box'>
-                        <div className='comment-poster-prof'>
-                            <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                    {user && user.prof_photo_url && (
+                        <div className='post-comment-box'>
+                            <div className='comment-poster-prof'>
+                                <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                            </div>
+                            <form className='post-comment-form'>
+                                <label className='comment-form-data'>
+                                    <input
+                                        className='comment-text'
+                                        placeholder='Add a comment'
+                                        type="text"
+                                        value={newComment}
+                                        onChange={(e) => setNewComment(e.target.value)}
+                                        onClick={(e) => { e.preventDefault(); setPostButton(true) }}
+                                    />
+                                </label>
+                                {postButton && (
+                                    <button className='comment-post-button' onClick={sendComment}>Post</button>
+                                )}
+                            </form>
                         </div>
-                        <form className='post-comment-form'>
-                            <label className='comment-form-data'>
-                                <input
-                                    className='comment-text'
-                                    placeholder='Add a comment'
-                                    type="text"
-                                    value={newComment}
-                                    onChange={(e) => setNewComment(e.target.value)}
-                                    onClick={(e) => { e.preventDefault(); setPostButton(true) }}
-                                />
-                            </label>
-                            {postButton && (
-                                <button className='comment-post-button' onClick={sendComment}>Post</button>
-                            )}
-                        </form>
-                    </div>
+                    )}
 
                     <div className='posted-comments-container'>
                         <h3 className='posted-comments-header'>
@@ -197,7 +200,7 @@ const SinglePhoto = () => {
                                         </p>
                                     )}
 
-                                    {user.id === comment.userId && (
+                                    {user !== null && user.id === comment.userId && (
                                         <>
                                             {showEditForm && currentComment === comment.id && (
                                                 <form className='post-comment-form'>
@@ -212,11 +215,11 @@ const SinglePhoto = () => {
                                                         />
                                                     </label>
                                                     {editPostButton && (
-                                                        <button className='comment-post-button' onClick={()=> updateComment(comment.id)}>Post</button>
+                                                        <button className='comment-post-button' onClick={() => updateComment(comment.id)}>Post</button>
                                                     )}
                                                 </form>
                                             )}
-                                            <button className='edit-comment-button' onClick={() => {setShowEditForm(!showEditForm); setCurrentComment(comment.id); setEditComment(comment.comment)}}>Edit</button>
+                                            <button className='edit-comment-button' onClick={() => { setShowEditForm(!showEditForm); setCurrentComment(comment.id); setEditComment(comment.comment) }}>Edit</button>
                                             <button className='delete-comment-button' onClick={() => deleteComment(comment.id)}>Delete</button>
                                         </>
                                     )}
