@@ -33,16 +33,25 @@ const UserProfile = () => {
     return (
         <div className='profile-container'>
             <div className='prof-images-container'>
-                <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover'></img>
+                {user.cover_photo_url && (
+                    <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover'></img>
+                )}
+                <div className='prof-cover-photo'></div>
                 <div className='prof-photo-container'>
-                    <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
+                    {user.prof_photo_url && (
+                        <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
+                    )}
+
+                    <i class="fa-solid fa-user-plus prof-photo"></i>
                 </div>
                 <div className='profile-info'>
                     <div className='profile-edit-buttons'>
                         <button className='edit-profile-button'><i className="fa-regular fa-pen-to-square"></i></button>
                     </div>
                     <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
-                    <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
+                    {user.city && (
+                        <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
+                    )}
                 </div>
             </div>
             <div className='profile-link-headers'>
