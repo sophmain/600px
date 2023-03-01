@@ -6,7 +6,7 @@ user_routes = Blueprint('users', __name__)
 
 
 @user_routes.route('/')
-@login_required
+# @login_required
 def users():
     """
     Query for all users and returns them in a list of user dictionaries
@@ -16,7 +16,7 @@ def users():
 
 
 @user_routes.route('/<int:id>')
-@login_required
+# @login_required
 def user(id):
     """
     Query for a user by id and returns that user in a dictionary
@@ -26,8 +26,6 @@ def user(id):
 
 @user_routes.route('/<int:id>')
 def single_user(id):
-    print('INSIDE ROUTE')
     found_user = User.query.get(id)
-    print('FOUND USER', found_user)
     user = found_user.to_dict()
     return jsonify(user)

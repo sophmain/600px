@@ -2,6 +2,7 @@
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 const GET_USER = "session/GET_USER"
+const GET_ALLUSERS = "session/GET_ALLUSERS"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -14,6 +15,10 @@ const removeUser = () => ({
 const getUser = (user) => ({
 	type: GET_USER,
 	user
+})
+const getAllUser = (users) => ({
+	type: GET_ALLUSERS,
+	users
 })
 
 const initialState = { user: null };
@@ -102,26 +107,44 @@ export const signUp = (firstName, lastName, email, username, password) => async 
 };
 
 export const thunkGetUser = (userId) => async (dispatch) => {
-	console.log('USERID', userId)
 	const response = await fetch(`/api/users/${userId}`)
-	console.log('RESPONSE FROM THUNK', response)
+
 	if (response.ok) {
 		const user = await response.json()
-		console.log('USER FROM THUNK', user)
 		dispatch(getUser(user))
 		return user
 	}
 }
 
+export const thunkGetAllUser = () => async (dispatch) => {
+	const response = await fetch(`/api/users/`)
+	console.log('RESPONSE FROM THUNK', response)
+	if (response.ok) {
+		const users = await response.json()
+		dispatch(getAllUser(users.users))
+		return users
+	}
+}
+
+const normalize = (arr) => {
+    const resObj = {}
+    arr.forEach((ele) => { resObj[ele.id] = ele })
+    return resObj
+}
 export default function reducer(state = initialState, action) {
+	let newState
 	switch (action.type) {
 		case SET_USER:
 			return { user: action.payload };
 		case REMOVE_USER:
 			return { user: null };
 		case GET_USER:
-			const newState = {...state}
+			newState = { ...state }
 			newState.singleUser = action.user
+			return newState
+		case GET_ALLUSERS:
+			newState = { ...state }
+			newState.allUsers = normalize(action.users)
 			return newState
 		default:
 			return state;

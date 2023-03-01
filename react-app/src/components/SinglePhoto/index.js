@@ -234,7 +234,7 @@ const SinglePhoto = () => {
                                         {!showEditForm && (
                                             <p className='edit-comment-text-box'>
                                                 {comment.comment}
-                                                {user.id === comment.userId && (
+                                                {user && user.id === comment.userId && (
                                                     <div className='edit-delete-button-parent'>
                                                         <button className='edit-comment-button' onClick={() => { setShowEditForm(!showEditForm); setCurrentComment(comment.id); setEditComment(comment.comment) }}>Edit</button>
                                                         <button className='delete-comment-button' onClick={() => deleteComment(comment.id)}>Delete</button>
@@ -245,7 +245,7 @@ const SinglePhoto = () => {
                                         )}
 
 
-                                        {user !== null && user.id === comment.userId && (
+                                        {user && user.id === comment.userId && (
                                             <>
                                                 {showEditForm && currentComment === comment.id && (
                                                     <form className='edit-comment-form'>
