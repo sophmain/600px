@@ -181,34 +181,41 @@ def delete_photo(id):
 
 @photo_routes.route('/<int:id>/comments', methods=['GET'])
 def all_comments(id):
+
     found_photo = Photo.query.get(id)
+
     all_comments = found_photo.comments
     comments = [comm.to_dict() for comm in all_comments]
 
     comment_res = []
-    for commment in comments:
+    for comment in comments:
 
         comment_res.append({
             'id': comment['id'],
             'userId': comment['userId'],
-            'photoId': comment['productId'],
-            'comment': comment['review'],
-            'createdAt': commment['createdAt'],
+            'photoId': comment['photoId'],
+            'comment': comment['comment'],
+            'createdAt': comment['createdAt'],
             'updatedAt': comment['updatedAt'],
-            # 'userFirstName': comment['user'],
+            'userFirstName': comment['userFirstName'],
+            'userLastName': comment['userLastName'],
+            'userProfile': comment['userProfile']
         })
 
     return jsonify(comment_res)
 
 
-@product_routes.route('/<int:id>/comments', methods=['POST'])
+@photo_routes.route('/<int:id>/comments', methods=['POST'])
 @login_required
 def post_comment(id):
+    print('>>>>> in post comment route', id)
     found_photo = Photo.query.get(id)
+    print('>>>>> found photo', found_photo)
     res = request.get_json()
+    print('>>>>>>>>>res', res)
     form = CommentForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
-
+    print('>>>>>>>>> validate on submit?', form.validate_on_submit())
     if form.validate_on_submit():
         comment = Comment(
             photo_id=found_photo.id,
