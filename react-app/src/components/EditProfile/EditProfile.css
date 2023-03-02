@@ -54,3 +54,12 @@
     padding: 2px;
     object-fit: cover;
 }
+.upload_form {
+    cursor: pointer;
+
+}
+.edit-profile-cover-upload-submit-buttons {
+    position: absolute;
+    top: 70px;
+    left: 180px;
+}

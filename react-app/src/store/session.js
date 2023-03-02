@@ -3,6 +3,7 @@ const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 const GET_USER = "session/GET_USER"
 const GET_ALLUSERS = "session/GET_ALLUSERS"
+const EDIT_USER = "session/EDIT_USER"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -19,6 +20,10 @@ const getUser = (user) => ({
 const getAllUser = (users) => ({
 	type: GET_ALLUSERS,
 	users
+})
+export const editUser = (coverPhoto) => ({
+	type: EDIT_USER,
+	coverPhoto
 })
 
 const initialState = { user: null };
@@ -145,6 +150,12 @@ export default function reducer(state = initialState, action) {
 		case GET_ALLUSERS:
 			newState = { ...state }
 			newState.allUsers = normalize(action.users)
+			return newState
+		case EDIT_USER:
+			console.log('state.coverphoto', action.coverPhoto)
+			newState = { ...state }
+			// newState.user.cover_photo_url = action.coverPhoto
+			newState.user = { ...newState.user, cover_photo_url: action.coverPhoto }
 			return newState
 		default:
 			return state;
