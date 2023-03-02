@@ -189,6 +189,7 @@
 }
 .profile-form-padding {
     padding: 10px;
+
 }
 .profile-textarea-input{
     width: 435px;
@@ -230,5 +231,10 @@
     width: 470px;
     justify-content: flex-end;
     margin-bottom: 25px;
-    margin-top: 15px;
+}
+.errors-profile-edit{
+    height: 20px;
+    font-size: 12px;
+    color: red;
+    margin-top: 2px;
 }

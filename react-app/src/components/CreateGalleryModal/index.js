@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom"
 import { useModal } from "../../context/Modal"
 import { thunkCreateGallery } from "../../store/gallery"
+import { thunkPostPhotoGallery } from "../../store/photo"
 import './CreateGalleryModal.css'
 
 const CreateGalleryModal = ({ photo }) => {
@@ -37,17 +38,23 @@ const CreateGalleryModal = ({ photo }) => {
 
 
         const data = await dispatch(thunkCreateGallery(payload))
+        console.log('data in handlesubmit', data)
+
 
         if (Array.isArray(data)) {
             const formattedData = data.map((data) => data.split(': ')[1])
             setErrors(formattedData)
         } else {
             await setCreatedGallery(data)
+
+            // await dispatch(thunkPostPhotoGallery(createdGallery.id, [photo]))
             closeModal();
         }
     }
     useEffect(() => {
         if (createdGallery) {
+
+            dispatch(thunkPostPhotoGallery(createdGallery.id, [photo.id]))
             history.push(`/galleries/${createdGallery.id}`)
         }
     }, [createdGallery])

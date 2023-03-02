@@ -51,3 +51,14 @@
 .placehoder-modal {
     border: 1px solid lightgray
 }
+.from-all-to-gallery-form{
+    text-decoration: none;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
+}
+.create-gallery-modal {
+    z-index: 2;
+}

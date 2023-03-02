@@ -57,13 +57,12 @@ const SelectProfilePhotosModal = ({ gallery }) => {
           });
 
     }
-    console.log('SELECTED', selectedPhotos)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setErrors([])
 
         await dispatch(thunkPostPhotoGallery(gallery.id, selectedPhotos))
-
 
         closeModal();
 
