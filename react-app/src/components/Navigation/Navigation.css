@@ -33,10 +33,11 @@
   font-weight: bolder;
   font-size: 16px;
   border: none;
+  cursor: pointer;
 }
 .log-in-modal:hover {
   color:  #1890ff;
-  cursor: pointer;
+  transition: .7s;
 }
 .sign-up-modal {
   border: 2px solid rgb(34, 34, 34);
@@ -47,9 +48,10 @@
   font-weight: bolder;
   line-height: 16px;
   height: 32px;
+  cursor: pointer;
 }
 .sign-up-modal:hover {
-  cursor: pointer;
+  transition: .7s;
   color:  #1890ff;
 }
 .nav-bar-right {
@@ -74,6 +76,7 @@
 }
 .upload-photo-button:hover {
   background-color: rgb(237, 237, 237);
+  transition: .7s;
 }
 .profile-button {
   display: flex;
@@ -117,7 +120,7 @@
 }
 .dropdown-profile-item:hover {
   background-color: #0870d1;
-  transition: .5s;
+  transition: .7s;
 
 }
 .dropdown-button {

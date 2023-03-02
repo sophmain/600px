@@ -228,7 +228,11 @@ const SinglePhoto = () => {
                                     <img className='small-profile-icon' src={comment.userProfile} alt='commenter profile'></img>
                                     <div className='single-comment-text'>
                                         <div className='commenter-name-box'>
-                                            <div className='commenter-name'>{comment.userFirstName} {comment.userLastName}</div>
+                                            <div className='commenter-name'>
+                                                <NavLink to={`/profile/${comment.userId}`} className='from-comment-to-profile'>
+                                                    {comment.userFirstName} {comment.userLastName}
+                                                </NavLink>
+                                            </div>
                                             <div className='comment-date'>{postDate(comment.createdAt)}</div>
                                         </div>
                                         {!showEditForm && (
@@ -259,10 +263,10 @@ const SinglePhoto = () => {
                                                             />
                                                         </label>
 
-                                                            <div className='submit-cancel-comment'>
-                                                                <button className='cancel-comment-button' onClick={() => {  setShowEditForm(false)}}>Cancel</button>
-                                                                <button className='comment-post-button' onClick={() => updateComment(comment.id)}>Post</button>
-                                                            </div>
+                                                        <div className='submit-cancel-comment'>
+                                                            <button className='cancel-comment-button' onClick={() => { setShowEditForm(false) }}>Cancel</button>
+                                                            <button className='comment-post-button' onClick={() => updateComment(comment.id)}>Post</button>
+                                                        </div>
                                                     </form>
                                                 )}
 

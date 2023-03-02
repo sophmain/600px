@@ -62,7 +62,9 @@
 }
 .login-button:hover {
     background-color: #2986f7;
+    transition: .7s;
 }
 .demo-login:hover {
     background-color: rgb(237, 237, 237);
+    transition: .7s;
 }

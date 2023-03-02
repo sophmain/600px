@@ -43,7 +43,8 @@ input::file-selector-button {
 input::file-selector-button:hover {
     border: none;
     color: white;
-    background-color: #0870d1;;
+    background-color: #0870d1;
+    transition: .7s;
 
 }
 input[type="file" i] {

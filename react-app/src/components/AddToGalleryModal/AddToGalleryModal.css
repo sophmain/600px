@@ -11,6 +11,7 @@
 }
 .select-gallery-for-photo:hover {
     background-color: rgb(233, 233, 233);
+    transition: .7s;
 }
 .add-to-gallery-header {
     padding: 20px 0px 30px 0px;

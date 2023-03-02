@@ -40,7 +40,7 @@ const UserProfileGalleries = () => {
     return (
         <div className='profile-container'>
             <div className='prof-images-container'>
-                {user.cover_photo_url && (
+            {user.cover_photo_url && (
                     <img className='prof-cover-photo' src={user.cover_photo_url} alt='cover'></img>
                 )}
                 {!user.cover_photo_url && (
@@ -57,7 +57,7 @@ const UserProfileGalleries = () => {
                 <div className='profile-info'>
                     {loggedInUser.id === +userId && (
                         <div className='profile-edit-buttons'>
-                            <button className='edit-profile-button' onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></button>
+                            <button className='edit-profile-button-page' onClick={(e)=> editProfile(e)}><i className="fa-regular fa-pen-to-square"></i></button>
                         </div>
                     )}
                     {loggedInUser.id !== +user.id && (
