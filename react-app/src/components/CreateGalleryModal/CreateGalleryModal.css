@@ -1,0 +1,67 @@
+.create-gallery-modal-container{
+    min-width: 400px;
+    width: 400px;
+    padding: 0px 24px;
+}
+.create-new-gallery-header {
+    font-size: 16px;
+    color: rgb(34, 34, 34);
+}
+
+.create-gallery-modal-title-input{
+    width: 89%;
+    height: 40px;
+    border: 1px solid rgb(215, 216, 219);
+    border-radius: 4px;
+
+}
+.create-gallery-modal-label{
+    color: rgb(129, 129, 129);
+    font-size: 14px;
+    margin: 5px 0px;
+}
+.create-gallery-modal-title-input{
+    padding: 0px 24px;
+}
+.gallery-checkbox{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+.input-box-gallery {
+    margin-right: 10px;
+    height: 25px;
+    width: 25px;
+}
+.create-gallery-modal-cancel-create {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+
+}
+.create-gallery-modal-submit-button{
+    background-color: rgb(8, 112, 209);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 22px;
+    height: 48px;
+    border-radius: 28px;
+    border: none;
+    width: 80%;
+    margin-left: 15px;
+    cursor: pointer;
+}
+.create-gallery-cancel-button{
+    color: #0870D1;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}

@@ -12,6 +12,7 @@ const AddToGalleryModal = ({ photo }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { closeModal } = useModal()
+
     //const [selectedGallery, setSelectedGallery] = useState([])
     // console.log('selected gallery', selectedGallery)
 
@@ -32,11 +33,16 @@ const AddToGalleryModal = ({ photo }) => {
 
     return (
         <div className='your-galleries-select'>
+            <div className='exit-create-gallery-modal' onClick={closeModal}><i class="fa-solid fa-x"></i></div>
             <h1 className='add-to-gallery-header'>Add to Gallery</h1>
-            <div className='gallery-modal-button'>
+
+            <div className='gallery-modal-button-submit'>
+                <div className='create-gallery-modal-plus'>
+                    <i class="fa-solid fa-plus"></i>
+                </div>
                 <OpenModalButton
                     className='create-gallery-modal'
-                    buttonText='+ Create new gallery'
+                    buttonText='Create new gallery'
                     modalComponent={<CreateGalleryModal photo={photo} />}
                 />
             </div>

@@ -26,7 +26,7 @@ const CreateGalleryModal = ({ photo }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setErrors([])
-        const description= '' //empty for modal, can add from form
+        const description = '' //empty for modal, can add from form
 
         const payload = {
             userId: user.id,
@@ -62,18 +62,15 @@ const CreateGalleryModal = ({ photo }) => {
 
     return (
         <div className='create-gallery-modal-container'>
-            <h1>Create gallery</h1>
-            <form className='gallery-form' onSubmit={handleSubmit}>
-                <ul className="validation-errors">
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
-                <label>
-                    <p>
+            <h1 className='add-to-gallery-header'>Add to Gallery</h1>
+            <h2 className='create-new-gallery-header'>Create new gallery</h2>
+            <form className='create-gallery-modal-form' onSubmit={handleSubmit}>
+                <label >
+                    <p className='create-gallery-modal-label'>
                         Title*
                     </p>
                     <input
+                        className='create-gallery-modal-title-input'
                         id="title"
                         type="text"
                         name="title"
@@ -97,7 +94,11 @@ const CreateGalleryModal = ({ photo }) => {
                         />
                     </div>
                 </label>
-                <button className="create-gallery-submit-button" type="submit">Submit</button>
+                <div className='create-gallery-modal-cancel-create'>
+                    <button className='create-gallery-cancel-button' onClick={closeModal}>Cancel</button>
+                    <button className="create-gallery-modal-submit-button" type="submit">Create and add</button>
+                </div>
+
             </form>
         </div>
     )
