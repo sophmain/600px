@@ -40,7 +40,8 @@ const EditGallery = () => {
         const data = await dispatch(thunkEditGallery(payload))
 
         if (Array.isArray(data)) {
-            setErrors(data);
+            const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(formattedData)
         } else {
             history.push(`/galleries/${payload.id}`)
         }

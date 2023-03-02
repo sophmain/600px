@@ -42,6 +42,7 @@
     position: absolute;
     right: 50px;
     text-align: center;
+    border-radius: 50%;
 }
 .fa-chevron-left {
     display: flex;
@@ -50,10 +51,11 @@
     position: absolute;
     left: 50px;
     text-align: center;
+    border-radius: 50%;
 }
 .fa-chevron-left:hover, .fa-chevron-right:hover {
-    border-radius: 50%;
     background-color: rgba(229, 229, 229, 0.342);
+    transition: .7s;
 
 }
 .single-right-profile {
@@ -72,7 +74,7 @@
 }
 .single-photo-about-container {
     background-color: white;
-    width: 50%;
+    width: 100%;
     padding: 24px;
 }
 .fa-pen-to-square {
@@ -85,12 +87,12 @@
     height: 35px;
     border: none;
     padding: 0px;
+    border-radius: 100px;
+    cursor: pointer;
 }
 .edit-photo-button:hover {
     background-color: rgb(231, 231, 231);
-    border: none;
-    cursor: pointer;
-    border-radius: 100px;
+    transition: .7s;
 }
 .single-photo-title {
     color: #222222;
@@ -145,7 +147,7 @@
 }
 .single-photo-comments-container {
     background-color: white;
-    width: 50%;
+    width: 600px;
     padding: 24px;
     margin-left: 20px;
     display: flex;
@@ -155,4 +157,145 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
+}
+.new-comment-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.post-comment-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+.comment-text {
+    font-size: 18px;
+    padding: 10px 16px 10px 20px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    width: 300px;
+    height: 25px;
+    margin-left: 8px;
+}
+.post-comment-form {
+    width: 100%;
+}
+.comment-poster-prof {
+    width: 10%;
+}
+.submit-cancel-comment {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 10px;
+}
+.comment-post-button {
+    background-color:  rgb(41, 134, 247);
+    color: white;
+    font-size: 16px;
+    border-radius: 18px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    width: 150px;
+    height: 30px;
+
+}
+.comment-post-button-disabled {
+    background-color:  lightgray;
+    color: white;
+    font-size: 16px;
+    border-radius: 18px;
+    border: none;
+    font-weight: bold;
+    width: 150px;
+    height: 30px;
+}
+.cancel-comment-button {
+    color: rgb(41, 134, 247);
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+
+}
+.posted-comments-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.posted-comments-header {
+    font-size: 18px;
+    margin: 10px 0px;
+}
+.single-comment {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.single-comment-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 100%;
+    margin-left: 8px;
+}
+.commenter-name-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.commenter-name{
+    font-weight: bold;
+}
+.comment-date {
+    font-size: 12px;
+}
+.edit-comment-text-box {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.edit-comment-button, .delete-comment-button {
+    background-color: transparent;
+    border: none;
+    color:rgb(41, 134, 247);
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    margin: 0px 0px 0px 10px;
+    padding: 0px;
+}
+.edit-comment-form-data {
+    border-radius: 4px;
+    color: lightgray;
+
+}
+.edit-comment-text {
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    height: 25px;
+    padding: 10px 16px 10px 20px;
+    font-size: 18px;
+    width: 300px;
+    margin-top: 5px;
+}
+.from-comment-to-profile {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.from-comment-to-profile:hover {
+    color:rgb(41, 134, 247);
+    transition: .5s;
 }

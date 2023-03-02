@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SinglePhoto from './components/SinglePhoto';
 import AllPhotos from "./components/AllPhotos";
@@ -14,6 +14,9 @@ import UserProfile from "./components/UserProfile";
 import UserProfileGalleries from './components/UserProfileGalleries'
 import EditGallery from "./components/EditGallery";
 import CreateGalleryForm from "./components/CreateGalleryForm";
+import EditProfile from "./components/EditProfile";
+import SplashPage from "./components/SplashPage";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -22,13 +25,20 @@ function App() {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
+  const user = useSelector((state) => state.session.user)
+
   return (
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
           <Route exact path='/'>
-            <AllPhotos />
+            {user !== null && (
+              <AllPhotos />
+            )}
+            {user === null && (
+              <SplashPage />
+            )}
           </Route>
           <Route exact path='/photos/:photoId'>
             <SinglePhoto />
@@ -59,6 +69,9 @@ function App() {
           </Route>
           <Route exact path='/profile/:userId/galleries/create'>
             <CreateGalleryForm />
+          </Route>
+          <Route exact path='/profile/:userId/edit'>
+            <EditProfile />
           </Route>
         </Switch>
       )}

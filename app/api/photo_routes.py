@@ -142,14 +142,11 @@ def single_photo(id):
 @photo_routes.route('/<int:id>', methods=["PUT"])
 def edit_photo(id):
     current_photo = Photo.query.get(id)
-
     res = request.get_json()
-    print('>>>>>>>RES', res)
     photo = PhotoForm()
-    print('photo......', photo.validate_on_submit())
     photo['csrf_token'].data = request.cookies['csrf_token']
+
     if photo.validate_on_submit():
-        # photo.populate_obj(current_photo)
 
         current_photo.taken_date = res['takenDate']
         current_photo.category = res['category']
@@ -159,8 +156,6 @@ def edit_photo(id):
         current_photo.title = res['title']
         current_photo.description = res['description']
         current_photo.location = res['location']
-        # current_photo.gallery_id = res['galleryId']
-
 
         db.session.commit()
         photo = current_photo.to_dict()

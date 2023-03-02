@@ -31,7 +31,8 @@ const CreateGalleryForm = () => {
         const data = await dispatch(thunkCreateGallery(payload))
 
         if (Array.isArray(data)) {
-            setErrors(data);
+            const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(formattedData)
         } else {
             await setCreatedGallery(data)
         }

@@ -66,7 +66,8 @@ const EditPhoto = () => {
         const data = await dispatch(thunkEditPhoto(payload))
 
         if (Array.isArray(data)) {
-            setErrors(data);
+            const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(formattedData)
         } else {
             history.push(`/photos/${payload.id}`)
         }

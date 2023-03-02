@@ -2,6 +2,10 @@
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 const GET_USER = "session/GET_USER"
+const GET_ALLUSERS = "session/GET_ALLUSERS"
+const EDIT_USERCOVER = "session/EDIT_USER"
+const EDIT_USERINFO = "session/EDIT_USERINFO"
+const EDIT_USERPROFILE = "session/EDIT_USERPROFILE"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -15,8 +19,23 @@ const getUser = (user) => ({
 	type: GET_USER,
 	user
 })
+const getAllUser = (users) => ({
+	type: GET_ALLUSERS,
+	users
+})
+export const editUserCover = (coverPhoto) => ({
+	type: EDIT_USERCOVER,
+	coverPhoto
+})
+export const editProfilePhoto = (profilePhoto) => ({
+	type: EDIT_USERPROFILE,
+	profilePhoto
+})
+const actionEditUserInfo = (user) => ({
+	type: EDIT_USERINFO,
+	user
+})
 
-const initialState = { user: null };
 
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
@@ -102,26 +121,80 @@ export const signUp = (firstName, lastName, email, username, password) => async 
 };
 
 export const thunkGetUser = (userId) => async (dispatch) => {
-	console.log('USERID', userId)
 	const response = await fetch(`/api/users/${userId}`)
-	console.log('RESPONSE FROM THUNK', response)
+
 	if (response.ok) {
 		const user = await response.json()
-		console.log('USER FROM THUNK', user)
 		dispatch(getUser(user))
 		return user
 	}
 }
 
+export const thunkGetAllUser = () => async (dispatch) => {
+	const response = await fetch(`/api/users/`)
+	console.log('RESPONSE FROM THUNK', response)
+	if (response.ok) {
+		const users = await response.json()
+		dispatch(getAllUser(users.users))
+		return users
+	}
+}
+export const thunkEditUser = (user, userId) => async (dispatch) => {
+	const response = await fetch(`/api/users/${userId}/edit`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    })
+
+    if (response.ok) {
+        const user = await response.json()
+        dispatch(actionEditUserInfo(user))
+        return user;
+
+    } else if (response.status < 500) {
+        const user = await response.json()
+        if (user.errors) {
+            return user.errors;
+        }
+    } else {
+        return ["An error occurred. Please try again."];
+    }
+}
+
+const normalize = (arr) => {
+    const resObj = {}
+    arr.forEach((ele) => { resObj[ele.id] = ele })
+    return resObj
+}
+
+const initialState = { user: null };
+
 export default function reducer(state = initialState, action) {
+	let newState
 	switch (action.type) {
 		case SET_USER:
 			return { user: action.payload };
 		case REMOVE_USER:
 			return { user: null };
 		case GET_USER:
-			const newState = {...state}
+			newState = { ...state }
 			newState.singleUser = action.user
+			return newState
+		case GET_ALLUSERS:
+			newState = { ...state }
+			newState.allUsers = normalize(action.users)
+			return newState
+		case EDIT_USERCOVER:
+			newState = { ...state }
+			newState.user = { ...newState.user, cover_photo_url: action.coverPhoto }
+			return newState
+		case EDIT_USERINFO:
+			newState = { ...state }
+			newState.user = { ...newState.user, ...action.user }
+			return newState
+		case EDIT_USERPROFILE:
+			newState = { ...state }
+			newState.user = { ...newState.user, prof_photo_url: action.profilePhoto }
 			return newState
 		default:
 			return state;

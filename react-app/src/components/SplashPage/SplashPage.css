@@ -1,0 +1,69 @@
+.splash-photo-container{
+    width: 100%;
+
+}
+.background-image-splash{
+    opacity: 1;
+    height: 550px;
+    width: 100%;
+    object-fit: cover;
+    /* transition: opacity .7s ease-in-out; */
+    z-index: 0;
+
+}
+/* .background-image-splash .show-1 {
+    opacity: 1;
+}
+.background-image-splash .show-2 {
+    opacity: 1;
+}
+.background-image-splash .show-3 {
+    opacity: 1;
+}
+.background-image-splash .show-4 {
+    opacity: 1;
+}
+.background-image-splash .show-5 {
+    opacity: 1;
+}
+.background-image-splash .show-6 {
+    opacity: 1;
+} */
+.splash-page-container {
+    width: 100%;
+}
+.text-over-photo-splash {
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    color: white;
+    width: 40%;
+    z-index: 2;
+
+}
+.detail-text-splash{
+    line-height: 1.5;
+    font-size: 18px;;
+}
+.linear-gradient-splash {
+    height: 550px;
+    width: 100%;
+    background: linear-gradient(0.25turn, rgba(23, 22, 21, 0.812),rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.025));
+    z-index: 1;
+    position: absolute;
+    top: 65px;
+}
+.sign-up-modal-splash{
+    border-radius: 24px;
+    border: none;
+    background-color: white;
+    padding: 12px 20px;
+    width: 200px;
+    font-weight: bold;
+    font-size: 24px;
+    cursor: pointer;
+}
+.sign-up-modal-splash:hover{
+    background-color: rgb(228, 228, 228);
+    transition: .7s;
+}
