@@ -1,0 +1,45 @@
+.splash-photo-container{
+    width: 100%;
+
+}
+.background-image-splash{
+    opacity: 1;
+    height: 550px;
+    width: 100%;
+    object-fit: cover;
+    transition: opacity .7s ease-in-out;
+
+}
+/* .background-image-splash .show-1 {
+    opacity: 1;
+}
+.background-image-splash .show-2 {
+    opacity: 1;
+}
+.background-image-splash .show-3 {
+    opacity: 1;
+}
+.background-image-splash .show-4 {
+    opacity: 1;
+}
+.background-image-splash .show-5 {
+    opacity: 1;
+}
+.background-image-splash .show-6 {
+    opacity: 1;
+} */
+.splash-page-container {
+    width: 100%;
+}
+.text-over-photo-splash {
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    color: white;
+    width: 50%;
+
+}
+.detail-text-splash{
+    line-height: 1.5;
+    font-size: 18px;;
+}

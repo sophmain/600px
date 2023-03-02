@@ -35,6 +35,11 @@ const UserProfile = () => {
         e.preventDefault()
         history.push(`/profile/${sessionUser.id}/edit`)
     }
+    //if logged in user has no images, upload button shows
+    const uploadPhoto = (e) => {
+        e.preventDefault()
+        history.push(`/upload`)
+    }
     return (
         <div className='profile-container'>
             <div className='prof-images-container'>
@@ -55,7 +60,7 @@ const UserProfile = () => {
                 <div className='profile-info'>
                     {sessionUser.id === +userId && (
                         <div className='profile-edit-buttons'>
-                            <button className='edit-profile-button-page' onClick={(e)=> editProfile(e)}><i className="fa-regular fa-pen-to-square"></i></button>
+                            <button className='edit-profile-button-page' onClick={(e) => editProfile(e)}><i className="fa-regular fa-pen-to-square"></i></button>
                         </div>
                     )}
                     {sessionUser.id !== +user.id && (
@@ -78,6 +83,14 @@ const UserProfile = () => {
                             <img src={photo.photoUrl} className='image-size' onClick={() => toSinglePhoto(photo)} style={{ cursor: 'pointer' }} alt='user'></img>
                         )
                     })}
+                    {userPhotos.length === 0 && sessionUser.id === +user.id && (
+                        <div className='work-in-progress-photos'>
+                            <p className='profile-no-photos-yet'>
+                                No images uploaded yet
+                            </p>
+                            <button className='upload-photo-button' onClick={(e) => uploadPhoto(e)}><i className="fa-solid fa-arrow-up"></i>Upload</button>
+                        </div>
+                    )}
                     {sessionUser.id !== +userId && userPhotos.length === 0 && (
                         <div className='work-in-progress-photos'>
                             <i class="fa-regular fa-images"></i>
@@ -87,7 +100,7 @@ const UserProfile = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 export default UserProfile

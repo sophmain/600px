@@ -105,3 +105,8 @@
     color: rgb(47, 47, 47);
 }
 
+.profile-no-photos-yet{
+    font-size: 16px;
+    color: rgb(47, 47, 47);
+    margin: 15px;
+}
