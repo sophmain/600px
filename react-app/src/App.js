@@ -15,7 +15,7 @@ import UserProfileGalleries from './components/UserProfileGalleries'
 import EditGallery from "./components/EditGallery";
 import CreateGalleryForm from "./components/CreateGalleryForm";
 import EditProfile from "./components/EditProfile";
-import SplashPage from "./components/SplashPage"; 
+import SplashPage from "./components/SplashPage";
 
 
 function App() {
@@ -36,7 +36,9 @@ function App() {
             {user !== null && (
               <AllPhotos />
             )}
-            <SplashPage />
+            {user === null && (
+              <SplashPage />
+            )}
           </Route>
           <Route exact path='/photos/:photoId'>
             <SinglePhoto />
