@@ -39,10 +39,15 @@ const UploadPhoto = () => {
 
     return (
         <div className='upload-container'>
-            <h2> Upload</h2>
-
+            <h2 className='upload-page-title'> Upload</h2>
+            <div className='unlimited-uploads'>
+                <p className='unlimited-uploads'> You have
+                    <span style={{ fontWeight: 'bold', margin: '0px 5px .5px 5px' }}> unlimited
+                    </span>
+                    uploads remaining</p>
+            </div>
             <div className='upload-arrow'>
-                <div><i className="fa-solid fa-arrow-up"></i></div>
+                <div><i className="fa-solid fa-arrow-up" style={{ fontSize: '34px' }}></i></div>
                 <h3>Upload photo</h3>
             </div>
             <div className='upload-submit-buttons'>
@@ -60,6 +65,12 @@ const UploadPhoto = () => {
                     )}
 
                 </form>
+            </div>
+            <div className='photo-requirements'>
+                <div className='requirements-text'>
+                    <h3 style={{ margin: '0px' }}>Photo requirements</h3>
+                    <p style={{ margin: '5px 0px' }}>.pdf .png .jpg .jpeg .gif</p>
+                </div>
             </div>
 
         </div>
