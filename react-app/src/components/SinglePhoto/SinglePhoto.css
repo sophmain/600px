@@ -42,6 +42,7 @@
     position: absolute;
     right: 50px;
     text-align: center;
+    border-radius: 50%;
 }
 .fa-chevron-left {
     display: flex;
@@ -50,10 +51,11 @@
     position: absolute;
     left: 50px;
     text-align: center;
+    border-radius: 50%;
 }
 .fa-chevron-left:hover, .fa-chevron-right:hover {
-    border-radius: 50%;
     background-color: rgba(229, 229, 229, 0.342);
+    transition: .7s;
 
 }
 .single-right-profile {
@@ -85,12 +87,12 @@
     height: 35px;
     border: none;
     padding: 0px;
+    border-radius: 100px;
+    cursor: pointer;
 }
 .edit-photo-button:hover {
     background-color: rgb(231, 231, 231);
-    border: none;
-    cursor: pointer;
-    border-radius: 100px;
+    transition: .7s;
 }
 .single-photo-title {
     color: #222222;
@@ -287,4 +289,13 @@
     font-size: 18px;
     width: 300px;
     margin-top: 5px;
+}
+.from-comment-to-profile {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.from-comment-to-profile:hover {
+    color:rgb(41, 134, 247);
+    transition: .5s;
 }

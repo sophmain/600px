@@ -1,0 +1,234 @@
+.edit-profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.edit-profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 120%;
+    box-shadow: 0px 2px 5px rgb(228, 228, 228);
+
+}
+.edit-profile-title {
+    font-size: 16px;
+
+}
+.edit-profile-back {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+}
+.edit-profile-images-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid rgb(238, 239, 242);
+    max-width: 560px;
+    width: 100%;
+    margin-top: 25px;
+}
+.edit-profile-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 560px;
+    width: 100%;
+
+}
+.edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-row-edit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.edit-profile-images {
+    width: 100%;
+    position: relative;
+    height: 220px;
+}
+.edit-profile-cover-photo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+.edit-prof-photo-container {
+    width: 100%;
+    display: flex;
+    position: relative;
+    top: -55px;
+    justify-content: center;
+}
+.edit-prof-photo {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    right: 50%;
+    justify-content: center;
+    top: 390px;
+    border-radius: 50%;
+    background-color: white;
+    padding: 2px;
+    object-fit: cover;
+}
+.upload-cover-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.upload-profile-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.edit-profile-cover-upload-submit-buttons {
+    position: absolute;
+    top: 65px;
+    left: 165px;
+}
+.edit-profile-photo-upload-submit-buttons {
+    position: absolute;
+    top: 180px;
+    left: 295px;
+
+}
+.change-cover-button {
+    background-color: white;
+    min-width: 130px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 28px;
+    height: 50px;
+    padding: 12px 18px;
+    border: 2px solid rgb(8, 112, 209);
+    color: rgb(8, 112, 209);
+    font-weight: bold;
+    text-align: center;
+}
+.change-cover-button:hover {
+    transition: .7s;
+    background-color: rgb(228, 228, 228);
+}
+.fa-camera {
+    font-size: 20px;
+    color:rgb(8, 112, 209);
+}
+.change-profile-button{
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 2px 2px 2px lightgray;
+    border: none;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+
+}
+.submit-cover-photo {
+    background-color: white;
+    min-width: 90px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 28px;
+    height: 40px;
+    padding: 8px 16px;
+    margin-left: 5px;
+    border: 2px solid rgb(8, 112, 209);
+    color: rgb(8, 112, 209);
+    font-weight: bold;
+    text-align: center;
+}
+.submit-cover-photo:hover {
+    transition: .7s;
+    background-color: rgb(228, 228, 228);
+}
+.submit-profile-photo{
+    background-color: white;
+    min-width: 60px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 28px;
+    height: 35px;
+    padding: 6px 12px;
+    margin-left: 5px;
+    border: 2px solid rgb(8, 112, 209);
+    color: rgb(8, 112, 209);
+    font-weight: bold;
+    text-align: center;
+}
+.loading-text-profile {
+    color: rgb(8, 112, 209);
+    background-color: white;
+    border-radius: 28px;
+    margin-left: 5px;
+    font-size: 12px;
+
+}
+.profile-form-label {
+    margin: 5px 0px;
+    font-size: 14px;
+    color: rgb(109, 115, 120);
+}
+.profile-form-input {
+    height: 20px;
+    width: 190px;
+    border-radius: 4px;
+    border: 1px solid rgba(134, 138, 141, 0.43);
+    font-size: 16px;
+    padding: 12px 16px;
+}
+.profile-form-padding {
+    padding: 10px;
+}
+.profile-textarea-input{
+    width: 435px;
+    height: 60px;
+    border-radius: 4px;
+    border: 1px solid rgba(134, 138, 141, 0.43);
+    font-size: 16px;
+    padding: 12px 16px;
+    overflow-y: auto;
+}
+.submit-edit-profile {
+    background-color: rgb(8, 112, 209);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 22px;
+    height: 48px;
+    border-radius: 28px;
+    border: none;
+    width: 165px;
+    cursor: pointer;
+}
+.cancel-edit-profile {
+    background-color: white;
+    color: rgb(8, 112, 209);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 22px;
+    height: 48px;
+    border-radius: 28px;
+    border: none;
+    width: 100px;
+    cursor: pointer;
+    text-align: center;
+}
+.edit-profile-cancel-submit {
+    display: flex;
+    flex-direction: row;
+    width: 470px;
+    justify-content: flex-end;
+    margin-bottom: 25px;
+    margin-top: 15px;
+}

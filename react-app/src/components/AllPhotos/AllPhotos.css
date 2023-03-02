@@ -95,6 +95,7 @@
 }
 .photo-card:hover .image-overlay , .photo-card:hover .image-overlay-2{
     opacity: 1;
+    transition: 1.2s;
 }
 
 .overlay-2-text {
@@ -127,6 +128,7 @@
     height: 35px;
     background: transparent;
     border: none;
+    border-radius: 50%;
 }
 .overlay-bottom-text {
     position: absolute;
@@ -138,6 +140,7 @@
     bottom: 10px;
 }
 .gallery-modal-button:hover {
-    border-radius: 50%;
+
     background-color: rgba(229, 229, 229, 0.342);
+    transition: .5s;
 }

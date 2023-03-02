@@ -52,7 +52,6 @@ def single_gallery(id):
     """
     Route to query for single gallery
     """
-    print('>>>>>>>>>>>>in single gallery route')
     single_gallery = Gallery.query.get(id)
     gallery = single_gallery.to_dict()
     return jsonify(gallery)
@@ -63,7 +62,6 @@ def create_gallery():
     Route to add created gallery to galleries table
     """
     res = request.get_json()
-    print('>>>>>>>.res', res)
     gallery = GalleryForm()
     gallery['csrf_token'].data = request.cookies['csrf_token']
 

@@ -61,7 +61,8 @@ const PostPhoto = () => {
         const data = await dispatch(thunkPostPhoto(payload))
 
         if (Array.isArray(data)) {
-            setErrors(data);
+            const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(formattedData)
         } else {
             setCreatedPhoto(data)
         }
