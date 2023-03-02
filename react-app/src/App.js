@@ -14,6 +14,7 @@ import UserProfile from "./components/UserProfile";
 import UserProfileGalleries from './components/UserProfileGalleries'
 import EditGallery from "./components/EditGallery";
 import CreateGalleryForm from "./components/CreateGalleryForm";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,9 @@ function App() {
           </Route>
           <Route exact path='/profile/:userId/galleries/create'>
             <CreateGalleryForm />
+          </Route>
+          <Route exact path='/profile/:userId/edit'>
+            <EditProfile />
           </Route>
         </Switch>
       )}

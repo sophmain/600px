@@ -23,13 +23,17 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+
 }
 .profile-edit-buttons {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: right;
     margin-bottom: 16px;
     width: 100%;
+    height: 40px;
+
 }
 .user-profile-name {
     font-size: 24px;
@@ -73,8 +77,33 @@
     align-items: center;
     justify-content: center;
 }
-.fa-user-plus {
+.fa-user-large {
     font-size: 40px;
     border-radius: 50%;
     color: rgb(191, 191, 191);
+}
+.profile-link-headers {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+}
+.work-in-progress-photos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    margin-top: 7px;
+
+}
+.fa-images {
+    font-size: 30px;
+    color: rgb(47, 47, 47);
+}
+.work-in-progress-title {
+    font-size: 21px;
+    color: rgb(47, 47, 47);
+}
+.work-in-progress-detail {
+
 }

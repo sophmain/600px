@@ -42,7 +42,7 @@ function Navigation({ isLoaded }) {
 	}
 
 	const ulClassName = "discover-dropdown" + (showMenu ? "" : " hidden");
-	//const closeMenu = () => setShowMenu(false);
+	const closeMenu = () => setShowMenu(false);
 
 	let sessionLinks;
 	if (sessionUser) {
