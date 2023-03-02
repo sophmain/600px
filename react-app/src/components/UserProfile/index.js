@@ -55,7 +55,7 @@ const UserProfile = () => {
                 <div className='profile-info'>
                     {sessionUser.id === +userId && (
                         <div className='profile-edit-buttons'>
-                            <button className='edit-profile-button' onClick={(e)=> editProfile(e)}><i className="fa-regular fa-pen-to-square"></i></button>
+                            <button className='edit-profile-button-page' onClick={(e)=> editProfile(e)}><i className="fa-regular fa-pen-to-square"></i></button>
                         </div>
                     )}
                     {sessionUser.id !== +user.id && (

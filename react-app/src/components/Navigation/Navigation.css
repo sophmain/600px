@@ -86,6 +86,13 @@
   height: 35px;
   width: 35px;
   cursor: pointer;
+
+}
+.profile-button-nav {
+  height: 35px;
+  min-width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .profile-dropdown {
   background-color: white;

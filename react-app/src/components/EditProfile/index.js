@@ -13,7 +13,9 @@ function EditProfile() {
     const profileRef = useRef()
     const [image, setImage] = useState(null);
     const [profileImage, setProfileImage] = useState(null)
-    const [imageLoading, setImageLoading] = useState(false);
+    const [imageLoading, setImageLoading] = useState(false)
+    const [coverSubmited, setCoverSubmited] = useState(true) //hide confirm button after submit
+    const [profileSubmitted, setProfileSubmitted] = useState(true)
 
     //get logged in user to fill in current form data
     const sessionUser = useSelector((state) => state.session.user)
@@ -47,6 +49,7 @@ function EditProfile() {
         if (res.ok) {
             const data = await res.json(); //response after updating cover photo
             setImageLoading(false);
+            setCoverSubmited(false)
             dispatch(editUserCover(data.cover_photo_url))
 
         }
@@ -72,6 +75,7 @@ function EditProfile() {
         if (res.ok) {
             const data = await res.json(); //response after updating cover photo
             setImageLoading(false);
+            setProfileSubmitted(false)
             dispatch(editProfilePhoto(data.prof_photo_url))
 
         }
@@ -120,7 +124,7 @@ function EditProfile() {
         }
 
         const data = await dispatch(thunkEditUser(payload, sessionUser.id))
-        if (Array.isArray(data)){
+        if (Array.isArray(data)) {
             const formattedData = data.map((data) => data.split(': ')[1])
             setErrors(formattedData)
         } else {
@@ -130,13 +134,13 @@ function EditProfile() {
 
     return (
         <div className='edit-profile-page-container'>
+            <NavLink to={`/profile/${sessionUser.id}`} className='edit-profile-back'>
+                <i className="fa-solid fa-arrow-left-long"></i>
+            </NavLink>
             <div className='edit-profile-header'>
-                <NavLink to={`/profile/${sessionUser.id}`}>
-                    <i className="fa-solid fa-arrow-left-long"></i>
-                </NavLink>
                 <h1 className='edit-profile-title'>Edit Profile</h1>
             </div>
-            <div className='edit-profile-form-container'>
+            <div className='edit-profile-images-container'>
                 <div className='edit-profile-images'>
                     <div className='edit-profile-cover-photo'>
                         {sessionUser.cover_photo_url && (
@@ -155,45 +159,50 @@ function EditProfile() {
                         )}
                     </div>
                     <div className='edit-profile-cover-upload-submit-buttons'>
-                        <form onSubmit={handleCoverSubmit} className='upload-form'>
-                            <input
+                        <form onSubmit={handleCoverSubmit} className='upload-cover-form'>
+                            <button
+                                className='change-cover-button'
                                 type="button"
-                                value="change cover"
-                                onClick={refClick}
-                            />
+                                // value=''
+                                onClick={refClick}>
+                                <i class="fa-solid fa-camera"></i> Change cover photo
+                            </button>
                             <input
                                 type="file"
                                 accept="image/*"
-                                onChange={(e) => updateImage(e)}
+                                onChange={(e) => { updateImage(e); setCoverSubmited(true) }}
                                 ref={fileRef}
                                 style={{ display: 'none' }}
                             />
-                            {image && (
+                            {image && coverSubmited && (
                                 <>
-                                    <button className='submit-cover-photo' type="submit">Confirm selection</button>
-                                    {(imageLoading) && <p>Loading...</p>}
+                                    <button className='submit-cover-photo' type="submit">Confirm</button>
+                                    {(imageLoading) && <p className='loading-text-profile'>Loading...</p>}
                                 </>
                             )}
                         </form>
                     </div>
                     <div className='edit-profile-photo-upload-submit-buttons'>
-                        <form onSubmit={handleProfileSubmit} className='upload-form'>
-                            <input
-                                type="button"
-                                value="change profile"
-                                onClick={proRefClick}
-                            />
+                        <form onSubmit={handleProfileSubmit} className='upload-profile-form'>
+                            <div className='form-icons'>
+                                <button
+                                    className='change-profile-button'
+                                    type="button"
+                                    onClick={proRefClick}>
+                                    <i class="fa-solid fa-camera"></i>
+                                </button>
+                            </div>
                             <input
                                 type="file"
                                 accept="image/*"
-                                onChange={(e) => updateProfileImage(e)}
+                                onChange={(e) => { updateProfileImage(e); setProfileSubmitted(true) }}
                                 ref={profileRef}
                                 style={{ display: 'none' }}
                             />
-                            {profileImage && (
+                            {profileImage && profileSubmitted && (
                                 <>
-                                    <button className='submit-profile-photo' type="submit">Confirm selection</button>
-                                    {(imageLoading) && <p>Loading...</p>}
+                                    <button className='submit-profile-photo' type="submit">Confirm</button>
+                                    {(imageLoading) && <p className='loading-text-profile'>Loading...</p>}
                                 </>
                             )}
                         </form>
@@ -207,64 +216,68 @@ function EditProfile() {
                                 <li key={idx}>{error}</li>
                             ))}
                         </ul>
-                        <label>
-                            <p className='profile-form-label'>
-                                First Name
-                            </p>
-                            <input
-                                className='profile-form-input'
-                                id="firstName"
-                                type="text"
-                                name="firstName"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                            <p className='profile-form-label'>
-                                Last Name
-                            </p>
-                            <input
-                                className='profile-form-input'
-                                id="lastName"
-                                type="text"
-                                name="lastName"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                            <p className='profile-form-label'>
-                                City
-                            </p>
-                            <input
-                                className='profile-form-input'
-                                id="city"
-                                type="text"
-                                name="city"
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                            <p className='profile-form-label'>
-                                Country
-                            </p>
-                            <input
-                                className='profile-form-input'
-                                id="country"
-                                type="text"
-                                name="country"
-                                value={country}
-                                onChange={(e) => setCountry(e.target.value)}
-                            />
-                        </label>
-                        <label>
+                        <div className='profile-row-edit'>
+                            <label className='profile-form-padding'>
+                                <p className='profile-form-label'>
+                                    First Name
+                                </p>
+                                <input
+                                    className='profile-form-input'
+                                    id="firstName"
+                                    type="text"
+                                    name="firstName"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                />
+                            </label>
+                            <label className='profile-form-padding'>
+                                <p className='profile-form-label'>
+                                    Last Name
+                                </p>
+                                <input
+                                    className='profile-form-input'
+                                    id="lastName"
+                                    type="text"
+                                    name="lastName"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                            </label>
+                        </div>
+                        <div className='profile-row-edit'>
+                            <label className='profile-form-padding'>
+                                <p className='profile-form-label'>
+                                    City
+                                </p>
+                                <input
+                                    className='profile-form-input'
+                                    id="city"
+                                    type="text"
+                                    name="city"
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
+                                />
+                            </label>
+                            <label className='profile-form-padding'>
+                                <p className='profile-form-label'>
+                                    Country
+                                </p>
+                                <input
+                                    className='profile-form-input'
+                                    id="country"
+                                    type="text"
+                                    name="country"
+                                    value={country}
+                                    onChange={(e) => setCountry(e.target.value)}
+                                />
+                            </label>
+                        </div>
+                        <label className='profile-form-padding'>
                             <p className='profile-form-label'>
                                 About
                             </p>
                             <textarea
-                                className='profile-form-input'
+                                className='profile-textarea-input'
                                 id="about"
                                 type="textarea"
                                 name="about"
@@ -273,8 +286,10 @@ function EditProfile() {
                             />
                         </label>
                     </form>
-                    <button className='cancel-edit-profile' onClick={(e)=> cancelSubmit(e)}>Cancel</button>
-                    <button className='submit-edit-profile' onClick={(e)=> submitEditProfile(e)}>Submit</button>
+                    <div className='edit-profile-cancel-submit'>
+                        <button className='cancel-edit-profile' onClick={(e) => cancelSubmit(e)}>Cancel</button>
+                        <button className='submit-edit-profile' onClick={(e) => submitEditProfile(e)}>Save changes</button>
+                    </div>
                 </div>
             </div>
 

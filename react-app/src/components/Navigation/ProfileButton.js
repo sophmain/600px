@@ -49,7 +49,7 @@ function ProfileButton({ user }) {
     <>
       <button onClick={openMenu} className='profile-button'>
         {user && user.prof_photo_url && (
-          <img src={user.prof_photo_url} alt='profile dropdown' className='profile-button'></img>
+          <img src={user.prof_photo_url} alt='profile dropdown' className='profile-button-nav'></img>
         )}
         {user && !user.prof_photo_url && (
           <i class="fa-regular fa-user profile-button"></i>
