@@ -26,6 +26,7 @@ class Photo(db.Model):
     user = db.relationship('User', back_populates='photo')
     galleryphoto = db.relationship('GalleryPhotos', back_populates='photo')
     comments = db.relationship('Comment', cascade="all, delete-orphan", back_populates='photo')
+    likes = db.relationship('Like', cascade="all, delete-orphan", back_populates='photo')
     # gallery = db.relationship('Gallery', secondary=gallery_photos, back_populates='photo')
     upload = db.relationship('Upload', cascade="all, delete-orphan", single_parent=True, uselist=False, back_populates='photo')
 

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Photo, Upload, Comment, db
+from app.models import Photo, Upload, Comment, Like, db
 from ..forms.post_form import PhotoForm
 from ..forms.comment_form import CommentForm
 from app.awsupload import (
@@ -203,14 +203,12 @@ def all_comments(id):
 @photo_routes.route('/<int:id>/comments', methods=['POST'])
 @login_required
 def post_comment(id):
-    print('>>>>> in post comment route', id)
+
     found_photo = Photo.query.get(id)
-    print('>>>>> found photo', found_photo)
     res = request.get_json()
-    print('>>>>>>>>>res', res)
     form = CommentForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
-    print('>>>>>>>>> validate on submit?', form.validate_on_submit())
+
     if form.validate_on_submit():
         comment = Comment(
             photo_id=found_photo.id,
@@ -219,6 +217,50 @@ def post_comment(id):
         )
 
         db.session.add(comment)
+        db.session.commit()
+        return comment.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@photo_routes.route('/<int:id>/likes', methods=['GET'])
+def all_likes(id):
+    found_photo = Photo.query.get(id)
+
+    all_likes = found_photo.likes
+    likes = [like.to_dict() for like in all_likes]
+
+    like_res = []
+    for like in likes:
+
+        like_res.append({
+            'id': like['id'],
+            'userId': like['userId'],
+            'photoId': like['photoId'],
+            'like': like['like'],
+            'createdAt': like['createdAt'],
+            'userFirstName': like['userFirstName'],
+            'userLastName': like['userLastName'],
+            'userProfile': like['userProfile']
+        })
+
+    return jsonify(like_res)
+
+@photo_routes.route('/<int:id>/likes', methods=['POST'])
+@login_required
+def post_like(id):
+
+    found_photo = Photo.query.get(id)
+    res = request.get_json()
+    form = LikeForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        like = Like(
+            photo_id=found_photo.id,
+            user_id=current_user.id,
+            like=res['like'],
+        )
+
+        db.session.add(like)
         db.session.commit()
         return comment.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
