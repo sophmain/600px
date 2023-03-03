@@ -53,5 +53,6 @@ class Photo(db.Model):
             'description': self.description,
             'location': self.location,
             'uploadedFirstName': self.user.first_name,
-            'uploadedLastName': self.user.last_name
+            'uploadedLastName': self.user.last_name,
+            'profilePhoto': self.user.prof_photo_url
         }

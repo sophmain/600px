@@ -5,13 +5,15 @@ import photoReducer from './photo';
 import uploadReducer from './upload';
 import galleryReducer from './gallery';
 import commentsReducer from './comment';
+import likesReducer from './like';
 
 const rootReducer = combineReducers({
   session,
   photos: photoReducer,
   uploads: uploadReducer,
   galleries: galleryReducer,
-  comments: commentsReducer
+  comments: commentsReducer,
+  likes: likesReducer
 });
 
 

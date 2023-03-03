@@ -43,7 +43,7 @@ def edit_like(id):
 @like_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_like(id):
-    selected_like = like.query.get(id)
+    selected_like = Like.query.get(id)
 
     if selected_like:
         db.session.delete(selected_like)

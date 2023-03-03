@@ -7,34 +7,43 @@
     justify-content: center;
     min-height: 650px;
 }
+
 .single-photo-nav {
     width: 33%;
     cursor: pointer;
 }
+
 .nav-placeholder {
     width: 33%;
 }
+
 .photo-background {
     background-color: rgb(40, 40, 40);
 }
+
 .page-background {
     background-color: rgb(245, 245, 245);
 }
+
 .single-photo-size {
     image-resolution: from-image 300dpi;
     width: 33%;
 }
+
 .single-photo {
     width: 100%;
 
 }
-.fa-chevron-left, .fa-chevron-right {
+
+.fa-chevron-left,
+.fa-chevron-right {
     color: white;
     font-size: 24px;
     font-weight: 100px;
     width: 45px;
     height: 45px;
 }
+
 .fa-chevron-right {
     display: flex;
     justify-content: center;
@@ -44,6 +53,7 @@
     text-align: center;
     border-radius: 50%;
 }
+
 .fa-chevron-left {
     display: flex;
     justify-content: center;
@@ -53,34 +63,61 @@
     text-align: center;
     border-radius: 50%;
 }
-.fa-chevron-left:hover, .fa-chevron-right:hover {
+
+.fa-chevron-left:hover,
+.fa-chevron-right:hover {
     background-color: rgba(229, 229, 229, 0.342);
     transition: .7s;
 
 }
+
+.likes-chevron {
+    color: black;
+    position: relative;
+    font-size: 12px;
+    right: 8px;
+    top: 2px;
+}
+
+.likes-chevron:hover {
+    background-color: transparent;
+}
+
+.single-photo-likes-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
 .single-right-profile {
     display: flex;
     flex-direction: column;
 }
+
 .single-taken-updated {
     display: flex;
     flex-direction: row;
     font-size: 14px;
 }
+
 .single-lower-container {
     padding: 24px 16px 16px;
     display: flex;
     flex-direction: row;
 }
+
 .single-photo-about-container {
     background-color: white;
     width: 100%;
     padding: 24px;
 }
+
 .fa-pen-to-square {
     font-size: 22px;
 
 }
+
 .edit-photo-button {
     background-color: white;
     width: 35px;
@@ -90,85 +127,120 @@
     border-radius: 100px;
     cursor: pointer;
 }
+
 .edit-photo-button:hover {
     background-color: rgb(231, 231, 231);
     transition: .7s;
 }
+
 .single-photo-title {
     color: #222222;
     margin: 10px 0px;
 }
+
 .single-taken {
     font-weight: bold;
-    padding: 0px 5px 0px 0px;
+    padding-right: 5px;
 }
-.single-taken-data {
-    padding: 0px 10px 0px 0px;
+.single-taken-data{
+    margin-right: 10px;
 }
+.single-photo-likes {
+    margin-top: 30px;
+}
+
 .single-category-data {
     padding: 1px 0px 0px 0px;
 }
 
-.single-camera-info, .single-lense-info, .single-category-info, .single-location {
+.single-camera-info,
+.single-lense-info,
+.single-category-info,
+.single-location {
     display: flex;
     flex-direction: row;
     align-items: center;
+
+}
+
+.single-photo-description {
+    margin-top: 10px;
+}
+
+.single-camera-info {
+    margin-top: 20px;
 }
 
 .lense-photo {
     height: 30px;
     margin: 0px 8px 0px 0px;
 }
+
 .single-category {
     font-weight: bold;
     font-size: 16px;
     margin: 0px 5px 0px 0px;
 }
 
+.single-location-taken-uploaded {
+    display: flex;
+    flex-direction: row;
+}
+
 .fa-location-dot {
     color: white;
     text-shadow: -1px 1px 0 #555555,
-    1px 1px 0 #555555,
-   1px -1px 0 #555555,
-  -1px -1px 0 #555555;
-  margin-right: 8px;
+        1px 1px 0 #555555,
+        1px -1px 0 #555555,
+        -1px -1px 0 #555555;
+    margin-right: 8px;
 }
+
 .single-location {
     font-size: 14px;
+    margin-right: 10px;
 }
+
 .single-photo-owner {
     text-decoration: none;
     color: black;
     cursor: pointer;
 }
+
 .single-gallery-edit-buttons {
     display: flex;
     align-items: center;
 }
+
 .single-photo-comments-container {
     background-color: white;
     width: 600px;
-    padding: 24px;
+    padding: 15px 24px;
     margin-left: 20px;
     display: flex;
     flex-direction: column;
 }
+
 .small-profile-icon {
     width: 30px;
     height: 30px;
     border-radius: 50%;
 }
+
 .new-comment-box {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
+
 .post-comment-box {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     width: 100%;
 }
+
 .comment-text {
     font-size: 18px;
     padding: 10px 16px 10px 20px;
@@ -178,12 +250,15 @@
     height: 25px;
     margin-left: 8px;
 }
+
 .post-comment-form {
     width: 100%;
 }
+
 .comment-poster-prof {
     width: 10%;
 }
+
 .submit-cancel-comment {
     display: flex;
     flex-direction: row;
@@ -191,8 +266,9 @@
     width: 100%;
     margin-top: 10px;
 }
+
 .comment-post-button {
-    background-color:  rgb(41, 134, 247);
+    background-color: rgb(41, 134, 247);
     color: white;
     font-size: 16px;
     border-radius: 18px;
@@ -203,8 +279,9 @@
     height: 30px;
 
 }
+
 .comment-post-button-disabled {
-    background-color:  lightgray;
+    background-color: lightgray;
     color: white;
     font-size: 16px;
     border-radius: 18px;
@@ -213,6 +290,7 @@
     width: 150px;
     height: 30px;
 }
+
 .cancel-comment-button {
     color: rgb(41, 134, 247);
     background-color: transparent;
@@ -224,15 +302,18 @@
     cursor: pointer;
 
 }
+
 .posted-comments-container {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
+
 .posted-comments-header {
     font-size: 18px;
     margin: 10px 0px;
 }
+
 .single-comment {
     display: flex;
     flex-direction: row;
@@ -241,6 +322,7 @@
     overflow-wrap: normal;
     word-wrap: break-word;
 }
+
 .single-comment-text {
     display: flex;
     flex-direction: column;
@@ -248,18 +330,22 @@
     width: 100%;
     margin-left: 8px;
 }
+
 .commenter-name-box {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
 }
-.commenter-name{
+
+.commenter-name {
     font-weight: bold;
 }
+
 .comment-date {
     font-size: 12px;
 }
+
 .edit-comment-text-box {
     margin: 0px;
     display: flex;
@@ -272,26 +358,31 @@
 
 
 }
+
 .edit-delete-button-parent {
     display: flex;
     flex-direction: row;
     min-width: 90px;
 }
-.edit-comment-button, .delete-comment-button {
+
+.edit-comment-button,
+.delete-comment-button {
     background-color: transparent;
     border: none;
-    color:rgb(41, 134, 247);
+    color: rgb(41, 134, 247);
     font-size: 14px;
     cursor: pointer;
     text-align: left;
     margin: 0px 0px 0px 10px;
     padding: 0px;
 }
+
 .edit-comment-form-data {
     border-radius: 4px;
     color: lightgray;
 
 }
+
 .edit-comment-text {
     border: 1px solid lightgray;
     border-radius: 4px;
@@ -301,12 +392,56 @@
     width: 300px;
     margin-top: 5px;
 }
+
 .from-comment-to-profile {
     text-decoration: none;
     color: black;
     cursor: pointer;
 }
+
 .from-comment-to-profile:hover {
-    color:rgb(41, 134, 247);
+    color: rgb(41, 134, 247);
     transition: .5s;
+}
+
+.likes-modal-button-text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+}
+
+.photo-likes-modal {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0px;
+
+}
+
+.photo-likes-modal:hover .likes-chevron, .photo-likes-modal:hover{
+    color: rgb(41, 134, 247)
+}
+
+.likes-modal-people-person{
+    margin-left: 5px;
+}
+.large-profile-icon{
+    display: flex;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid lightgray;
+}
+.single-left-right-profile{
+    display: flex;
+    flex-direction: row;
+}
+.single-photo-edit-buttons{
+    margin-bottom: 20px;
 }

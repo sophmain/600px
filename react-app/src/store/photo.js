@@ -177,6 +177,7 @@ export const thunkGetGalleryPhotos = (galleryId) => async (dispatch) => {
 }
 
 const normalize = (arr) => {
+
     const resObj = {}
     arr.forEach((ele) => { resObj[ele.id] = ele })
     return resObj

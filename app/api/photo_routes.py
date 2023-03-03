@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import Photo, Upload, Comment, Like, db
 from ..forms.post_form import PhotoForm
 from ..forms.comment_form import CommentForm
+from sqlalchemy import and_
 from app.awsupload import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -44,7 +45,8 @@ def all_photos():
             'privacy': photo['privacy'],
             'description': photo['description'],
             'location': photo['location'],
-            'takenDate': photo['takenDate']
+            'takenDate': photo['takenDate'],
+            'profilePhoto': photo['profilePhoto']
         })
 
     return jsonify(photo_res)
@@ -235,7 +237,6 @@ def all_likes(id):
             'id': like['id'],
             'userId': like['userId'],
             'photoId': like['photoId'],
-            'like': like['like'],
             'createdAt': like['createdAt'],
             'userFirstName': like['userFirstName'],
             'userLastName': like['userLastName'],
@@ -244,23 +245,25 @@ def all_likes(id):
 
     return jsonify(like_res)
 
+# @photo_routes.route('/<int:id>/likes/<int:userId>', methods=['GET'])
+# def single_like(id):
+#     found_like = Like.query.filter(and_(Like.photo_id == id, Like.user_id == current_user.id))
+#     return found_like.to_dict()
+
 @photo_routes.route('/<int:id>/likes', methods=['POST'])
 @login_required
 def post_like(id):
 
     found_photo = Photo.query.get(id)
-    res = request.get_json()
-    form = LikeForm()
-    form["csrf_token"].data = request.cookies["csrf_token"]
+    # res = request.get_json()
+    # form = LikeForm()
+    # form["csrf_token"].data = request.cookies["csrf_token"]
 
-    if form.validate_on_submit():
-        like = Like(
-            photo_id=found_photo.id,
-            user_id=current_user.id,
-            like=res['like'],
-        )
+    like = Like(
+        photo_id=found_photo.id,
+        user_id=current_user.id,
+    )
 
-        db.session.add(like)
-        db.session.commit()
-        return comment.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    db.session.add(like)
+    db.session.commit()
+    return like.to_dict()
