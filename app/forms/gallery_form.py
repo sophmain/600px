@@ -19,4 +19,4 @@ class GalleryForm(FlaskForm):
     title = StringField('title', validators=[DataRequired(), title_length])
     description = StringField('description', validators=[description_length])
     visible = BooleanField('visible')
-    preview_image_id = IntegerField('previewImage')
+

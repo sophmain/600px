@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from "react-router-dom"
+import { useHistory, NavLink } from "react-router-dom"
 import { useModal } from "../../context/Modal"
 import { thunkLoadGalleries } from '../../store/gallery'
 import { thunkPostPhotoGallery } from "../../store/photo";
+import CreateGalleryModal from "../CreateGalleryModal";
+import OpenModalButton from "../OpenModalButton";
 import './AddToGalleryModal.css'
 
 const AddToGalleryModal = ({ photo }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { closeModal } = useModal()
+
     //const [selectedGallery, setSelectedGallery] = useState([])
     // console.log('selected gallery', selectedGallery)
 
@@ -30,7 +33,19 @@ const AddToGalleryModal = ({ photo }) => {
 
     return (
         <div className='your-galleries-select'>
+            <div className='exit-create-gallery-modal' onClick={closeModal}><i class="fa-solid fa-x"></i></div>
             <h1 className='add-to-gallery-header'>Add to Gallery</h1>
+
+            <div className='gallery-modal-button-submit'>
+                <div className='create-gallery-modal-plus'>
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <OpenModalButton
+                    className='create-gallery-modal'
+                    buttonText='Create new gallery'
+                    modalComponent={<CreateGalleryModal photo={photo} />}
+                />
+            </div>
             <div className='add-to-gallery-scroll'>
                 {galleries && myGalleries.map((gallery) => {
                     return (
