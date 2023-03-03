@@ -15,6 +15,7 @@ const SinglePhoto = () => {
     const [postButton, setPostButton] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
     const [currentComment, setCurrentComment] = useState('')
+    const [errors, setErrors] = useState([])
 
 
     useEffect(() => {
@@ -60,10 +61,17 @@ const SinglePhoto = () => {
         comment: editComment
     }
     //function to send comment, hide post button and clear comment box
-    const sendComment = () => {
-        dispatch(thunkPostComment(commentPayload, photoId))
-        setPostButton(false)
-        setNewComment('')
+    const sendComment = async (e) => {
+        e.preventDefault()
+        const data = await dispatch(thunkPostComment(commentPayload, photoId))
+        if (Array.isArray(data)) {
+            // const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(data)
+        } else {
+            setPostButton(false)
+            setNewComment('')
+        }
+
     }
 
     //function to edit comment user has already posted
@@ -191,6 +199,9 @@ const SinglePhoto = () => {
                                 </div>
                                 <form className='post-comment-form'>
                                     <label className='comment-form-data'>
+                                        <div className='errors-profile-edit'>
+                                            {errors.filter((error) => error.includes('comment')).length > 0 ? errors.filter((error) => error.includes('comment'))[0].split(': ')[1] : ''}
+                                        </div>
                                         <input
                                             className='comment-text'
                                             placeholder='Add a comment'
@@ -205,11 +216,11 @@ const SinglePhoto = () => {
                             </div>
                             <div className='submit-cancel-comment'>
                                 {postButton && (
-                                    <button className='cancel-comment-button' onClick={(e) => { e.preventDefault(); setPostButton(false) }}>Cancel</button>
+                                    <button className='cancel-comment-button' onClick={(e) => { e.preventDefault(); setPostButton(false); setNewComment('') }}>Cancel</button>
                                 )}
 
                                 {postButton && newComment !== '' && (
-                                    <button className='comment-post-button' onClick={sendComment}>Post</button>
+                                    <button className='comment-post-button' onClick={(e) => sendComment(e)}>Post</button>
                                 )}
                                 {postButton && newComment === '' && (
                                     <button className='comment-post-button-disabled' onClick={(e) => e.preventDefault()}>Post</button>

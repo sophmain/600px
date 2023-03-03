@@ -66,8 +66,8 @@ const EditPhoto = () => {
         const data = await dispatch(thunkEditPhoto(payload))
 
         if (Array.isArray(data)) {
-            const formattedData = data.map((data) => data.split(': ')[1])
-            setErrors(formattedData)
+            // const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(data)
         } else {
             history.push(`/photos/${payload.id}`)
         }
@@ -94,13 +94,6 @@ const EditPhoto = () => {
                         <h3 className='edit-form-title'>Edit photo</h3>
                         <p className='form-is-required'>* is required</p>
                         <form className='photo-form' onSubmit={handleSubmit}>
-                            {errors.length > 0 && (
-                                <ul className="validation-errors">
-                                    {errors.map((error, idx) => (
-                                        <li key={idx}>{error}</li>
-                                    ))}
-                                </ul>
-                            )}
                             <label>
                                 <p className="edit-input">
                                     Photo privacy
@@ -120,8 +113,10 @@ const EditPhoto = () => {
                                         </option>
                                     ))}
                                 </select>
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('privacy')).length > 0 ? errors.filter((error) => error.includes('privacy'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
-                            <div className='form-error'></div>
                             <label>
                                 <p className="edit-input">
                                     Title*
@@ -135,8 +130,10 @@ const EditPhoto = () => {
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('title')).length > 0 ? errors.filter((error) => error.includes('title'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
-                            <div className='form-error'></div>
                             <label>
                                 <p className="edit-input">
                                     Description
@@ -150,8 +147,11 @@ const EditPhoto = () => {
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('description')).length > 0 ? errors.filter((error) => error.includes('description'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
-                            <div className='form-error'></div>
+
                             <label>
                                 <p className="edit-input">
                                     Location
@@ -165,8 +165,10 @@ const EditPhoto = () => {
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('location')).length > 0 ? errors.filter((error) => error.includes('location'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
-                            <div className='form-error'></div>
                             <label>
                                 <p className="edit-input">
                                     Category*
@@ -186,8 +188,10 @@ const EditPhoto = () => {
                                         </option>
                                     ))}
                                 </select>
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('category')).length > 0 ? errors.filter((error) => error.includes('category'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
-                            <div className='form-error'></div>
                             <label>
                                 <p className="edit-input">
                                     Camera
@@ -201,8 +205,10 @@ const EditPhoto = () => {
                                     value={cameraType}
                                     onChange={(e) => setCameraType(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('cameraType')).length > 0 ? errors.filter((error) => error.includes('cameraType'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
-                            <div className='form-error'></div>
                             <label>
                                 <p className="edit-input">
                                     Lense
@@ -216,8 +222,10 @@ const EditPhoto = () => {
                                     value={lenseType}
                                     onChange={(e) => setLenseType(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('lenseType')).length > 0 ? errors.filter((error) => error.includes('lenseType'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
-                            <div className='form-error'></div>
                             <label>
                                 <p className="edit-input">
                                     Date taken
@@ -230,6 +238,9 @@ const EditPhoto = () => {
                                     value={takenDate}
                                     onChange={(e) => setTakenDate(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('takenDate')).length > 0 ? errors.filter((error) => error.includes('takenDate'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
                             <button className='delete-photo-button' onClick={deletePhoto}>Delete photo</button>
                             <button className="create-product-submit-button" type="submit">Save changes</button>

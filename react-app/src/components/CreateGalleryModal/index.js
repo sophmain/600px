@@ -42,8 +42,8 @@ const CreateGalleryModal = ({ photo }) => {
 
 
         if (Array.isArray(data)) {
-            const formattedData = data.map((data) => data.split(': ')[1])
-            setErrors(formattedData)
+            // const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(data)
         } else {
             await setCreatedGallery(data)
 
@@ -77,6 +77,9 @@ const CreateGalleryModal = ({ photo }) => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />
+                    <div className='errors-profile-edit'>
+                        {errors.filter((error) => error.includes('title')).length > 0 ? errors.filter((error) => error.includes('title'))[0].split(': ')[1] : ''}
+                    </div>
                 </label>
                 <label>
                     <div className="gallery-checkbox">
