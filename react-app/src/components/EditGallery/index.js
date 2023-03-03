@@ -40,8 +40,8 @@ const EditGallery = () => {
         const data = await dispatch(thunkEditGallery(payload))
 
         if (Array.isArray(data)) {
-            const formattedData = data.map((data) => data.split(': ')[1])
-            setErrors(formattedData)
+            // const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(data)
         } else {
             history.push(`/galleries/${payload.id}`)
         }
@@ -65,13 +65,6 @@ const EditGallery = () => {
             <div className='create-gallery-form-container'>
 
                 <form className='gallery-form' onSubmit={handleSubmit}>
-                    {errors.length > 0 && (
-                        <ul className="validation-errors">
-                            {errors.map((error, idx) => (
-                                <li key={idx}>{error}</li>
-                            ))}
-                        </ul>
-                    )}
                     <label>
                         <p className='gallery-form-label'>
                             Title*
@@ -84,6 +77,9 @@ const EditGallery = () => {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
+                        <div className='errors-profile-edit'>
+                            {errors.filter((error) => error.includes('title')).length > 0 ? errors.filter((error) => error.includes('title'))[0].split(': ')[1] : ''}
+                        </div>
                     </label>
                     <div className='form-error'></div>
                     <label>
@@ -98,6 +94,9 @@ const EditGallery = () => {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
+                        <div className='errors-profile-edit'>
+                            {errors.filter((error) => error.includes('description')).length > 0 ? errors.filter((error) => error.includes('description'))[0].split(': ')[1] : ''}
+                        </div>
                     </label>
                     <div className='form-error'></div>
                     <label>

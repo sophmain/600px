@@ -125,12 +125,13 @@ function EditProfile() {
 
         const data = await dispatch(thunkEditUser(payload, sessionUser.id))
         if (Array.isArray(data)) {
-            const formattedData = data.map((data) => data.split(': ')[1])
-            setErrors(formattedData)
+            // const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(data)
         } else {
             history.push(`/profile/${sessionUser.id}`)
         }
     }
+    console.log('errors', errors)
 
     return (
         <div className='edit-profile-page-container'>
@@ -212,9 +213,6 @@ function EditProfile() {
                 <div className='edit-profile-form-container'>
                     <form className='edit-profile-form'>
                         <ul className="validation-errors">
-                            {errors.map((error, idx) => (
-                                <li key={idx}>{error}</li>
-                            ))}
                         </ul>
                         <div className='profile-row-edit'>
                             <label className='profile-form-padding'>
@@ -229,6 +227,9 @@ function EditProfile() {
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('firstName')).length > 0 ? errors.filter((error) => error.includes('firstName'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
                             <label className='profile-form-padding'>
                                 <p className='profile-form-label'>
@@ -242,6 +243,9 @@ function EditProfile() {
                                     value={lastName}
                                     onChange={(e) => setLastName(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('lastName')).length > 0 ? errors.filter((error) => error.includes('lastName'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
                         </div>
                         <div className='profile-row-edit'>
@@ -257,6 +261,9 @@ function EditProfile() {
                                     value={city}
                                     onChange={(e) => setCity(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('city')).length > 0 ? errors.filter((error) => error.includes('city'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
                             <label className='profile-form-padding'>
                                 <p className='profile-form-label'>
@@ -270,6 +277,9 @@ function EditProfile() {
                                     value={country}
                                     onChange={(e) => setCountry(e.target.value)}
                                 />
+                                <div className='errors-profile-edit'>
+                                    {errors.filter((error) => error.includes('country')).length > 0 ? errors.filter((error) => error.includes('country'))[0].split(': ')[1] : ''}
+                                </div>
                             </label>
                         </div>
                         <label className='profile-form-padding'>
@@ -284,6 +294,9 @@ function EditProfile() {
                                 value={about}
                                 onChange={(e) => setAbout(e.target.value)}
                             />
+                            <div className='errors-profile-edit'>
+                                {errors.filter((error) => error.includes('about')).length > 0 ? errors.filter((error) => error.includes('about'))[0].split(': ')[1] : ''}
+                            </div>
                         </label>
                     </form>
                     <div className='edit-profile-cancel-submit'>

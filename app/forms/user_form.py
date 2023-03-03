@@ -19,19 +19,19 @@ def lastname_length(form, field):
 def city_length(form, field):
     city = field.data
     print('city in form', city)
-    if len(city) > 50:
+    if city and len(city) > 50:
         raise ValidationError('City must be less than 50 characters.')
 
 def country_length(form, field):
     country = field.data
     print('country in form', country)
-    if len(country) > 50:
+    if country and len(country) > 50:
         raise ValidationError('Country must be less than 50 characters.')
 
 def about_length(form, field):
     about = field.data
     print('about in form', about)
-    if len(about) > 500:
+    if about and len(about) > 500:
         raise ValidationError('About must be less than 500 characters.')
 
 

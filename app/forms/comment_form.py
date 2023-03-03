@@ -6,7 +6,7 @@ from app.models import Comment
 def comment_length(form, field):
     comment = field.data
     if comment and len(comment) > 500:
-        raise ValidationError('Comment type must be less than 500 characters.')
+        raise ValidationError('Comment must be less than 500 characters.')
 
 
 
