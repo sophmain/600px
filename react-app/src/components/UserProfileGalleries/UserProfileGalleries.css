@@ -20,6 +20,10 @@
     padding: 12px 22px;
     font-weight: 600;
 }
+.create-button-gallery:hover{
+    background-color: #2986f7;
+    transition: .7s;
+}
 .work-in-progress-galleries {
     display: flex;
     flex-direction: column;

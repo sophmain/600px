@@ -17,6 +17,7 @@ import CreateGalleryForm from "./components/CreateGalleryForm";
 import EditProfile from "./components/EditProfile";
 import SplashPage from "./components/SplashPage";
 import UserLikes from "./components/UserLikes";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }

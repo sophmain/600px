@@ -26,6 +26,7 @@ const UserProfile = () => {
         photoArr = Object.values(photos)
     }
     const userPhotos = photoArr.filter((photo) => photo.userId === user.id)
+    console.log('userPhotos', userPhotos)
 
     const toSinglePhoto = (photo) => {
         history.push(`/photos/${photo.id}`)
@@ -80,7 +81,18 @@ const UserProfile = () => {
                 <div className='user-photos-mapped'>
                     {userPhotos && userPhotos.map((photo) => {
                         return (
-                            <img src={photo.photoUrl} className='image-size' onClick={() => toSinglePhoto(photo)} style={{ cursor: 'pointer' }} alt='user'></img>
+                            <div className='photo-card'>
+                                <div className='image-overlay-3'>
+                                    <h4 className='overlay-3-text'>{photo.title}</h4>
+
+                                </div>
+                                <img src={photo.photoUrl} className='image-size' onClick={() => toSinglePhoto(photo)} style={{ cursor: 'pointer' }} alt='user'></img>
+                                <div className='image-overlay-4'>
+                                    <div className='overlay-2-text overlay-bottom-text'>
+                                        {photo.uploadedFirstName} {photo.uploadedLastName}
+                                    </div>
+                                </div>
+                            </div>
                         )
                     })}
                     {userPhotos.length === 0 && sessionUser.id === +user.id && (

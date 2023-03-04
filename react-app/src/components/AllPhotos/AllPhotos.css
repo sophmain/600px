@@ -23,6 +23,17 @@
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+.selected-subheader:hover {
+    color: #2986f7;
+    border-bottom: 2px solid #2986f7;
+}
+.not-selected-subheader:hover {
+    border-bottom: 2px solid #2986f7;
+    padding-bottom: 5px;
+    color: #2986f7;
+
 }
 .subheader-home {
     display: flex;
@@ -100,6 +111,15 @@
 
 .overlay-2-text {
     display: flex;
+    align-items: center;
+    font-weight: lighter;
+    align-self: left;
+    margin: 0px;
+    font-size: 16px;
+}
+
+.overlay-3-text {
+    display: flex;
     font-weight: lighter;
     align-self: left;
     margin: 0px;
@@ -145,16 +165,35 @@
     transition: .5s;
 }
 .all-photo-like-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: transparent;
     border: none;
     color: white;
     font-size: 26px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.all-photo-like-button:hover, .all-photo-notlike-button:hover {
+
+    background-color: rgba(229, 229, 229, 0.342);
+    transition: .5s;
 }
 .all-photo-notlike-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: transparent;
     color: white;
     font-size: 26px;
     border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 .overlay-right-buttons{
     display: flex;

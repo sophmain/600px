@@ -61,7 +61,8 @@ const AllPhotos = () => {
                             <img className='photo-size' src={photo.photoUrl} alt='main page'></img>
                             <div className='image-overlay'>
                                 <div className='overlay-2-text overlay-bottom-text'>
-                                    {photo.photoFirstName} {photo.photoLastName}
+                                    <img className='small-profile-icon' src={photo.profilePhoto} alt='profile' style={{marginLeft: '5px'}}></img>
+                                    <div style={{paddingLeft: '5px'}}>{photo.photoFirstName} {photo.photoLastName}</div>
                                 </div>
                                 {sessionUser && (
                                     <div className='overlay-right'>
