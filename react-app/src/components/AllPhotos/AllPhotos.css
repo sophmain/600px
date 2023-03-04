@@ -31,7 +31,7 @@
     width: 100%;
     position: sticky;
     top: 63px;
-    z-index: 2;
+    z-index: 1;
     height: 27px;
 }
 .all-photos {
@@ -75,7 +75,7 @@
     font-size: 20px;
     padding: 0px 20px 0px 5px;
     text-align: center;
-    z-index: 1;
+    z-index: 0;
     margin-bottom: 24px;
 }
 .image-overlay-2 {
@@ -90,7 +90,7 @@
     font-size: 20px;
     padding: 10px 20px 0px 5px;
     text-align: center;
-    z-index: 1;
+    z-index: 0;
     margin-top: 20px;
 }
 .photo-card:hover .image-overlay , .photo-card:hover .image-overlay-2{
@@ -143,6 +143,22 @@
 
     background-color: rgba(229, 229, 229, 0.342);
     transition: .5s;
+}
+.all-photo-like-button{
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 26px;
+}
+.all-photo-notlike-button{
+    background-color: transparent;
+    color: white;
+    font-size: 26px;
+    border: none;
+}
+.overlay-right-buttons{
+    display: flex;
+    flex-direction: row;
 }
 
 @media screen and (max-width: 1200px) {

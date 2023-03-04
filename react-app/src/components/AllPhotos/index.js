@@ -12,7 +12,6 @@ import { thunkLoadAllLikes, thunkPostLike, thunkDeleteLike } from '../../store/l
 const AllPhotos = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    // const [liked, setLiked] = useState(false)
 
     useEffect(() => {
         dispatch(thunkLoadPhotos())
@@ -23,11 +22,8 @@ const AllPhotos = () => {
 
     const allPhotosObj = useSelector((state) => state.photos.allPhotos)
     const sessionUser = useSelector((state) => state.session.user)
-    const allLikes = useSelector((state)=> state.likes.allLikes)
+    const allLikes = useSelector((state) => state.likes.allLikes)
 
-
-
-    // console.log('all likes', allLikes)
 
     if (!allPhotosObj) return null
 
@@ -38,27 +34,7 @@ const AllPhotos = () => {
         e.preventDefault()
         history.push(`/photos/${id}`)
     }
-    let isLiked;
-    console.log('isLiked', isLiked)
-    let likeId;
-    // const likePhoto = (photo) => {
-    //     dispatch(thunkPostLike(photo.id, sessionUser.id))
-    // }
-    const likeUnlike = (photo) => {
 
-        const likesArr = Object.values(allLikes).filter((like)=> like.photoId === photo.id)
-        console.log('likesArr', likesArr)
-        if (likesArr.filter(like => like.userId === sessionUser.id).length > 0) {
-            likeId = likesArr.filter(like => like.userId === sessionUser.id)[0].id
-            console.log('isliked in remove func', likeId)
-            dispatch(thunkDeleteLike(likeId))
-            return isLiked = false
-
-        } else {
-            dispatch(thunkPostLike(photo.id, sessionUser.id))
-            return isLiked = true
-        }
-    }
     if (!allLikes) return null
     return (
         <div className='mapped-photo-container'>
@@ -70,6 +46,10 @@ const AllPhotos = () => {
             </div>
             <ul className='all-photos' >
                 {photos.map((photo) => {
+                    const likesArr = Object.values(allLikes).filter((like) => like.photoId === photo.id)
+                    const isLiked = likesArr.filter(like => like.userId === sessionUser?.id).length > 0
+                    const likeId = likesArr.filter(like => like.userId === sessionUser?.id)[0]?.id
+
                     return (
                         <div className='photo-card' key={photo.id} onClick={(e) => PhotoClick(e, photo.id)}>
                             {/* <div className='all-photo-image'>
@@ -85,12 +65,12 @@ const AllPhotos = () => {
                                 </div>
                                 {sessionUser && (
                                     <div className='overlay-right'>
-                                        <div className='all-photos-like-button'>
+                                        <div className='overlay-right-buttons'>
                                             {isLiked === false && (
-                                                <button className='single-photo-like-button' onClick={(e) => {likeUnlike(photo); e.stopPropagation()}}><i className="fa-regular fa-heart"></i></button>
+                                                <button className='all-photo-notlike-button' onClick={(e) => {dispatch(thunkPostLike(photo.id, sessionUser.id)); e.stopPropagation() }}><i className="fa-regular fa-heart"></i></button>
                                             )}
                                             {isLiked === true && (
-                                                <button className='single-photo-like-button' onClick={(e) => {likeUnlike(photo); e.stopPropagation()}}><i className="fa-solid fa-heart heart-liked-color"></i></button>
+                                                <button className='all-photo-like-button' onClick={(e) => { dispatch(thunkDeleteLike(likeId)); e.stopPropagation() }}><i className="fa-solid fa-heart heart-liked-color"></i></button>
                                             )}
                                             <div className='gallery-modal-button' onClick={e => e.stopPropagation()}>
                                                 <OpenModalButton
