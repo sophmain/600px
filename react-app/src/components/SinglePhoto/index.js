@@ -2,7 +2,10 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams, NavLink } from "react-router-dom"
 import { thunkLoadAllComments, thunkPostComment, thunkEditComment, thunkDeleteComment } from "../../store/comment"
+import { thunkLoadAllLikes, thunkPostLike, thunkDeleteLike } from "../../store/like"
 import { thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
+import PhotoLikesModal from "../PhotoLikesModal"
+import OpenModalButton from "../OpenModalButton"
 import './SinglePhoto.css'
 
 const SinglePhoto = () => {
@@ -15,6 +18,7 @@ const SinglePhoto = () => {
     const [postButton, setPostButton] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
     const [currentComment, setCurrentComment] = useState('')
+    const [liked, setLiked] = useState(false)
     const [errors, setErrors] = useState([])
 
 
@@ -22,6 +26,8 @@ const SinglePhoto = () => {
         dispatch(thunkLoadSinglePhoto(photoId))
         dispatch(thunkLoadPhotos())
         dispatch(thunkLoadAllComments(photoId))
+        dispatch(thunkLoadAllLikes())
+
 
     }, [dispatch, photoId])
 
@@ -29,6 +35,8 @@ const SinglePhoto = () => {
     const photo = useSelector((state) => state.photos.singlePhoto)
     const comments = useSelector((state) => state.comments.photoComments)
     const allPhotos = useSelector((state) => state.photos.allPhotos) //get length to prevent right arrow on last img
+    const likes = useSelector((state) => state.likes.allLikes)
+
     if (!comments) return null
     const commentsArr = Object.values(comments)
     // sort the comments by ascending time posted
@@ -37,6 +45,21 @@ const SinglePhoto = () => {
     if (!allPhotos) return null
     const allPhotosArr = Object.values(allPhotos)
     if (!photo) return null
+
+    if (!likes) return null
+    const likesArr = Object.values(likes)
+
+    // set liked to true or false to display red heart or empty heart
+    let isLiked = false;
+    let likeId;
+
+    // check if like is in all likes array
+    const filteredLikes = likesArr.filter(like => ((like.userId === user.id) && like.photoId === +photoId))
+    if (filteredLikes.length > 0) {
+        isLiked = true
+        likeId = likesArr.filter(like => (like.userId === user.id && like.photoId === +photoId))[0].id
+        console.log('likeid', likeId)
+    }
 
     const editPhoto = () => {
         history.push(`/manage/${photo.id}`)
@@ -85,6 +108,21 @@ const SinglePhoto = () => {
     const deleteComment = (commentId) => {
         dispatch(thunkDeleteComment(commentId))
     }
+
+    // function to like a photo
+    const likePhoto = () => {
+        dispatch(thunkPostLike(photoId, user.id))
+
+    }
+
+    // function to remove a like
+    const removeLike = () => {
+        console.log(likeId)
+        dispatch(thunkDeleteLike(likeId))
+        isLiked = false
+
+    }
+
     // function to format the date a user posted a comment
     const postDate = (postDate) => {
         const now = new Date()
@@ -136,13 +174,28 @@ const SinglePhoto = () => {
             </div>
             <div className='single-lower-container'>
                 <div className='single-photo-about-container'>
-                    {user && user.id === photo.userId && (
-                        <div className='single-photo-edit-buttons'>
+                    <div className='single-photo-edit-buttons'>
+                        {isLiked === false && (
+                            <button className='single-photo-like-button' onClick={likePhoto}><i className="fa-regular fa-heart"></i></button>
+                        )}
+                        {isLiked === true && (
+                            <button className='single-photo-like-button' onClick={removeLike}><i className="fa-solid fa-heart heart-liked-color"></i></button>
+                        )}
+                        {user && user.id === photo.userId && (
                             <button className='edit-photo-button' onClick={editPhoto}><i className="fa-regular fa-pen-to-square"></i></button>
-                        </div>
-                    )}
+                        )}
+                    </div>
+
                     <div className='single-photo-profile-info'>
                         <div className='single-left-right-profile'>
+                            <div className='single-left-profile'>
+                                {photo.profilePhoto && (
+                                    <img className='large-profile-icon' src={photo.profilePhoto} alt='profile'></img>
+                                )}
+                                {photo.profilePhoto === null && (
+                                    <i className="fa-solid fa-user-large large-profile-icon"></i>
+                                )}
+                            </div>
                             <div className='single-right-profile'>
                                 <h2 className='single-photo-title'>{photo.title}</h2>
                                 <div>by
@@ -151,25 +204,53 @@ const SinglePhoto = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='single-location'>
-
+                    <div className='single-location-taken-uploaded'>
+                        {photo.location && (
+                            <div className='single-location'>
+                                <i className="fa-solid fa-location-dot"></i>
+                                <p>{photo.location}</p>
+                            </div>
+                        )}
+                        <div className='single-taken-updated'>
+                            {photo.takenDate && (
+                                <>
+                                    <p className='single-taken'>Taken: </p>
+                                    <p className='single-taken-data'>{photo.takenDate.slice(0, 10)}</p>
+                                </>
+                            )}
+                            <p className='single-taken'>Uploaded:</p>
+                            <p className='single-taken-data'>{photo.uploadDate.slice(0, 16)}</p>
+                        </div>
                     </div>
-                    {photo.location && (
-                        <div className='single-location'>
-                            <i className="fa-solid fa-location-dot"></i>
-                            <p>{photo.location}</p>
+
+
+                    <div className='single-photo-description'>
+                        {photo.description}
+                    </div>
+                    {filteredLikes.length > 0 && (
+                        <div className='single-photo-likes'>
+                            <div className='photo-likes-modal-button'>
+                                <OpenModalButton
+                                    className='photo-likes-modal'
+                                    buttonText={
+                                        <span className='likes-modal-button-text'>
+                                            {filteredLikes.length}
+                                            {filteredLikes.length === 1 && (
+                                                <div className='likes-modal-people-person'> person liked this photo</div>
+                                            )}
+                                            {filteredLikes.length !== 1 && (
+                                                <div className='likes-modal-people-person'> people liked this photo</div>
+                                            )}
+
+                                            <i className="fa-solid fa-chevron-right likes-chevron"></i>
+                                        </span>
+                                    }
+                                    modalComponent={<PhotoLikesModal photoId={ photoId } />}
+                                />
+                            </div>
                         </div>
                     )}
-                    <div className='single-taken-updated'>
-                        {photo.takenDate && (
-                            <>
-                                <p className='single-taken'>Taken: </p>
-                                <p className='single-taken-data'>{photo.takenDate.slice(0, 10)}</p>
-                            </>
-                        )}
-                        <p className='single-taken'>Uploaded:</p>
-                        <p className='single-taken-data'>{photo.uploadDate.slice(0, 16)}</p>
-                    </div>
+
                     {photo.cameraType && (
                         <div className='single-camera-info'>
                             <img className='lense-photo' src='https://cdn-icons-png.flaticon.com/512/4584/4584897.png' alt='camera'></img>
@@ -191,11 +272,18 @@ const SinglePhoto = () => {
 
                 </div>
                 <div className='single-photo-comments-container'>
-                    {user && user.prof_photo_url && (
+                    {user && (
                         <div className='new-comment-box'>
                             <div className='post-comment-box'>
                                 <div className='comment-poster-prof'>
-                                    <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                                    <div className='errors-profile-edit'></div>
+                                    {user.prof_photo_url && (
+                                        <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                                    )}
+                                    {user.prof_photo_url === null && (
+                                        <i className="fa-regular fa-user create-comment-profile-placeholder"></i>
+
+                                    )}
                                 </div>
                                 <form className='post-comment-form'>
                                     <label className='comment-form-data'>
@@ -236,7 +324,12 @@ const SinglePhoto = () => {
                         {sortedComments.map((comment) => {
                             return (
                                 <div key={comment.id} className='single-comment'>
-                                    <img className='small-profile-icon' src={comment.userProfile} alt='commenter profile'></img>
+                                    {comment.userProfile && (
+                                        <img className='small-profile-icon' src={comment.userProfile} alt='commenter profile'></img>
+                                    )}
+                                    {comment.userProfile === null && (
+                                        <i className="fa-regular fa-user create-comment-profile-placeholder"></i>
+                                    )}
                                     <div className='single-comment-text'>
                                         <div className='commenter-name-box'>
                                             <div className='commenter-name'>
@@ -247,7 +340,7 @@ const SinglePhoto = () => {
                                             <div className='comment-date'>{postDate(comment.createdAt)}</div>
                                         </div>
                                         {!showEditForm && (
-                                            <p className='edit-comment-text-box'>
+                                            <div className='edit-comment-text-box'>
                                                 {comment.comment}
                                                 {user && user.id === comment.userId && (
                                                     <div className='edit-delete-button-parent'>
@@ -256,7 +349,7 @@ const SinglePhoto = () => {
                                                     </div>
                                                 )}
 
-                                            </p>
+                                            </div>
                                         )}
 
 

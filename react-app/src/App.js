@@ -16,6 +16,7 @@ import EditGallery from "./components/EditGallery";
 import CreateGalleryForm from "./components/CreateGalleryForm";
 import EditProfile from "./components/EditProfile";
 import SplashPage from "./components/SplashPage";
+import UserLikes from "./components/UserLikes";
 
 
 function App() {
@@ -72,6 +73,9 @@ function App() {
           </Route>
           <Route exact path='/profile/:userId/edit'>
             <EditProfile />
+          </Route>
+          <Route exact path='/profile/:userId/likes'>
+            <UserLikes />
           </Route>
         </Switch>
       )}
