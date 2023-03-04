@@ -125,6 +125,7 @@
     border: none;
     padding: 0px;
     border-radius: 100px;
+    margin-right: 10px;
     cursor: pointer;
 }
 
@@ -223,8 +224,10 @@
 
 .small-profile-icon {
     min-width: 30px;
+    width: 30px;
     height: 30px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .new-comment-box {
@@ -317,6 +320,7 @@
 .single-comment {
     display: flex;
     flex-direction: row;
+    align-items: center;
     width: 100%;
     margin-bottom: 20px;
     overflow-wrap: normal;
@@ -466,6 +470,48 @@
     background-color: transparent;
     border: none;
     font-size: 24px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
     margin-right: 10px;
     cursor: pointer;
+}
+.single-photo-like-button:hover {
+    background-color: rgb(231, 231, 231);
+    transition: .7s;
+}
+.add-gallery-modal-single-photo-page{
+    position: relative;
+    bottom: 0px;
+    display: flex;
+    color: #222222;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #222222;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0px 1px 2px 1px;
+
+}
+.add-gallery-modal-single-photo-page:hover {
+    background-color: rgb(231, 231, 231);
+    transition: .7s;
+}
+.gallery-modal-button-single-photo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.gallery-modal-button-single-photo:hover {
+    background-color: rgb(231, 231, 231);
+    transition: .5s;
 }

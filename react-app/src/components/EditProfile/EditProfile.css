@@ -116,7 +116,7 @@
     font-weight: bold;
     text-align: center;
 }
-.change-cover-button:hover {
+.change-cover-button:hover, .change-profile-button:hover {
     transition: .7s;
     background-color: rgb(228, 228, 228);
 }
@@ -132,8 +132,8 @@
     cursor: pointer;
     height: 40px;
     width: 40px;
-
 }
+
 .submit-cover-photo {
     background-color: white;
     min-width: 90px;
@@ -211,6 +211,14 @@
     border: none;
     width: 165px;
     cursor: pointer;
+}
+.submit-edit-profile:hover{
+    background-color: #2986f7;
+    transition: .7s;
+}
+.cancel-edit-profile:hover{
+    color: #2986f7;
+    transition: .7s;
 }
 .cancel-edit-profile {
     background-color: white;

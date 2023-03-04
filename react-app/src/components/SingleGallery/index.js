@@ -93,7 +93,7 @@ const SingleGallery = () => {
                     return (
                         <div className='photo-card' key={index} onClick={(e) => PhotoClick(e, photo.id)}>
                             <div className='image-overlay-3'>
-                                <h4 className='overlay-2-text'>{photo.title}</h4>
+                                <h4 className='overlay-3-text'>{photo.title}</h4>
                                 {user && user.id === gallery.userId && (
                                     <button className='delete-from-gallery-button' onClick={(e) => { e.stopPropagation(); deleteFromGallery(photo) }}>
                                         <i className="fa-regular fa-trash-can"></i>
@@ -104,7 +104,7 @@ const SingleGallery = () => {
                             <img className='image-size' src={photo.photoUrl} alt='one in gallery'></img>
                             <div className='image-overlay-4'>
                                 <div className='overlay-2-text overlay-bottom-text'>
-                                    {photo.photoFirstName} {photo.photoLastName}
+                                    {photo.uploadedFirstName} {photo.uploadedLastName}
                                 </div>
                             </div>
                         </div>
