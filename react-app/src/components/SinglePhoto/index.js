@@ -6,6 +6,7 @@ import { thunkLoadAllLikes, thunkPostLike, thunkDeleteLike } from "../../store/l
 import { thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
 import PhotoLikesModal from "../PhotoLikesModal"
 import OpenModalButton from "../OpenModalButton"
+import AddToGalleryModal from "../AddToGalleryModal"
 import './SinglePhoto.css'
 
 const SinglePhoto = () => {
@@ -181,6 +182,13 @@ const SinglePhoto = () => {
                         {isLiked === true && (
                             <button className='single-photo-like-button' onClick={removeLike}><i className="fa-solid fa-heart heart-liked-color"></i></button>
                         )}
+                        <div className='gallery-modal-button-single-photo' onClick={e => e.stopPropagation()}>
+                            <OpenModalButton
+                                className='add-gallery-modal-single-photo-page'
+                                buttonText='+'
+                                modalComponent={<AddToGalleryModal photo={photo} />}
+                            />
+                        </div>
                         {user && user.id === photo.userId && (
                             <button className='edit-photo-button' onClick={editPhoto}><i className="fa-regular fa-pen-to-square"></i></button>
                         )}
@@ -245,7 +253,7 @@ const SinglePhoto = () => {
                                             <i className="fa-solid fa-chevron-right likes-chevron"></i>
                                         </span>
                                     }
-                                    modalComponent={<PhotoLikesModal photoId={ photoId } />}
+                                    modalComponent={<PhotoLikesModal photoId={photoId} />}
                                 />
                             </div>
                         </div>

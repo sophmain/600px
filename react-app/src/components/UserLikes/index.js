@@ -41,7 +41,18 @@ const UserLikes = () => {
                 <div className='user-photos-mapped'>
                     {userLikes.length > 0 && photosArr.map((photo) => {
                         return (
-                            <img key={photo.id} className=' image-size user-mapped-liked-photo' src={photo.photoUrl} alt='liked' onClick={() => toSinglePhoto(photo.id)} style={{ cursor: 'pointer' }}></img>
+                            <div className='photo-card'>
+                                <div className='image-overlay-3'>
+                                    <h4 className='overlay-3-text'>{photo.title}</h4>
+
+                                </div>
+                                <img key={photo.id} className=' image-size user-mapped-liked-photo' src={photo.photoUrl} alt='liked' onClick={() => toSinglePhoto(photo.id)} style={{ cursor: 'pointer' }}></img>
+                                <div className='image-overlay-4'>
+                                    <div className='overlay-2-text overlay-bottom-text'>
+                                        {photo.photoFirstName} {photo.photoLastName}
+                                    </div>
+                                </div>
+                            </div>
                         )
                     })}
                     {userLikes.length === 0 && (
