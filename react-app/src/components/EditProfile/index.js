@@ -156,7 +156,7 @@ function EditProfile() {
                             <img className='edit-prof-photo' src={sessionUser.prof_photo_url} alt='profile'></img>
                         )}
                         {!sessionUser.prof_photo_url && (
-                            <i class="fa-solid fa-user-large edit-prof-photo"></i>
+                            <i className="fa-solid fa-user-large edit-prof-photo"></i>
                         )}
                     </div>
                     <div className='edit-profile-cover-upload-submit-buttons'>
@@ -166,7 +166,7 @@ function EditProfile() {
                                 type="button"
                                 // value=''
                                 onClick={refClick}>
-                                <i class="fa-solid fa-camera"></i> Change cover photo
+                                <i className="fa-solid fa-camera"></i> Change cover photo
                             </button>
                             <input
                                 type="file"
@@ -190,7 +190,7 @@ function EditProfile() {
                                     className='change-profile-button'
                                     type="button"
                                     onClick={proRefClick}>
-                                    <i class="fa-solid fa-camera"></i>
+                                    <i className="fa-solid fa-camera"></i>
                                 </button>
                             </div>
                             <input

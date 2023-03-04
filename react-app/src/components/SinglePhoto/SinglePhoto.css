@@ -222,7 +222,7 @@
 }
 
 .small-profile-icon {
-    width: 30px;
+    min-width: 30px;
     height: 30px;
     border-radius: 50%;
 }
@@ -444,4 +444,28 @@
 }
 .single-photo-edit-buttons{
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.create-comment-profile-placeholder{
+    display: flex;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    min-width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+.heart-liked-color {
+    color: rgb(202, 8, 8);
+}
+.single-photo-like-button{
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    margin-right: 10px;
+    cursor: pointer;
 }

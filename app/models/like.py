@@ -25,5 +25,6 @@ class Like(db.Model):
             'createdAt': self.created_at,
             'userFirstName': self.user.first_name,
             'userLastName': self.user.last_name,
-            'userProfile': self.user.prof_photo_url
+            'userProfile': self.user.prof_photo_url,
+            # 'photoUrl': self.photo.upload.upload_url
         }

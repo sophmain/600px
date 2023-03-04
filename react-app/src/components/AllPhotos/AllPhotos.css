@@ -144,3 +144,20 @@
     background-color: rgba(229, 229, 229, 0.342);
     transition: .5s;
 }
+
+@media screen and (max-width: 1200px) {
+    .all-photos {
+        column-count: 2;
+    }
+
+}
+@media screen and (min-width: 1600px) {
+    .all-photos {
+        column-count: 4;
+    }
+}
+@media screen and (max-width: 800px) {
+    .all-photos {
+        column-count: 1;
+    }
+}

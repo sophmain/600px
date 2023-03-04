@@ -2,17 +2,18 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useModal } from "../../context/Modal"
-import { thunkLoadAllLikes } from "../../store/like"
+import { thunkLoadAllPhotoLikes } from "../../store/like"
 
 const PhotoLikesModal = ({ photoId }) => {
     const dispatch = useDispatch()
     const { closeModal } = useModal();
-
+    console.log('photo id', photoId)
     useEffect(() => {
-        dispatch(thunkLoadAllLikes(photoId))
-    })
+        dispatch(thunkLoadAllPhotoLikes(+photoId))
+    }, [dispatch])
 
     const photoLikes = useSelector(state => state.likes.photoLikes)
+    if (!photoLikes) return null
     const photoLikesArr = Object.values(photoLikes)
 
     return (

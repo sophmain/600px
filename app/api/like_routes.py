@@ -17,7 +17,7 @@ def validation_errors_to_error_messages(validation_errors):
 @like_routes.route('/')
 def all_likes():
 
-    all_likes = like.query.all()
+    all_likes = Like.query.all()
     likes = [like.to_dict() for like in all_likes]
 
     return jsonify(likes)

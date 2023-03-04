@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams, NavLink } from "react-router-dom"
 import { thunkLoadAllComments, thunkPostComment, thunkEditComment, thunkDeleteComment } from "../../store/comment"
-import { thunkLoadAllLikes, thunkPostLike, thunkDeleteLike} from "../../store/like"
+import { thunkLoadAllLikes, thunkPostLike, thunkDeleteLike } from "../../store/like"
 import { thunkLoadPhotos, thunkLoadSinglePhoto } from "../../store/photo"
 import PhotoLikesModal from "../PhotoLikesModal"
 import OpenModalButton from "../OpenModalButton"
@@ -26,7 +26,7 @@ const SinglePhoto = () => {
         dispatch(thunkLoadSinglePhoto(photoId))
         dispatch(thunkLoadPhotos())
         dispatch(thunkLoadAllComments(photoId))
-        dispatch(thunkLoadAllLikes(photoId))
+        dispatch(thunkLoadAllLikes())
 
 
     }, [dispatch, photoId])
@@ -35,7 +35,7 @@ const SinglePhoto = () => {
     const photo = useSelector((state) => state.photos.singlePhoto)
     const comments = useSelector((state) => state.comments.photoComments)
     const allPhotos = useSelector((state) => state.photos.allPhotos) //get length to prevent right arrow on last img
-    const likes = useSelector((state) => state.likes.photoLikes)
+    const likes = useSelector((state) => state.likes.allLikes)
 
     if (!comments) return null
     const commentsArr = Object.values(comments)
@@ -49,15 +49,17 @@ const SinglePhoto = () => {
     if (!likes) return null
     const likesArr = Object.values(likes)
 
+    // set liked to true or false to display red heart or empty heart
     let isLiked = false;
     let likeId;
-    if (likesArr.filter(like => like.userId === user.id).length > 0) {
+
+    // check if like is in all likes array
+    const filteredLikes = likesArr.filter(like => ((like.userId === user.id) && like.photoId === +photoId))
+    if (filteredLikes.length > 0) {
         isLiked = true
-        likeId = likesArr.filter(like => like.userId === user.id)[0].id
+        likeId = likesArr.filter(like => (like.userId === user.id && like.photoId === +photoId))[0].id
+        console.log('likeid', likeId)
     }
-    console.log('likes arr', likesArr)
-    console.log('liked?', isLiked)
-    console.log('likeId', likeId)
 
     const editPhoto = () => {
         history.push(`/manage/${photo.id}`)
@@ -110,11 +112,15 @@ const SinglePhoto = () => {
     // function to like a photo
     const likePhoto = () => {
         dispatch(thunkPostLike(photoId, user.id))
+
     }
 
     // function to remove a like
     const removeLike = () => {
+        console.log(likeId)
         dispatch(thunkDeleteLike(likeId))
+        isLiked = false
+
     }
 
     // function to format the date a user posted a comment
@@ -173,7 +179,7 @@ const SinglePhoto = () => {
                             <button className='single-photo-like-button' onClick={likePhoto}><i className="fa-regular fa-heart"></i></button>
                         )}
                         {isLiked === true && (
-                            <button className='single-photo-like-button' onClick={removeLike}><i className="fa-solid fa-heart"></i></button>
+                            <button className='single-photo-like-button' onClick={removeLike}><i className="fa-solid fa-heart heart-liked-color"></i></button>
                         )}
                         {user && user.id === photo.userId && (
                             <button className='edit-photo-button' onClick={editPhoto}><i className="fa-regular fa-pen-to-square"></i></button>
@@ -187,7 +193,7 @@ const SinglePhoto = () => {
                                     <img className='large-profile-icon' src={photo.profilePhoto} alt='profile'></img>
                                 )}
                                 {photo.profilePhoto === null && (
-                                    <i class="fa-solid fa-user-large large-profile-icon"></i>
+                                    <i className="fa-solid fa-user-large large-profile-icon"></i>
                                 )}
                             </div>
                             <div className='single-right-profile'>
@@ -221,25 +227,25 @@ const SinglePhoto = () => {
                     <div className='single-photo-description'>
                         {photo.description}
                     </div>
-                    {likesArr.length > 0 && (
+                    {filteredLikes.length > 0 && (
                         <div className='single-photo-likes'>
                             <div className='photo-likes-modal-button'>
                                 <OpenModalButton
                                     className='photo-likes-modal'
                                     buttonText={
                                         <span className='likes-modal-button-text'>
-                                            {likesArr.length}
-                                            {likesArr.length === 1 && (
+                                            {filteredLikes.length}
+                                            {filteredLikes.length === 1 && (
                                                 <div className='likes-modal-people-person'> person liked this photo</div>
                                             )}
-                                            {likesArr.length !== 1 && (
+                                            {filteredLikes.length !== 1 && (
                                                 <div className='likes-modal-people-person'> people liked this photo</div>
                                             )}
 
-                                            <i class="fa-solid fa-chevron-right likes-chevron"></i>
+                                            <i className="fa-solid fa-chevron-right likes-chevron"></i>
                                         </span>
                                     }
-                                    modalComponent={<PhotoLikesModal photo={photoId} />}
+                                    modalComponent={<PhotoLikesModal photoId={ photoId } />}
                                 />
                             </div>
                         </div>
@@ -266,12 +272,18 @@ const SinglePhoto = () => {
 
                 </div>
                 <div className='single-photo-comments-container'>
-                    {user && user.prof_photo_url && (
+                    {user && (
                         <div className='new-comment-box'>
                             <div className='post-comment-box'>
                                 <div className='comment-poster-prof'>
                                     <div className='errors-profile-edit'></div>
-                                    <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                                    {user.prof_photo_url && (
+                                        <img src={user.prof_photo_url} className='small-profile-icon' alt='profile'></img>
+                                    )}
+                                    {user.prof_photo_url === null && (
+                                        <i className="fa-regular fa-user create-comment-profile-placeholder"></i>
+
+                                    )}
                                 </div>
                                 <form className='post-comment-form'>
                                     <label className='comment-form-data'>
@@ -312,7 +324,12 @@ const SinglePhoto = () => {
                         {sortedComments.map((comment) => {
                             return (
                                 <div key={comment.id} className='single-comment'>
-                                    <img className='small-profile-icon' src={comment.userProfile} alt='commenter profile'></img>
+                                    {comment.userProfile && (
+                                        <img className='small-profile-icon' src={comment.userProfile} alt='commenter profile'></img>
+                                    )}
+                                    {comment.userProfile === null && (
+                                        <i className="fa-regular fa-user create-comment-profile-placeholder"></i>
+                                    )}
                                     <div className='single-comment-text'>
                                         <div className='commenter-name-box'>
                                             <div className='commenter-name'>
@@ -323,7 +340,7 @@ const SinglePhoto = () => {
                                             <div className='comment-date'>{postDate(comment.createdAt)}</div>
                                         </div>
                                         {!showEditForm && (
-                                            <p className='edit-comment-text-box'>
+                                            <div className='edit-comment-text-box'>
                                                 {comment.comment}
                                                 {user && user.id === comment.userId && (
                                                     <div className='edit-delete-button-parent'>
@@ -332,7 +349,7 @@ const SinglePhoto = () => {
                                                     </div>
                                                 )}
 
-                                            </p>
+                                            </div>
                                         )}
 
 

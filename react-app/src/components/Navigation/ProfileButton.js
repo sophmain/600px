@@ -43,6 +43,13 @@ function ProfileButton({ user }) {
     closeMenu()
     history.push(`/profile/${user.id}`)
   }
+
+  //takes to user likes page
+  const userLikes = (e) => {
+    e.preventDefault()
+    closeMenu()
+    history.push(`/profile/${user.id}/likes`)
+  }
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
@@ -53,7 +60,7 @@ function ProfileButton({ user }) {
           <img src={user.prof_photo_url} alt='profile dropdown' className='profile-button-nav'></img>
         )}
         {user && !user.prof_photo_url && (
-          <i class="fa-regular fa-user profile-button"></i>
+          <i className="fa-regular fa-user profile-button"></i>
         )}
       </button>
       <ul className={ulClassName} ref={ulRef}>
@@ -62,8 +69,10 @@ function ProfileButton({ user }) {
             <li className='dropdown-profile-item'>
               <button className='dropdown-button' onClick={userProfile}>Profile</button>
             </li>
-            {/* <li className='dropdown-profile-item'>{user.username}</li>
-            <li className='dropdown-profile-item'>{user.email}</li> */}
+            {/* {/* <li className='dropdown-profile-item'>{user.username}</li> */}
+            <li className='dropdown-profile-item'>
+              <button className='dropdown-button' onClick={userLikes}>Liked photos</button>
+              </li>
             <li className='dropdown-profile-item'>
               <button className='dropdown-button' onClick={handleLogout}>Log Out</button>
             </li>

@@ -1,6 +1,7 @@
 const LOAD_LIKES = 'likes/LOAD_LIKES'
 const POST_LIKE = 'likes/POST_LIKE'
 const DELETE_LIKE = 'likes/DELETE_LIKE'
+const LOAD_ALLLIKES = 'likes/LOAD_ALLLIKES'
 // const LOAD_SINGLELIKE = 'likes/LOAD_SINGLELIKE'
 
 //action creators
@@ -21,9 +22,13 @@ const actionDeleteLike = (deleteId) => ({
 //     type: LOAD_SINGLELIKE,
 //     like
 // })
+const actionLoadAllLikes = (likes) => ({
+    type: LOAD_ALLLIKES,
+    likes
+})
 
 //thunks
-export const thunkLoadAllLikes = (photoId) => async (dispatch) => {
+export const thunkLoadAllPhotoLikes = (photoId) => async (dispatch) => {
     const response = await fetch(`/api/photos/${photoId}/likes`);
 
     if (response.ok) {
@@ -76,6 +81,17 @@ export const thunkDeleteLike = (deleteId) => async (dispatch) => {
     }
 }
 
+export const thunkLoadAllLikes = () => async (dispatch) => {
+    const response = await fetch(`/api/likes/`)
+    if (response.ok){
+        const likes = await response.json()
+        dispatch(actionLoadAllLikes(likes))
+        return likes
+    }
+
+
+}
+
 //normalize function to make key the id
 const normalize = (arr) => {
     const resObj = {}
@@ -96,14 +112,20 @@ const likesReducer = (state = initialState, action) => {
         //     newState = { ...state }
         //     newState.singleLike = action.like
         //     return newState
+        case LOAD_ALLLIKES:
+            newState = { ...state }
+            newState.allLikes = normalize(action.likes)
+            return newState
         case DELETE_LIKE:
             newState = { ...state }
-            delete newState.photoLikes[action.deleteId]
-            newState.photoLikes = { ...newState.photoLikes }
+            delete newState.allLikes[action.deleteId]
+            // delete newState.allLikes[action.deleteId]
+            newState.allLikes = { ...newState.allLikes }
+            // newState.allLikes = { ...newState.allLikes }
             return newState
         case POST_LIKE:
             newState = { ...state }
-            newState.photoLikes = { ...newState.photoLikes, [action.like.id]: action.like}
+            newState.allLikes = { ...newState.allLikes, [action.like.id]: action.like}
             return newState
         default:
             return state
