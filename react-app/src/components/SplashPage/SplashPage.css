@@ -11,24 +11,9 @@
     z-index: 0;
 
 }
-/* .background-image-splash .show-1 {
-    opacity: 1;
+.carousel {
+    height: 550px;
 }
-.background-image-splash .show-2 {
-    opacity: 1;
-}
-.background-image-splash .show-3 {
-    opacity: 1;
-}
-.background-image-splash .show-4 {
-    opacity: 1;
-}
-.background-image-splash .show-5 {
-    opacity: 1;
-}
-.background-image-splash .show-6 {
-    opacity: 1;
-} */
 .splash-page-container {
     width: 100%;
 }

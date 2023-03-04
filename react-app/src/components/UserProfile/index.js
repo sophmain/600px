@@ -54,7 +54,7 @@ const UserProfile = () => {
                         <img className='prof-photo' src={user.prof_photo_url} alt='profile'></img>
                     )}
                     {!user.prof_photo_url && (
-                        <i class="fa-solid fa-user-large prof-photo"></i>
+                        <i className="fa-solid fa-user-large prof-photo"></i>
                     )}
                 </div>
                 <div className='profile-info'>
@@ -93,7 +93,7 @@ const UserProfile = () => {
                     )}
                     {sessionUser.id !== +userId && userPhotos.length === 0 && (
                         <div className='work-in-progress-photos'>
-                            <i class="fa-regular fa-images"></i>
+                            <i className="fa-regular fa-images"></i>
                             <h1 className='work-in-progress-title'>Work in progress</h1>
                             <p className='work-in-progress-detail'>{user.firstName} hasn't uploaded any photos. Check back soon.</p>
                         </div>

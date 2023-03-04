@@ -26,7 +26,8 @@ class User(db.Model, UserMixin):
     gallery = db.relationship('Gallery', back_populates='user')
     photo = db.relationship('Photo', back_populates='user')
     comments = db.relationship('Comment', back_populates='user')
-    
+    likes = db.relationship('Like', back_populates='user')
+
 
     # @validates('first_name')
     # def validate_first_name(self, key, first_name):

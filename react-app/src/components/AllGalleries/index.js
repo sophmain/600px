@@ -15,7 +15,7 @@ const AllGalleries = () => {
     const allGalleriesObj = useSelector((state) => state.galleries.allGalleries)
     if (!allGalleriesObj) return null
     const galleries = Object.values(allGalleriesObj)
-    const galleryShow = galleries.filter((gallery) => gallery.photos.length > 0)
+    const galleryShow = galleries.filter((gallery) => gallery.photos.length > 0 && gallery.visible == true)
 
     const toGallery = (gallery) => {
         history.push(`/galleries/${gallery.id}`)
