@@ -1,0 +1,20 @@
+.photo-likes-modal-container{
+    width: 300px;
+}
+.photo-like-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    padding: 10px;
+}
+.photo-like-modal-header{
+    text-align: center;
+    font-size: 20px;
+}
+.photo-like-container-name{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+}

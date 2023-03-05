@@ -20,11 +20,15 @@ const UserLikes = () => {
 
     if (!allLikes) return null
     const userLikes = Object.values(allLikes).filter((like) => like.userId === user.id)
+    console.log('user likes', userLikes)
     const userLikeImgIds = []
-    userLikes.forEach((like) => userLikeImgIds.push(like.photoId))
+    const sortedLikes = userLikes.sort((a,b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+    console.log('sorted likes', sortedLikes)
+    sortedLikes.forEach((like) => userLikeImgIds.push(like.photoId))
 
     if (!photos) return null
     const photosArr = Object.values(photos).filter((photo) => userLikeImgIds.includes(photo.id))
+    console.log('photosArr', photosArr)
 
     // navigate to single photo page
     const toSinglePhoto = (photoId) => {
@@ -41,7 +45,7 @@ const UserLikes = () => {
                 <div className='user-photos-mapped'>
                     {userLikes.length > 0 && photosArr.map((photo) => {
                         return (
-                            <div className='photo-card'>
+                            <div className='photo-card' key={photo.id}>
                                 <div className='image-overlay-3'>
                                     <h4 className='overlay-3-text'>{photo.title}</h4>
 
