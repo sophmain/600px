@@ -84,11 +84,12 @@ transition: .7s;
 
 }
 .fa-x {
-    font-size: 22px;
+    font-size: 20px;
     position: absolute;
     top: 20px;
     left: 20px;
     cursor: pointer;
+    font-weight: 100;
 }
 .fa-plus {
     font-size: 22px;

@@ -100,11 +100,37 @@ def seed_uploads():
     upload33 = Upload(
         upload_url='https://briandsmithphotography.com/static/media/uploads/blog/projects/.thumbnails/2020-12-31_0157.jpg/2020-12-31_0157-600x0.jpg', user_id=3
     )
+    upload34 = Upload(
+        upload_url='https://i.imgur.com/lvUcpyw.jpg', user_id=2
+    )
+    upload35 = Upload(
+        upload_url='https://i.imgur.com/Fopy5Ay.jpg', user_id=1
+    )
+    upload36 = Upload(
+        upload_url='https://i.imgur.com/Ya66axs.jpg', user_id=1
+    )
+    upload37 = Upload(
+        upload_url='https://i.imgur.com/CzRwc1g.jpg', user_id=1
+    )
+    upload38 = Upload(
+        upload_url='https://i.imgur.com/LvFdDst.jpg', user_id=1
+    )
+    upload39 = Upload(
+        upload_url='https://i.imgur.com/MrfcK64.jpg', user_id=1
+    )
+    upload40 = Upload(
+        upload_url='https://i.imgur.com/MJ4Z655.jpg', user_id=1
+    )
+    upload41 = Upload(
+        upload_url='https://i.imgur.com/6nXJ4Yr.jpg', user_id=3
+    )
+
 
     uploads = [upload1, upload2, upload3, upload4, upload5, upload6, upload7, upload8, upload9, upload10,
     upload11, upload12, upload13, upload14, upload15, upload16, upload17, upload18, upload19, upload20,
     upload21, upload22, upload23, upload24, upload25, upload26, upload27, upload28, upload29, upload30,
-    upload31, upload32, upload33]
+    upload31, upload32, upload33, upload34, upload35, upload36, upload37, upload38, upload39, upload40,
+    upload41]
 
 
     for upload in uploads:

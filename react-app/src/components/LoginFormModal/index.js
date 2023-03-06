@@ -32,24 +32,15 @@ function LoginFormModal() {
       closeModal()
     }
   };
+  console.log('errors', errors)
 
   return (
     <div className='login-modal-container'>
-      <h1 className='login-title'>Log in to 600px</h1>
+      <h1 className='login-title' style={{margin: '5px'}}>Log in to 600px</h1>
       <form className='log-in-form' onSubmit={handleSubmit}>
-        {errors.length > 0 && (
-          <ul>
-            {errors.map((error, idx) => (
-              <li key={idx}>{error}</li>
-            ))}
-          </ul>
-        )}
-
-        <div className='form-error'>
-          {/* {errors && (
-          <li>{errors[0].split(':')[1]}</li>
-          )} */}
-
+        <div className='errors-profile-edit' style={{height: '35px', width: '65%', marginBottom: '5px'}}>
+          <div style={{marginBottom: '5px'}}>{errors.filter((error) => error.includes('valid email')).length > 0 ? errors.filter((error) => error.includes('valid email'))[0].split(': ')[1] : ''}</div>
+          <div>{errors.filter((error) => error.includes('Credentials')).length > 0 ? errors.filter((error) => error.includes('Credentials'))[0].split(': ')[1] : ''}</div>
         </div>
         <label className='login-header'>
           Email*

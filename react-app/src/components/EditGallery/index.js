@@ -20,6 +20,7 @@ const EditGallery = () => {
     const [title, setTitle] = useState(galleryEdit?.title)
     const [description, setDescription] = useState(galleryEdit?.description)
     const [visible, setVisible] = useState(galleryEdit?.visible)
+    const [confirmDelete, setConfirmDelete] = useState(false)
     const [errors, setErrors] = useState([])
 
 
@@ -127,7 +128,12 @@ const EditGallery = () => {
                         </div>
                     </label>
                     <div className='edit-gallery-bottom-buttons'>
-                        <button className='delete-gallery-button' onClick={deleteGallery}>Delete gallery</button>
+                        {!confirmDelete && (
+                            <button className='delete-gallery-button' onClick={() => setConfirmDelete(true)}>Delete gallery</button>
+                        )}
+                        {confirmDelete && (
+                            <button className='delete-gallery-button' onClick={deleteGallery}>Confirm delete</button>
+                        )}
                         <div className='create-gallery-form-buttons'>
                             <div>
                                 <NavLink to={`/profile/${user.id}/galleries`} className='cancel-gallery-button'>Cancel</NavLink>

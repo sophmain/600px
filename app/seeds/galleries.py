@@ -20,11 +20,13 @@ def seed_galleries():
     gallery9 = Gallery(
         user_id=4, title='Black and White', description='Black and white photo inspiration', visible=True)
     gallery10 = Gallery(
-        user_id=2, title='Animals', description='Photos of animals I"ve seen from other photographers', visible=True)
+        user_id=2, title='Animals', description="Photos of animals I've seen from other photographers", visible=True)
+    gallery11 = Gallery(
+        user_id=1, title='Thailand', description='Photos collected from my time living in Thailand.', visible=True)
 
 
 
-    galleries = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8, gallery9, gallery10]
+    galleries = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8, gallery9, gallery10, gallery11]
 
     for gallery in galleries:
         db.session.add(gallery)
