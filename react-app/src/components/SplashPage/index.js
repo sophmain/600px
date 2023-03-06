@@ -59,7 +59,7 @@ const SplashPage = () => {
                         />
                     </div>
                 </div>
-                <div className='editors-choice-container'>
+                {/* <div className='editors-choice-container'>
                     <h2>The best of the best.</h2>
                     <p>Hand picked images by some of the best photographers on our site. </p>
                     <div className='editors-picks-photo-container'>
@@ -72,7 +72,7 @@ const SplashPage = () => {
                         <img className='image-size' src={photosArr[35].photoUrl} alt='drone over ship hong kong'></img>
                         <img className='image-size' src={photosArr[11].photoUrl} alt='drone over ship hong kong'></img>
                     </div>
-                </div>
+                </div> */}
 
             </div>
 
