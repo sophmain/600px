@@ -30,20 +30,12 @@ function SignupFormModal() {
 			]);
 		}
 	};
-
+console.log('errors', errors)
 	return (
 		<div className='signup-modal-container'>
 			<h1 className='sign-up-title'>Join 600px</h1>
 			<p classNam='discover-photos-text'>Discover and share incredible photos.</p>
 			<form className='signup-form' onSubmit={handleSubmit}>
-				{errors.length > 0 && (
-					<ul>
-						{errors.map((error, idx) => (
-							<li key={idx}>{error}</li>
-						))}
-					</ul>
-				)}
-				<div className='form-error'></div>
 				<label className='login-header'>
 					First Name*
 					<input
@@ -54,29 +46,35 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
-				<div className='form-error'></div>
+				<div className='errors-profile-edit'>
+					{errors.filter((error) => error.includes('firstName')).length > 0 ? errors.filter((error) => error.includes('firstName'))[0].split(': ')[1] : ''}
+				</div>
 				<label className='login-header'>
 					Last Name*
 					<input
-					    className='login-form-field'
+						className='login-form-field'
 						type="text"
 						value={lastName}
 						onChange={(e) => setLastName(e.target.value)}
 						required
 					/>
 				</label>
-				<div className='form-error'></div>
+				<div className='errors-profile-edit'>
+					{errors.filter((error) => error.includes('lastName')).length > 0 ? errors.filter((error) => error.includes('lastName'))[0].split(': ')[1] : ''}
+				</div>
 				<label className='login-header'>
 					Email*
 					<input
-					    className='login-form-field'
+						className='login-form-field'
 						type="text"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
 					/>
 				</label>
-				<div className='form-error'></div>
+				<div className='errors-profile-edit'>
+					{errors.filter((error) => error.includes('email')).length > 0 ? errors.filter((error) => error.includes('email'))[0].split(': ')[1] : ''}
+				</div>
 				<label className='login-header'>
 					Username*
 					<input
@@ -87,7 +85,9 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
-				<div className='form-error'></div>
+				<div className='errors-profile-edit'>
+					{errors.filter((error) => error.includes('username')).length > 0 ? errors.filter((error) => error.includes('username'))[0].split(': ')[1] : ''}
+				</div>
 				<label className='login-header'>
 					Password*
 					<input
@@ -98,7 +98,7 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
-				<div className='form-error'></div>
+				<div className='errors-profile-edit'></div>
 				<label className='login-header'>
 					Confirm Password*
 					<input
@@ -109,6 +109,9 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
+				<div className='errors-profile-edit'>
+					{errors.filter((error) => error.includes('match')).length > 0 ? errors.filter((error) => error.includes('match'))[0] : ""}
+				</div>
 				<div className='form-error'></div>
 				<button className='login-button' type="submit">Sign Up</button>
 			</form>

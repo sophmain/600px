@@ -35,6 +35,10 @@ textarea {
     font-weight: 600;
     margin: 15px 0px;
 }
+.create-product-submit-button:hover{
+    background-color: #2986f7;
+    transition: .7s;
+}
 .post-form-box {
     display: flex;
     flex-direction: column;
@@ -102,4 +106,8 @@ textarea {
     color: rgb(219, 56, 56);
     min-height: 24px;
     font-size: 14px;
+}
+.photo-delete-buttons-edit-page{
+    display: flex;
+    flex-direction: row;
 }

@@ -10,7 +10,7 @@ def date_in_past(form, field):
         return
     today_date = datetime.today()
     if takenDate and datetime.strptime(takenDate, '%Y-%m-%d') > today_date:
-        raise ValidationError('Date must be in the past')
+        raise ValidationError('Date must be in the past.')
 
 def cameratype_length(form, field):
     cameraType = field.data

@@ -9,6 +9,7 @@ const EditPhoto = () => {
     const categories = ['Abstract', 'Aerial', 'Animals', 'Black and White', 'Celebrities', 'City & Architecture', 'Commercial', 'Concert', 'Family', 'Fashion', 'Film', 'Fine Art', 'Food', 'Journalism', 'Landscapes', 'Macro', 'Nature', 'Night', 'People', 'Performing Arts', 'Sport', 'Still Life', 'Street', 'Transportation', 'Travel', 'Underwater', 'Urban Exploration', 'Wedding', 'Other']
     const privacyTypes = ['Public', 'Unlisted', 'Limited Access']
 
+
     function datetimeLocal(datetime) {
         const dt = new Date(datetime);
         const newDate = dt.toISOString().split('T')[0]
@@ -40,6 +41,7 @@ const EditPhoto = () => {
     const [description, setDescription] = useState(photoToEdit?.description ? photoToEdit.description : '')
     const [location, setLocation] = useState(photoToEdit?.location ? photoToEdit.location : '')
     const [errors, setErrors] = useState([])
+    const [confirmDelete, setConfirmDelete] = useState(false)
 
     // const [createdPhoto, setCreatedPhoto] = useState('')
 
@@ -242,7 +244,14 @@ const EditPhoto = () => {
                                     {errors.filter((error) => error.includes('takenDate')).length > 0 ? errors.filter((error) => error.includes('takenDate'))[0].split(': ')[1] : ''}
                                 </div>
                             </label>
-                            <button className='delete-photo-button' onClick={deletePhoto}>Delete photo</button>
+                            <div className='photo-delete-buttons-edit-page'>
+                                {!confirmDelete && (
+                                    <button className='delete-photo-button' onClick={() => setConfirmDelete(true)} style={{ marginRight: '5px' }}>Delete photo</button>
+                                )}
+                                {confirmDelete && (
+                                    <button className='delete-photo-button' onClick={deletePhoto} >Confirm delete</button>
+                                )}
+                            </div>
                             <button className="create-product-submit-button" type="submit">Save changes</button>
                         </form>
                     </div>

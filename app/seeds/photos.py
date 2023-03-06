@@ -68,13 +68,29 @@ def seed_photos():
         user_id=3, taken_date= datetime.strptime('2022-04-24','%Y-%m-%d'), upload_id=32, category='Portrait', camera_type='Canon EOS 5D Mark II', lense_type='Canon EF 50mm f/1.8 II', privacy='Public', title='Smoking Woman', location='Chicago, Illinois, USA')
     image33 = Photo(
         user_id=3, taken_date= datetime.strptime('2022-04-25','%Y-%m-%d'), upload_id=33, category='Portrait', camera_type='Canon EOS 5D Mark II', lense_type='Canon EF 50mm f/1.8 II', privacy='Public', title='Woman in Tulle', location='Chicago, Illinois, USA')
-
+    image34 = Photo(
+        user_id=2, taken_date= datetime.strptime('2022-08-25','%Y-%m-%d'), upload_id=34, category='Abstract', camera_type='Canon EOS 5D Mark II', lense_type='Canon EF 50mm f/1.8 II', privacy='Public', title='Cracked', location='Death Valley, CA, USA')
+    image35 = Photo(
+        user_id=1, taken_date= datetime.strptime('2022-08-29','%Y-%m-%d'), upload_id=35, category='Aerial', camera_type='DJI FC2103', privacy='Public', title='Dragon Temple', location='Thailand')
+    image36 = Photo(
+        user_id=1, taken_date= datetime.strptime('2022-05-17','%Y-%m-%d'), upload_id=36, category='Landscape', camera_type='Sony Alpha a7R III', lense_type='Sony FE 24-70mm f/2.8 GE', privacy='Public', title='Fishing Boat', location='Thailand')
+    image37 = Photo(
+        user_id=1, taken_date= datetime.strptime('2022-05-19','%Y-%m-%d'), upload_id=37, category='Landscape', camera_type='Sony Alpha a7R III', lense_type='Sony FE 24-70mm f/2.8 GE', privacy='Public', title='Fishing Village', location='Thailand')
+    image38 = Photo(
+        user_id=1, taken_date= datetime.strptime('2022-05-19','%Y-%m-%d'), upload_id=38, category='Landscape', camera_type='Sony Alpha a7R III', lense_type='Sony FE 24-70mm f/2.8 GE', privacy='Public', title='Fishing Boats', location='Thailand')
+    image39 = Photo(
+        user_id=1, taken_date= datetime.strptime('2022-06-19','%Y-%m-%d'), upload_id=39, category='Street', camera_type='Sony Alpha a7R III', lense_type='Sony FE 24-70mm f/2.8 GE', privacy='Public', title='Tracks', location='Thailand')
+    image40 = Photo(
+        user_id=1, taken_date= datetime.strptime('2022-06-21','%Y-%m-%d'), upload_id=40, category='Street', camera_type='Sony Alpha a7R III', lense_type='Sony FE 24-70mm f/2.8 GE', privacy='Public', title='On the Tracks', location='Thailand')
+    image41 = Photo(
+        user_id=3, taken_date= datetime.strptime('2022-08-21','%Y-%m-%d'), upload_id=41, category='Film', camera_type='Canon EOS 5D Mark II', lense_type='Canon EF 50mm f/1.8 II', privacy='Public', title='Sitting', location='Boston, MA, USA')
 
 
     images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10,
     image11, image12, image13, image14, image15, image16, image17, image18, image19, image20,
     image21, image22, image23, image24, image25, image26, image27, image28, image29, image30,
-    image31, image32, image33]
+    image31, image32, image33, image34, image35, image36, image37, image38, image39, image40,
+    image41]
 
     for image in images:
         db.session.add(image)

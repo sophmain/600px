@@ -10,6 +10,10 @@
     width: 165px;
     cursor: pointer;
 }
+.edit-gallery-submit-button:hover {
+    background-color: #2986f7;
+    transition: .7s;
+}
 .delete-gallery-button {
     color:  rgb(219, 56, 56);
     background-color: transparent;
