@@ -64,7 +64,7 @@
 
 ## Landing Page
 Users can log in with 'Demo User' to see site functionality without creating an account. 
-![Login Page]: ./images/Login.png
+![Login Page]: /Users/smain/appAcademy/500px/500px-flask-react/images/Login.png
 
 ## Photos Page
 Shows all photos all users have uploaded.
