@@ -30,7 +30,7 @@ function SignupFormModal() {
 			]);
 		}
 	};
-console.log('errors', errors)
+
 	return (
 		<div className='signup-modal-container'>
 			<h1 className='sign-up-title'>Join 600px</h1>

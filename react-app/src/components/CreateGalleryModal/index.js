@@ -21,7 +21,7 @@ const CreateGalleryModal = ({ photo }) => {
     //const photo = useSelector(state => state.photos.singlePhoto)
     //const galleries = useSelector(state => state.galleries.allGalleries)
     //const numGallery = galleries.length()
-    console.log('PHOTO', photo)
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -38,8 +38,6 @@ const CreateGalleryModal = ({ photo }) => {
 
 
         const data = await dispatch(thunkCreateGallery(payload))
-        console.log('data in handlesubmit', data)
-
 
         if (Array.isArray(data)) {
             // const formattedData = data.map((data) => data.split(': ')[1])

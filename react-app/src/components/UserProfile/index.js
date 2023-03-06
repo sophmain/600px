@@ -26,7 +26,7 @@ const UserProfile = () => {
         photoArr = Object.values(photos)
     }
     const userPhotos = photoArr.filter((photo) => photo.userId === user.id)
-    console.log('userPhotos', userPhotos)
+
 
     const toSinglePhoto = (photo) => {
         history.push(`/photos/${photo.id}`)

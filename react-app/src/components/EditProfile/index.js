@@ -131,7 +131,7 @@ function EditProfile() {
             history.push(`/profile/${sessionUser.id}`)
         }
     }
-    console.log('errors', errors)
+
 
     return (
         <div className='edit-profile-page-container'>

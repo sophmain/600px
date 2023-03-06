@@ -131,8 +131,7 @@ export const thunkDeletePhoto = (photoToDelete) => async (dispatch) => {
     const response = await fetch(`/api/photos/${photoToDelete.id}`, {
         method: "DELETE"
     })
-    console.log('delete thunk', response)
-    console.log('photo to delete', photoToDelete)
+
     if (response.ok) {
         await response.json()
         dispatch(actionDeletePhoto(photoToDelete.id))
@@ -168,10 +167,8 @@ export const thunkDeleteGalleryPhoto = (deleteId, galleryId) => async (dispatch)
 }
 export const thunkGetGalleryPhotos = (galleryId) => async (dispatch) => {
     const response = await fetch(`/api/galleries/${galleryId}/get`)
-    console.log('RESPONSE IN GET THUNK', response)
     if (response.ok) {
         const photos = await response.json()
-        console.log("PHOTOS IN GET THUNK", photos)
         dispatch(actionGetGalleryPhotos(photos))
         return photos
     }
@@ -211,12 +208,15 @@ const photoReducer = (state = initialState, action) => {
             newState.singlePhoto = { ...newState.singlePhoto, ...action.updatedPhoto }
             return newState
         case DELETE_PHOTO:
-            console.log('delete photo', action.toDelete)
-            console.log('new state', newState)
             newState = { ...state }
             delete newState.allPhotos[action.toDelete.id]
             newState.singlePhoto = { ...state }
-        //newState.allPhotos = { ...newState.allPhotos }
+            // const { [action.toDelete.id]: deletedPhoto, ...remainingPhotos } = state.allPhotos;
+            // return {
+            //   ...newState,
+            //   allPhotos: remainingPhotos,
+            //   photoDetails: state.photoDetails.filter(photo => photo.id !== action.toDelete.id),
+            // };
             return newState
         case POST_GALLERYPHOTO:
             newState = { ...state }
@@ -226,20 +226,14 @@ const photoReducer = (state = initialState, action) => {
             return newState
         case DELETE_GALLERYPHOTO:
             newState = { ...state }
-            // console.log('action', action.toDelete)
-            // console.log('newState.singleGallery.photos', newState.galleryPhotos)
             newState.galleryPhotos = { ...newState.galleryPhotos }
             delete newState.galleryPhotos[action.toDelete]
             return newState
         case GET_GALLERYPHOTO:
             newState = { ...state }
-            console.log('gallery action', action.photos)
             newState.galleryPhotos = { ...newState.galleryPhotos }
             action.photos.forEach((photo) => {
-                console.log('newstate', newState.galleryPhotos)
-                console.log('current photo', photo)
                 newState.galleryPhotos = { ...newState.galleryPhotos, [photo.photoId]: photo.photoUrl }
-                // console.log('newstate', newState.galleryPhotos)
             })
             return newState
         default:

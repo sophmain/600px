@@ -116,7 +116,6 @@ const commentsReducer = (state = initialState, action) => {
             newState.photoComments = {...newState.photoComments, [action.comment.id]: action.comment }
             return newState
         case DELETE_COMMENT:
-            console.log('action.comment', action.comment)
             newState = { ...state }
             delete newState.photoComments[action.comment.id]
             newState.photoComments = { ...newState.photoComments}

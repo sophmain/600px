@@ -32,7 +32,7 @@ function LoginFormModal() {
       closeModal()
     }
   };
-  console.log('errors', errors)
+
 
   return (
     <div className='login-modal-container'>

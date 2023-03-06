@@ -59,7 +59,6 @@ const SinglePhoto = () => {
     if (filteredLikes.length > 0) {
         isLiked = true
         likeId = likesArr.filter(like => (like.userId === user.id && like.photoId === +photoId))[0].id
-        console.log('likeid', likeId)
     }
 
     const editPhoto = () => {
@@ -118,7 +117,6 @@ const SinglePhoto = () => {
 
     // function to remove a like
     const removeLike = () => {
-        console.log(likeId)
         dispatch(thunkDeleteLike(likeId))
         isLiked = false
 
@@ -151,6 +149,14 @@ const SinglePhoto = () => {
         return Math.floor(seconds) + " s"
 
     }
+    // const dateConverter = (uploadDate) => {
+    //     let uploadDate = new Date(uploadDate)
+    //     let year = uploadDate.toLocalString('default', {year: 'numeric'} )
+    //     let month = uploadDate.toLocalString('default', {month: '2-digit'} )
+    //     let day = uploadDate.toLocalString('default', {day: '2-digit'} )
+    //     let formattedDate = year + '-' + month + '-' + day
+    //     return forma
+    // }
 
     return (
         <div className='page-background'>
@@ -227,7 +233,7 @@ const SinglePhoto = () => {
                                 </>
                             )}
                             <p className='single-taken'>Uploaded:</p>
-                            <p className='single-taken-data'>{photo.uploadDate.slice(0, 16)}</p>
+                            <p className='single-taken-data'>{photo.uploadDate.slice(4, 16)}</p>
                         </div>
                     </div>
 
