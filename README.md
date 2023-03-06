@@ -67,7 +67,8 @@
 Users can log in with 'Demo User' to see site functionality without creating an account. 
 
 ![Login Page]
-[Login Page]: /images/Login.png
+
+[Login Page]: ./images/Login.png
 
 ## Photos Page
 
