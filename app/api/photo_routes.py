@@ -167,7 +167,7 @@ def edit_photo(id):
 @photo_routes.route('/<int:id>', methods=['DELETE'])
 def delete_photo(id):
     current_photo = Photo.query.get(id)
-
+    print('>>>>>>>>>>>>>current photo', current_photo)
     if current_photo:
         db.session.delete(current_photo)
         db.session.commit()

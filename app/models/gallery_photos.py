@@ -13,8 +13,10 @@ class GalleryPhotos(db.Model):
     photo_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("photos.id")), primary_key=True)
 
     photo = db.relationship('Photo', back_populates='galleryphoto')
+    gallery = db.relationship('Gallery', back_populates='galleryphoto')
     def to_dict(self):
         return {
+            # 'id': self.id,
             'galleryId':self.gallery_id,
             'photoId': self.photo_id,
             'photoUrl': self.photo.upload.upload_url
