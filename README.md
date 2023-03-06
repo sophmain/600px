@@ -64,19 +64,19 @@
 
 ## Landing Page
 Users can log in with 'Demo User' to see site functionality without creating an account. 
-[Login Page]: ./images/Login.png
+![Login Page]: ./images/Login.png
 
 ## Photos Page
 Shows all photos all users have uploaded.
-[Photos Page]: ./images/Photos.png
+![Photos Page]: ./images/Photos.png
 
 ## Galleries Page
 From a user's profile page they can create a gallery and then add photos to that gallery.
-[Galleries Page]: ./images/Galleries.png
+![Galleries Page]: ./images/Galleries.png
 
 ## Single photo page
 From the single photo page a user can see details about the photo. They can favorite it and add to one of their galleries.
-[Photo Page]: ./images/SinglePhoto.png
+![Photo Page]: ./images/SinglePhoto.png
 
 
 
