@@ -132,7 +132,6 @@ export const thunkGetUser = (userId) => async (dispatch) => {
 
 export const thunkGetAllUser = () => async (dispatch) => {
 	const response = await fetch(`/api/users/`)
-	console.log('RESPONSE FROM THUNK', response)
 	if (response.ok) {
 		const users = await response.json()
 		dispatch(getAllUser(users.users))

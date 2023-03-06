@@ -18,7 +18,7 @@ const SplashPage = () => {
     const photos = useSelector((state)=> state.photos.allPhotos)
     if (!photos) return null
     const photosArr = Object.values(photos)
-    console.log('photos', photos)
+
 
     return (
         <div className='splash-page-container'>

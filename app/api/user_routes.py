@@ -106,14 +106,11 @@ def set_profile(id):
 @user_routes.route('/<int:id>/edit', methods=['PUT'])
 def edit_user_info(id):
     current_user = User.query.get(id)
-    print('>>>>>>>current user', current_user)
     res = request.get_json()
-    print('>>>>>>>RES', res)
     user = UserForm()
     user['csrf_token'].data = request.cookies['csrf_token']
 
     if user.validate_on_submit():
-        print('inside validate submit')
         current_user.first_name = res['firstName']
         current_user.last_name = res['lastName']
         current_user.city = res['city']
@@ -123,5 +120,4 @@ def edit_user_info(id):
         db.session.commit()
         user = current_user.to_dict()
         return jsonify(user)
-    print('!!!!!!!!user errors', user.errors)
     return {'errors': validation_errors_to_error_messages(user.errors)}, 401

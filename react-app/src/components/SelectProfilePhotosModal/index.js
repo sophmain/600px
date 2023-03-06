@@ -48,10 +48,10 @@ const SelectProfilePhotosModal = ({ gallery }) => {
             const updatedClickBorder = { ...prevClickBorder };
             if (selectedPhotos.includes(+photo.id)) {
               delete updatedClickBorder[photo.id];
-              console.log('updatedbored', updatedClickBorder)
+            
             } else {
               updatedClickBorder[photo.id] = "border-click-on";
-              console.log('updatedbored', updatedClickBorder)
+
             }
             return updatedClickBorder;
           });

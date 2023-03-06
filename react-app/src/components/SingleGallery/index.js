@@ -38,8 +38,6 @@ const SingleGallery = () => {
         history.push(`/galleries/${gallery.id}/edit`)
     }
     const deleteFromGallery = (photo) => {
-        console.log('photo id inside delete funciton', photo.id)
-        console.log('gallery id inside delete funciton', gallery.id)
         dispatch(thunkDeleteGalleryPhoto(photo.id, gallery.id))
     }
 
