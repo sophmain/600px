@@ -62,30 +62,41 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Landing Page
+## Splash/Login Page
+
 Users can log in with 'Demo User' to see site functionality without creating an account. 
+
 ![Login Page]
-[Login Page]: /Users/smain/appAcademy/500px/500px-flask-react/images/Login.png
+[Login Page]: /images/Login.png
 
 ## Photos Page
+
 Shows all photos all users have uploaded.
+
 ![All Photos]
 
-[All Photos]: ./Photos.png
+[All Photos]: ./images/Photos.png
 
 ## Galleries Page
+
 From a user's profile page they can create a gallery and then add photos to that gallery.
+
 ![Galleries Page]
 
 [Galleries Page]: ./images/Galleries.png
 
 ## Single photo page
-From the single photo page a user can see details about the photo. They can favorite it and add to one of their galleries.
+
+From the single photo page a user can see details about the photo. They can favorite it and add to one of their galleries. They can also add a comment, then edit/delte that comment.
+
 ![Photo Page]
 
 [Photo Page]: ./images/SinglePhoto.png
 
-
+## To Do:
+- Add following feature
+- Add search feature
+- 404 page
 
 ## Contact Info:
 - Created by: Sophie Main
