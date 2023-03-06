@@ -24,7 +24,7 @@ class Photo(db.Model):
     location = db.Column(db.String(100))
 
     user = db.relationship('User', back_populates='photo')
-    galleryphoto = db.relationship('GalleryPhotos', back_populates='photo')
+    galleryphoto = db.relationship('GalleryPhotos', back_populates='photo', cascade="all, delete-orphan")
     comments = db.relationship('Comment', cascade="all, delete-orphan", back_populates='photo')
     likes = db.relationship('Like', cascade="all, delete-orphan", back_populates='photo')
     # gallery = db.relationship('Gallery', secondary=gallery_photos, back_populates='photo')

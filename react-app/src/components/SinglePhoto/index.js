@@ -233,7 +233,10 @@ const SinglePhoto = () => {
                                 </>
                             )}
                             <p className='single-taken'>Uploaded:</p>
-                            <p className='single-taken-data'>{photo.uploadDate.slice(4, 16)}</p>
+                            {photo.uploadDate && (
+                                <p className='single-taken-data'>{photo.uploadDate.slice(4, 16)}</p>
+                            )}
+
                         </div>
                     </div>
 
