@@ -131,7 +131,8 @@ export const thunkDeletePhoto = (photoToDelete) => async (dispatch) => {
     const response = await fetch(`/api/photos/${photoToDelete.id}`, {
         method: "DELETE"
     })
-
+    console.log('delete thunk', response)
+    console.log('photo to delete', photoToDelete)
     if (response.ok) {
         await response.json()
         dispatch(actionDeletePhoto(photoToDelete.id))
@@ -210,9 +211,12 @@ const photoReducer = (state = initialState, action) => {
             newState.singlePhoto = { ...newState.singlePhoto, ...action.updatedPhoto }
             return newState
         case DELETE_PHOTO:
+            console.log('delete photo', action.toDelete)
+            console.log('new state', newState)
             newState = { ...state }
             delete newState.allPhotos[action.toDelete.id]
-            newState.allPhotos = { ...newState.allPhotos }
+            newState.singlePhoto = { ...state }
+        //newState.allPhotos = { ...newState.allPhotos }
             return newState
         case POST_GALLERYPHOTO:
             newState = { ...state }
@@ -230,8 +234,8 @@ const photoReducer = (state = initialState, action) => {
         case GET_GALLERYPHOTO:
             newState = { ...state }
             console.log('gallery action', action.photos)
-            newState.galleryPhotos = { ...newState.galleryPhotos}
-            action.photos.forEach((photo)=> {
+            newState.galleryPhotos = { ...newState.galleryPhotos }
+            action.photos.forEach((photo) => {
                 console.log('newstate', newState.galleryPhotos)
                 console.log('current photo', photo)
                 newState.galleryPhotos = { ...newState.galleryPhotos, [photo.photoId]: photo.photoUrl }
