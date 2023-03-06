@@ -106,6 +106,10 @@
     text-decoration: none;
     cursor: pointer;
 }
+.cancel-gallery-button:hover {
+    color: #2986f7;
+    transition: .7s;
+}
 .create-gallery-form-buttons {
     display: flex;
     flex-direction: row;

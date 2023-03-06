@@ -6,20 +6,20 @@ from app.models import User
 def valid_first_name(form,field):
     firstName = field.data
     if len(firstName)< 2 or len(firstName) >20:
-        raise ValidationError('First name must be between 2 and 20 characters')
+        raise ValidationError('First name must be between 2 and 20 characters.')
 
 def valid_last_name(form, field):
     lastName = field.data
 
     if len(lastName)< 2 or len(lastName) > 20:
-        raise ValidationError('Last name must be between 2 and 20 characters')
+        raise ValidationError('Last name must be between 2 and 20 characters.')
 
 def user_exists(form, field):
     # Checking if user exists
     email = field.data
     user = User.query.filter(User.email == email).first()
     if '@' not in email:
-        raise ValidationError('Please enter a valid email')
+        raise ValidationError('Please enter a valid email.')
     if user:
         raise ValidationError('Email address is already in use.')
 

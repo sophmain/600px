@@ -235,18 +235,18 @@ const SinglePhoto = () => {
                     <div className='single-photo-description'>
                         {photo.description}
                     </div>
-                    {filteredLikes.length > 0 && (
+                    {likesArr.filter(like => (like.photoId === +photoId)).length > 0 && (
                         <div className='single-photo-likes'>
                             <div className='photo-likes-modal-button'>
                                 <OpenModalButton
                                     className='photo-likes-modal'
                                     buttonText={
                                         <span className='likes-modal-button-text'>
-                                            {filteredLikes.length}
-                                            {filteredLikes.length === 1 && (
+                                            {likesArr.filter(like => (like.photoId === +photoId)).length}
+                                            {likesArr.filter(like => (like.photoId === +photoId)).length === 1 && (
                                                 <div className='likes-modal-people-person'> person liked this photo</div>
                                             )}
-                                            {filteredLikes.length !== 1 && (
+                                            {likesArr.filter(like => (like.photoId === +photoId)).length !== 1 && (
                                                 <div className='likes-modal-people-person'> people liked this photo</div>
                                             )}
 

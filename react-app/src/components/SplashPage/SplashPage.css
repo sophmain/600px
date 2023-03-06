@@ -2,7 +2,7 @@
     width: 100%;
 
 }
-.background-image-splash{
+.splash-page-carousel{
     opacity: 1;
     height: 550px;
     width: 100%;
@@ -51,4 +51,14 @@
 .sign-up-modal-splash:hover{
     background-color: rgb(228, 228, 228);
     transition: .7s;
+}
+.editors-picks-photo-container{
+    column-count: 4;
+    gap: 8px;
+}
+.editors-choice-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
