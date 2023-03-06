@@ -22,14 +22,10 @@ def all_galleries():
     """
     Route to query for all galleries
     """
-    print('>>>>>>>>> in get all thunk')
     all_galleries = Gallery.query.all()
-    # print('>>>>>>>>>>all galleries', all_galleries[0])
     galleries = [gallery.to_dict() for gallery in all_galleries]
     gallery_res = []
-    # print('galleries', galleries)
     for gallery in galleries:
-        # print('GALLERY PHOTO', gallery.photo)
 
         gallery_res.append({
             'id': gallery['id'],
@@ -118,9 +114,7 @@ def create_post(id):
 
     gallery = Gallery.query.get(id)
     res = request.get_json()
-    print('>>>>>res', res)
     for photoId in res:
-        print ('>>>>>>query', GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).all())
         if GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).all():
             continue
         new_gallery_photo = GalleryPhotos(
@@ -134,7 +128,6 @@ def create_post(id):
 @gallery_routes.route('/<int:id>/<int:photoId>', methods=['DELETE'])
 def delete_gallery_photo(id, photoId):
     current_gallery_photo = GalleryPhotos.query.filter(and_(GalleryPhotos.gallery_id == id, GalleryPhotos.photo_id == photoId)).first()
-    print('>>>>>>>', current_gallery_photo)
     if current_gallery_photo:
         db.session.delete(current_gallery_photo)
         db.session.commit()
@@ -145,6 +138,5 @@ def delete_gallery_photo(id, photoId):
 @gallery_routes.route('/<int:galleryId>/get', methods=['GET'])
 def get_gallery_photos(galleryId):
     all_gallery_photos = GalleryPhotos.query.filter(GalleryPhotos.gallery_id == galleryId).all()
-    print('>>>>>>>>>>>>>>> all gallery photos', all_gallery_photos)
     gallery_photos = [gallery_photo.to_dict() for gallery_photo in all_gallery_photos]
     return jsonify(gallery_photos)
