@@ -27,6 +27,7 @@ class User(db.Model, UserMixin):
     photo = db.relationship('Photo', back_populates='user')
     comments = db.relationship('Comment', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
+    followers = db.relationship('Follower', back_populates='user')
 
 
     # @validates('first_name')
