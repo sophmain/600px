@@ -13,7 +13,8 @@ class Follower(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
     follower_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 
-    user = db.relationship('User', back_populates='followers')
+    user = db.relationship('User', back_populates='followers', foreign_keys=[user_id])
+    # follower = db.relationship('User', )
 
 
     def to_dict(self):
