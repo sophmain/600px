@@ -28,6 +28,7 @@ def all_photos():
 
     all_photos = Photo.query.all()
     photos = [photo.to_dict() for photo in all_photos]
+    print('>>>>>>>>>>>>photos in route', photos)
 
     photo_res = []
     for photo in photos:

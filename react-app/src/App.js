@@ -32,14 +32,16 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <Route exact path='/'>
+        {user === null && (
+          <SplashPage />
+        )}
+      </Route>
       {isLoaded && (
         <Switch>
           <Route exact path='/'>
             {user !== null && (
               <AllPhotos />
-            )}
-            {user === null && (
-              <SplashPage />
             )}
           </Route>
           <Route exact path='/photos/:photoId'>

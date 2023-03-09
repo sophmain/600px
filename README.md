@@ -1,6 +1,27 @@
-# Flask React Project
+# 600px
 
-This is the starter for the Flask React project.
+600px is a clone of 500px. It allows you to upload photos, add photos to galleries, like photos, and leave comments on photos. Each user has a profile they can edit.
+
+**Live site:** https://sixhundredpx.onrender.com/
+
+## Wiki Links
+- [Database Schema](https://github.com/sophmain/600px/wiki/Database-Schema)
+- [Feature List](https://github.com/sophmain/600px/wiki/Features)
+- [User Stories](https://github.com/sophmain/600px/wiki/User-Stories)
+
+
+### Technologies Used
+* React
+* Redux
+* Javascript
+* Python
+* PostgreSQL
+* Render
+* Flask
+* SqlAlchemy
+* WtForms
+
+
 
 ## Getting started
 1. Clone this repository (only this branch)
@@ -39,110 +60,45 @@ This is the starter for the Flask React project.
    flask run
    ```
 
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Splash/Login Page
 
-## Deployment through Render.com
+Users can log in with 'Demo User' to see site functionality without creating an account. 
 
-First, refer to your Render.com deployment articles for more detailed
-instructions about getting started with [Render.com], creating a production
-database, and deployment debugging tips.
+![Login Page]
 
-From the [Dashboard], click on the "New +" button in the navigation bar, and
-click on "Web Service" to create the application that will be deployed.
+[Login Page]: ./images/Login.png
 
-Look for the name of the application you want to deploy, and click the "Connect"
-button to the right of the name.
+## Photos Page
 
-Now, fill out the form to configure the build and start commands, as well as add
-the environment variables to properly deploy the application.
+Shows all photos all users have uploaded.
 
-### Part A: Configure the Start and Build Commands
+![All Photos]
 
-Start by giving your application a name.
+[All Photos]: ./images/Photos.png
 
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
+## Galleries Page
 
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
+From a user's profile page they can create a gallery and then add photos to that gallery.
 
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
+![Galleries Page]
 
-For your Flask project, enter the following command into the Build field, all in
-one line:
+[Galleries Page]: ./images/Galleries.png
 
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
-```
+## Single photo page
 
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
+From the single photo page a user can see details about the photo. They can favorite it and add to one of their galleries. They can also add a comment, then edit/delte that comment.
 
-Now, add your start command in the Start field:
+![Photo Page]
 
-```shell
-# start script
-gunicorn app:app
-```
+[Photo Page]: ./images/SinglePhoto.png
 
-_If you are using websockets, use the following start command instead for increased performance:_
+## To Do:
+- Add following feature
+- Add search feature
+- 404 page
 
-`gunicorn --worker-class eventlet -w 1 app:app`
-
-### Part B: Add the Environment Variables
-
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
-
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
-
-Add the following keys and values in the Render GUI form:
-
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
-
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
-
-Add the following keys and values:
-
-- DATABASE_URL (copy value from Internal Database URL field)
-
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
-
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
-
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
-
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
-
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+## Contact Info:
+- Created by: Sophie Main
+- Email: sophiekmain@gmail.com
