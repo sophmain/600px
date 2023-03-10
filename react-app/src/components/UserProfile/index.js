@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink, useHistory } from "react-router-dom";
+import { thunkLoadFollowers } from "../../store/follower";
 import { thunkLoadPhotos } from "../../store/photo";
 import { thunkGetUser } from "../../store/session";
 import './UserProfile.css'
@@ -14,11 +15,22 @@ const UserProfile = () => {
     useEffect(() => {
         dispatch(thunkGetUser(userId))
         dispatch(thunkLoadPhotos())
+        dispatch(thunkLoadFollowers(userId))
     }, [dispatch, userId])
 
     const user = useSelector((state) => state.session.singleUser)
     const sessionUser = useSelector((state) => state.session.user)
     const photos = useSelector((state) => state.photos.allPhotos)
+    const followerFollowing = useSelector((state) => state.followers.allFollowers)
+    // const following = useSelector((state) => state.following.allFollowing)
+    if (!followerFollowing) return null
+    const followersArr = Object.values(followerFollowing)
+    const following = followersArr.filter((following)=> following.followerId === +userId)
+    const followers = followersArr.filter((follower) => follower.userId === +userId)
+    console.log('followers Arr', followersArr)
+    console.log('following', following)
+    console.log('followers', followers)
+
 
     if (!user) return null
     let photoArr = []
@@ -68,6 +80,10 @@ const UserProfile = () => {
                         <div className='profile-edit-buttons'></div>
                     )}
                     <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
+                    <div className='user-follower-following-container'>
+                        <div className='user-followers-count'>{followers.length} Followers</div>
+                        <div className='user-following-count'>{following.length} Following</div>
+                    </div>
                     {user.city && (
                         <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
                     )}
@@ -81,7 +97,7 @@ const UserProfile = () => {
                 <div className='user-photos-mapped'>
                     {userPhotos && userPhotos.map((photo) => {
                         return (
-                            <div className='photo-card'>
+                            <div className='photo-card' key={photo.id}>
                                 <div className='image-overlay-3'>
                                     <h4 className='overlay-3-text'>{photo.title}</h4>
 

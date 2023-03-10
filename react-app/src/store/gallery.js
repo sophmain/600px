@@ -167,4 +167,4 @@ const galleryReducer = (state = initialState, action) => {
     }
 }
 
-export default galleryReducer
+export default galleryReducer;

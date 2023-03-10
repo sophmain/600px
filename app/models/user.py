@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
     followers = db.relationship('Follower', back_populates='user', foreign_keys=[Follower.user_id])
-
+    following = db.relationship('Follower', back_populates='follower', foreign_keys=[Follower.follower_id])
 
 
     @property
@@ -54,5 +54,6 @@ class User(db.Model, UserMixin):
             'country': self.country,
             'about': self.about,
             'prof_photo_url': self.prof_photo_url,
-            'cover_photo_url': self.cover_photo_url
+            'cover_photo_url': self.cover_photo_url,
+
         }
