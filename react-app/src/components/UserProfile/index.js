@@ -25,7 +25,7 @@ const UserProfile = () => {
     // const following = useSelector((state) => state.following.allFollowing)
     if (!followerFollowing) return null
     const followersArr = Object.values(followerFollowing)
-    const following = followersArr.filter((following)=> following.followerId === +userId)
+    const following = followersArr.filter((following) => following.followerId === +userId)
     const followers = followersArr.filter((follower) => follower.userId === +userId)
     console.log('followers Arr', followersArr)
     console.log('following', following)
@@ -80,13 +80,14 @@ const UserProfile = () => {
                         <div className='profile-edit-buttons'></div>
                     )}
                     <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
-                    <div className='user-follower-following-container'>
-                        <div className='user-followers-count'>{followers.length} Followers</div>
-                        <div className='user-following-count'>{following.length} Following</div>
-                    </div>
                     {user.city && (
                         <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
                     )}
+                    <div className='user-follower-following-container'>
+                        <div className='user-followers-count' style={{ marginRight: '10px' }}>{followers.length} <span style={{ fontWeight: 'bold' }}>Followers</span></div>
+                        <div className='user-following-count'>{following.length} <span style={{ fontWeight: 'bold' }}>Following</span></div>
+                    </div>
+
                 </div>
                 <div className='profile-link-headers'>
                     <NavLink to={`/profile/${user.id}`} className='selected-subheader' style={{ marginRight: '8px' }}>Photos</NavLink>

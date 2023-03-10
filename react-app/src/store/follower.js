@@ -1,14 +1,14 @@
 const LOAD_FOLLOWERS = 'follower/LOAD_FOLLOWERS'
-const LOAD_FOLLOWING = 'follower/LOAD_FOLLOWING'
+const POST_FOLLOW = 'follower/POST_FOLLOW'
 
 const actionLoadFollowers = (followers) => ({
     type: LOAD_FOLLOWERS,
     followers
 })
-// const actionLoadFollowing = (following) => ({
-//     type: LOAD_FOLLOWING,
-//     following
-// })
+const actionPostFollow = (follow) => ({
+    type: POST_FOLLOW,
+    follow
+})
 
 export const thunkLoadFollowers = (userId) => async (dispatch) => {
     const response = await fetch(`/api/users/${userId}/followers`)
@@ -20,15 +20,19 @@ export const thunkLoadFollowers = (userId) => async (dispatch) => {
     }
 }
 
-// export const thunkLoadFollowing = (userId) => async (dispatch) => {
-//     const response = await fetch(`/api/users/${userId}/following`)
-//     console.log('response in following thunk', response)
-//     if (response.ok) {
-//         const following = await response.json()
-//         dispatch(actionLoadFollowing(following))
-//         return following
-//     }
-// }
+export const thunkPostFollow = (payload) => async (dispatch) => {
+    const response = await fetch(`/api/users/${payload.userId}/following`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    console.log('response in post follow thunk', response)
+    if (response.ok) {
+        const newFollowing = await response.json()
+        dispatch(actionPostFollow(newFollowing))
+        return newFollowing
+    }
+}
 
 const normalize = (arr) => {
     const resObj = {}
@@ -45,10 +49,9 @@ const followerReducer = (state = initialState, action) => {
             newState = { ...state }
             newState.allFollowers = normalize(action.followers)
             return newState
-        // case LOAD_FOLLOWING:
-        //     newState = { ...state }
-        //     newState.allFollowing = normalize(action.following)
-        //     return newState
+        case POST_FOLLOW:
+            newState = { ...state }
+            newState.allFollowers = { ...newState.allFollowers, [action.follow.id]: action.follow}
         default:
             return state
     }
