@@ -244,13 +244,10 @@ const SinglePhoto = () => {
                                     buttonText={
                                         <span className='likes-modal-button-text'>
                                             {likesArr.filter(like => (like.photoId === +photoId)).length}
-                                            {likesArr.filter(like => (like.photoId === +photoId)).length === 1 && (
-                                                <div className='likes-modal-people-person'> person liked this photo</div>
-                                            )}
-                                            {likesArr.filter(like => (like.photoId === +photoId)).length !== 1 && (
+                                            {(likesArr.filter(like => (like.photoId === +photoId)).length === 1 ?
+                                                <div className='likes-modal-people-person'> person liked this photo</div> :
                                                 <div className='likes-modal-people-person'> people liked this photo</div>
                                             )}
-
                                             <i className="fa-solid fa-chevron-right likes-chevron"></i>
                                         </span>
                                     }

@@ -9,7 +9,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
-    padding: 10px 64px 20px 64px;
+    padding: 5px 64px 20px 64px;
 }
 
 .all-gallery-image {

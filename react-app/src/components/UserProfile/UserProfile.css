@@ -9,8 +9,6 @@
     align-items: center;
     width: 100px;
     height: 100px;
-
-    right: 50%;
     justify-content: center;
     top: 390px;
     border-radius: 50%;
@@ -49,12 +47,17 @@
     background-color: rgb(247, 248, 250);
     column-count: 3;
     gap: 8px;
-    margin: 5px;
     padding: 7px 0px;
     width: 100%;
-    margin-top: 10px;
-}
 
+}
+.no-user-photos-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(247, 248, 250);
+    margin: 5px 0px 0px 0px;
+}
 .edit-profile-button-page {
     align-self: flex-end;
     background-color: transparent;
@@ -100,11 +103,11 @@
 
 .work-in-progress-photos {
     display: flex;
+    align-self: center;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 500px;
-    margin-top: 7px;
+    margin-top: 20px;
 
 }
 
@@ -135,8 +138,52 @@
 }
 .user-followers-count{
     margin-right: 10px;
+}
+.profile-follow-user-button {
+    background-color: rgb(8, 112, 209);
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 27px;
+    border-radius: 28px;
+    border: none;
+    width: 125px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.profile-follow-user-button:hover {
+    background-color: #2986f7;
+    transition: .7s;
+}
+.profile-unfollow-user-button{
+    position: relative;
+    background-color: white;
+    text-align: center;
+    color: rgb(130, 130, 130);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 6px 25px;
+    border: 2px solid rgb(8, 112, 209);
+    width: 125px;
+    border-radius: 28px;
+    cursor: pointer;
+    margin-top: 10px;
+    content: "Following";
+}
+.profile-unfollow-user-button:hover span{
+    visibility: hidden;
+}
+.profile-unfollow-user-button:hover::before{
+    content: "Unfollow";
+    position: absolute;
 
 }
+.profile-unfollow-user-button:hover{
+    border: 2px solid red;
+    color: red;
+}
+
 
 @media screen and (max-width: 1200px) {
     .user-photos-container {

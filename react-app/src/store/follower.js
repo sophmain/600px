@@ -71,7 +71,6 @@ const followerReducer = (state = initialState, action) => {
             newState.allFollowers = { ...newState.allFollowers, [action.follow.id]: action.follow}
             return newState
         case DELETE_FOLLOW:
-            console.log('delete follow', action)
             newState = { ...state }
             delete newState.allFollowers[action.followId]
             newState.allFollowers = { ...newState.allFollowers }

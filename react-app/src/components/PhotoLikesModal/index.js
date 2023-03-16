@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 import { useModal } from "../../context/Modal"
+import { thunkLoadFollowers } from "../../store/follower"
 import { thunkLoadAllPhotoLikes } from "../../store/like"
 import './PhotoLikesModal.css'
 
@@ -12,6 +13,7 @@ const PhotoLikesModal = ({ photoId }) => {
 
     useEffect(() => {
         dispatch(thunkLoadAllPhotoLikes(+photoId))
+        // dispatch(thunkLoadFollowers())
     }, [dispatch])
 
     const photoLikes = useSelector(state => state.likes.photoLikes)

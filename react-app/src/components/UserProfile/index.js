@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink, useHistory } from "react-router-dom";
 import { thunkDeleteFollow, thunkLoadFollowers, thunkPostFollow } from "../../store/follower";
 import { thunkLoadPhotos } from "../../store/photo";
 import { thunkGetUser } from "../../store/session";
+import OpenModalButton from "../OpenModalButton";
+import FollowerModal from "../FollowersModal";
+import FollowingModal from "../FollowingModal";
 import './UserProfile.css'
+
 
 
 const UserProfile = () => {
@@ -23,16 +27,15 @@ const UserProfile = () => {
     const photos = useSelector((state) => state.photos.allPhotos)
     const followerFollowing = useSelector((state) => state.followers.allFollowers)
 
-    if (!followerFollowing || !user) return null
+    if (!followerFollowing || !user || !photos) return null
+
+    // get array of followers/following and split into respective groups
     const followersArr = Object.values(followerFollowing)
     const following = followersArr.filter((following) => following.followerId === +userId)
     const followers = followersArr.filter((follower) => follower.userId === +userId)
 
-
-    let photoArr = []
-    if (photos) {
-        photoArr = Object.values(photos)
-    }
+    // get individual user's photos
+    let photoArr = Object.values(photos)
     const userPhotos = photoArr.filter((photo) => photo.userId === user.id)
 
 
@@ -94,18 +97,39 @@ const UserProfile = () => {
                         <div className='profile-edit-buttons'></div>
                     )}
                     <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
-                    {!isFollowing && (
-                        <button className='follow-user-button' onClick={followUser} >Follow</button>
-                    )}
-                    {isFollowing && (
-                        <button className='unfollow-user-button' onClick={unfollowUser}>Unfollow</button>
-                    )}
                     {user.city && (
                         <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
                     )}
+                    {sessionUser.id !== +user.id && (
+                        <>
+                            {!isFollowing && (
+                                <button className='profile-follow-user-button' onClick={followUser} >Follow</button>
+                            )}
+                            {isFollowing && (
+                                <button className='profile-unfollow-user-button' onClick={unfollowUser}><span>Following</span></button>
+                            )}
+                        </>
+                    )}
+
                     <div className='user-follower-following-container'>
-                        <div className='user-followers-count' style={{ marginRight: '10px' }}>{followers.length} <span style={{ fontWeight: 'bold' }}>Followers</span></div>
-                        <div className='user-following-count'>{following.length} <span style={{ fontWeight: 'bold' }}>Following</span></div>
+                        <OpenModalButton
+                            className='photo-likes-modal'
+                            buttonText={
+                                <span className='follower-modal-button-text'>
+                                    <div className='user-followers-count' style={{ marginRight: '10px', fontSize: '14px' }}>{followers.length} <span style={{ fontWeight: 'bold' }}>Followers</span></div>
+                                </span>
+                            }
+                            modalComponent={<FollowerModal userId={userId} />}
+                        ></OpenModalButton>
+                        <OpenModalButton
+                            className='photo-likes-modal'
+                            buttonText={
+                                <span className='follower-modal-button-text'>
+                                    <div className='user-followers-count' style={{ marginRight: '10px', fontSize: '14px' }}>{following.length} <span style={{ fontWeight: 'bold' }}>Following</span></div>
+                                </span>
+                            }
+                            modalComponent={<FollowingModal userId={userId} />}
+                        ></OpenModalButton>
                     </div>
 
                 </div>
@@ -114,6 +138,25 @@ const UserProfile = () => {
                     <NavLink to={`/profile/${user.id}/galleries`} className='not-selected-subheader'>Galleries</NavLink>
                 </div>
             </div>
+            <div className='no-user-photos-container'>
+                {userPhotos.length === 0 && sessionUser.id === +user.id && (
+                    <div className='work-in-progress-photos'>
+                        <p className='profile-no-photos-yet'>
+                            No images uploaded yet
+                        </p>
+                        <button className='upload-photo-button' onClick={(e) => uploadPhoto(e)}><i className="fa-solid fa-arrow-up"></i>Upload</button>
+                    </div>
+                )}
+
+                {sessionUser.id !== +userId && userPhotos.length === 0 && (
+                    <div className='work-in-progress-photos'>
+                        <i className="fa-regular fa-images"></i>
+                        <h1 className='work-in-progress-title'>Work in progress</h1>
+                        <p className='work-in-progress-detail'>{user.firstName} hasn't uploaded any photos. Check back soon.</p>
+                    </div>
+                )}
+            </div>
+
             <div className='user-photos-container'>
                 <div className='user-photos-mapped'>
                     {userPhotos && userPhotos.map((photo) => {
@@ -132,21 +175,7 @@ const UserProfile = () => {
                             </div>
                         )
                     })}
-                    {userPhotos.length === 0 && sessionUser.id === +user.id && (
-                        <div className='work-in-progress-photos'>
-                            <p className='profile-no-photos-yet'>
-                                No images uploaded yet
-                            </p>
-                            <button className='upload-photo-button' onClick={(e) => uploadPhoto(e)}><i className="fa-solid fa-arrow-up"></i>Upload</button>
-                        </div>
-                    )}
-                    {sessionUser.id !== +userId && userPhotos.length === 0 && (
-                        <div className='work-in-progress-photos'>
-                            <i className="fa-regular fa-images"></i>
-                            <h1 className='work-in-progress-title'>Work in progress</h1>
-                            <p className='work-in-progress-detail'>{user.firstName} hasn't uploaded any photos. Check back soon.</p>
-                        </div>
-                    )}
+
                 </div>
             </div>
         </div >
