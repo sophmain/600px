@@ -19,7 +19,7 @@ const SinglePhoto = () => {
     const [postButton, setPostButton] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
     const [currentComment, setCurrentComment] = useState('')
-    const [liked, setLiked] = useState(false)
+    // const [liked, setLiked] = useState(false)
     const [errors, setErrors] = useState([])
 
 
@@ -149,14 +149,6 @@ const SinglePhoto = () => {
         return Math.floor(seconds) + " s"
 
     }
-    // const dateConverter = (uploadDate) => {
-    //     let uploadDate = new Date(uploadDate)
-    //     let year = uploadDate.toLocalString('default', {year: 'numeric'} )
-    //     let month = uploadDate.toLocalString('default', {month: '2-digit'} )
-    //     let day = uploadDate.toLocalString('default', {day: '2-digit'} )
-    //     let formattedDate = year + '-' + month + '-' + day
-    //     return forma
-    // }
 
     return (
         <div className='page-background'>

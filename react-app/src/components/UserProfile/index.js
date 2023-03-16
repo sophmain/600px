@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink, useHistory } from "react-router-dom";
-import { thunkLoadFollowers } from "../../store/follower";
+import { thunkDeleteFollow, thunkLoadFollowers, thunkPostFollow } from "../../store/follower";
 import { thunkLoadPhotos } from "../../store/photo";
 import { thunkGetUser } from "../../store/session";
 import './UserProfile.css'
@@ -22,17 +22,13 @@ const UserProfile = () => {
     const sessionUser = useSelector((state) => state.session.user)
     const photos = useSelector((state) => state.photos.allPhotos)
     const followerFollowing = useSelector((state) => state.followers.allFollowers)
-    // const following = useSelector((state) => state.following.allFollowing)
-    if (!followerFollowing) return null
+
+    if (!followerFollowing || !user) return null
     const followersArr = Object.values(followerFollowing)
     const following = followersArr.filter((following) => following.followerId === +userId)
     const followers = followersArr.filter((follower) => follower.userId === +userId)
-    console.log('followers Arr', followersArr)
-    console.log('following', following)
-    console.log('followers', followers)
 
 
-    if (!user) return null
     let photoArr = []
     if (photos) {
         photoArr = Object.values(photos)
@@ -53,6 +49,24 @@ const UserProfile = () => {
         e.preventDefault()
         history.push(`/upload`)
     }
+    //follow user when clicking follow button
+    // boolean to check if user is already following to conditionally render follow button
+    const isFollowing = followers.filter((follower) => follower.followerId === sessionUser.id).length > 0
+
+    const payload = {
+        userId: sessionUser.id,
+        followingId: userId
+    }
+    const followUser = () => {
+        dispatch(thunkPostFollow(payload))
+    }
+    // remove a follow when clicking unfollow button
+    //find follow to delete
+    const followDelete = followers.filter((follower) => follower.followerId === sessionUser.id)[0]
+    const unfollowUser = () => {
+        dispatch(thunkDeleteFollow(followDelete.id))
+    }
+
     return (
         <div className='profile-container'>
             <div className='prof-images-container'>
@@ -80,6 +94,12 @@ const UserProfile = () => {
                         <div className='profile-edit-buttons'></div>
                     )}
                     <h1 className='user-profile-name'>{user.firstName} {user.lastName}</h1>
+                    {!isFollowing && (
+                        <button className='follow-user-button' onClick={followUser} >Follow</button>
+                    )}
+                    {isFollowing && (
+                        <button className='unfollow-user-button' onClick={unfollowUser}>Unfollow</button>
+                    )}
                     {user.city && (
                         <div className='user-profile-location'><i className="fa-solid fa-location-dot"></i>{user.city}, {user.country}</div>
                     )}

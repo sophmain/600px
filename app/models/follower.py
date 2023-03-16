@@ -12,9 +12,9 @@ class Follower(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
     follower_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
-
-    user = db.relationship('User', back_populates='followers', foreign_keys=[user_id])
-    follower = db.relationship('User', back_populates='following', foreign_keys=[follower_id])
+    #lazy=joined to eager load the user and follower objects with Follower object so they are available after the session is closed
+    user = db.relationship('User', back_populates='followers', foreign_keys=[user_id], lazy='joined')
+    follower = db.relationship('User', back_populates='following', foreign_keys=[follower_id], lazy='joined')
 
 
     def to_dict(self):

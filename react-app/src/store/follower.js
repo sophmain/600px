@@ -1,5 +1,6 @@
 const LOAD_FOLLOWERS = 'follower/LOAD_FOLLOWERS'
 const POST_FOLLOW = 'follower/POST_FOLLOW'
+const DELETE_FOLLOW = 'follower/DELETE_FOLLOW'
 
 const actionLoadFollowers = (followers) => ({
     type: LOAD_FOLLOWERS,
@@ -8,6 +9,10 @@ const actionLoadFollowers = (followers) => ({
 const actionPostFollow = (follow) => ({
     type: POST_FOLLOW,
     follow
+})
+const actionDeleteFollow = (followId) => ({
+    type: DELETE_FOLLOW,
+    followId
 })
 
 export const thunkLoadFollowers = (userId) => async (dispatch) => {
@@ -34,6 +39,18 @@ export const thunkPostFollow = (payload) => async (dispatch) => {
     }
 }
 
+export const thunkDeleteFollow = (deleteId) => async (dispatch) => {
+    const response = await fetch(`/api/followers/${deleteId}`, {
+        method: "DELETE"
+    })
+
+    if (response.ok) {
+        await response.json()
+        dispatch(actionDeleteFollow(deleteId))
+        return deleteId
+    }
+}
+
 const normalize = (arr) => {
     const resObj = {}
     arr.forEach((ele) => { resObj[ele.id] = ele })
@@ -52,6 +69,13 @@ const followerReducer = (state = initialState, action) => {
         case POST_FOLLOW:
             newState = { ...state }
             newState.allFollowers = { ...newState.allFollowers, [action.follow.id]: action.follow}
+            return newState
+        case DELETE_FOLLOW:
+            console.log('delete follow', action)
+            newState = { ...state }
+            delete newState.allFollowers[action.followId]
+            newState.allFollowers = { ...newState.allFollowers }
+            return newState
         default:
             return state
     }

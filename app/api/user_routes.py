@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import User, Follower, db
 from ..forms.user_form import UserForm
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 from app.awsupload import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -130,8 +130,18 @@ def get_followers(id):
     followers = [found_follower.to_dict() for found_follower in found_followers]
     return jsonify(followers)
 
-# @user_routes.route('/<int:id>/following')
-# def get_following(id):
-#     found_following = Follower.query.filter(Follower.follower_id == id).all()
-#     following = [found_follower.to_dict() for found_follower in found_following]
-#     return jsonify(following)
+@user_routes.route('/<int:id>/following', methods=['POST'])
+@login_required
+def follow_user(id):
+    res = request.get_json()
+
+
+    follow = Follower(
+        follower_id=res['userId'],
+        user_id=res['followingId']
+    )
+
+    db.session.add(follow)
+    db.session.commit()
+    return follow.to_dict()
+
