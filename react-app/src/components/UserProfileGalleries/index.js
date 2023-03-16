@@ -5,7 +5,10 @@ import { thunkLoadGalleries } from "../../store/gallery";
 import { thunkLoadPhotos } from "../../store/photo";
 import { thunkGetUser } from "../../store/session";
 import { thunkLoadFollowers, thunkPostFollow, thunkDeleteFollow } from "../../store/follower";
-import './UserProfileGalleries.css'
+import OpenModalButton from "../OpenModalButton";
+import FollowerModal from "../FollowersModal";
+import FollowingModal from "../FollowingModal";
+import './UserProfileGalleries.css';
 
 
 const UserProfileGalleries = () => {
@@ -105,8 +108,24 @@ const UserProfileGalleries = () => {
                     )}
 
                     <div className='user-follower-following-container'>
-                        <div className='user-followers-count' style={{ marginRight: '10px' }}>{followers.length} <span style={{ fontWeight: 'bold', fontSize: '14px' }}>Followers</span></div>
-                        <div className='user-following-count'>{following.length} <span style={{ fontWeight: 'bold' }}>Following</span></div>
+                    <OpenModalButton
+                            className='photo-likes-modal'
+                            buttonText={
+                                <span className='follower-modal-button-text'>
+                                    <div className='user-followers-count' style={{ marginRight: '10px', fontSize: '14px' }}>{followers.length} <span style={{ fontWeight: 'bold' }}>Followers</span></div>
+                                </span>
+                            }
+                            modalComponent={<FollowerModal userId={userId} />}
+                        ></OpenModalButton>
+                        <OpenModalButton
+                            className='photo-likes-modal'
+                            buttonText={
+                                <span className='follower-modal-button-text'>
+                                    <div className='user-followers-count' style={{ marginRight: '10px', fontSize: '14px' }}>{following.length} <span style={{ fontWeight: 'bold' }}>Following</span></div>
+                                </span>
+                            }
+                            modalComponent={<FollowingModal userId={userId} />}
+                        ></OpenModalButton>
                     </div>
                 </div>
                 <div className='profile-link-headers'>

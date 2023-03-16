@@ -7,7 +7,7 @@ import { thunkGetUser } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import FollowerModal from "../FollowersModal";
 import FollowingModal from "../FollowingModal";
-import './UserProfile.css'
+import './UserProfile.css';
 
 
 
