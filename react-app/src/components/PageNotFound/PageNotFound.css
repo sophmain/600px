@@ -1,0 +1,26 @@
+.not-found-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.not-found{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.not-found2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(110, 110, 110);
+}
+
+.image-not-found{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}

@@ -6,6 +6,7 @@ from .uploads import seed_uploads, undo_uploads
 from .galleries_photos import seed_galleries_photos, undo_galleries_photos
 from .comments import seed_comments, undo_comments
 from .likes import seed_likes, undo_likes
+from .followers import seed_followers, undo_followers
 
 from app.models.db import db, environment, SCHEMA
 
@@ -24,12 +25,14 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_likes()
         undo_comments()
+        undo_followers()
         undo_galleries_photos()
         undo_uploads()
         undo_users()
     seed_users()
     seed_uploads()
     seed_galleries_photos()
+    seed_followers()
     seed_comments()
     seed_likes()
 
@@ -40,6 +43,7 @@ def seed():
 def undo():
     undo_likes()
     undo_comments()
+    undo_followers()
     undo_galleries_photos()
     # undo_photos()
     undo_uploads()

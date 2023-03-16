@@ -18,7 +18,7 @@ import EditProfile from "./components/EditProfile";
 import SplashPage from "./components/SplashPage";
 import UserLikes from "./components/UserLikes";
 import Footer from "./components/Footer";
-
+import NotFound from "./components/PageNotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -79,6 +79,9 @@ function App() {
           </Route>
           <Route exact path='/profile/:userId/likes'>
             <UserLikes />
+          </Route>
+          <Route path='/'>
+            <NotFound />
           </Route>
         </Switch>
       )}

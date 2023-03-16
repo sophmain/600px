@@ -9,7 +9,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
-    padding: 10px 64px 20px 64px;
+    padding: 5px 64px 20px 64px;
 }
 
 .all-gallery-image {
@@ -30,9 +30,12 @@
 }
 
 .all-gallery-subheader {
-    font-size: 18px;
-    color: rgb(82, 85, 88);
-    margin: 0px 0px 20px 0px;
+    font-weight: normal;
+    color: rgb(109, 115, 120);
+    line-height: 20px;
+    font-size: 16px;
+    padding: 0px 0px 12px;
+    margin: 0px;
 }
 
 .all-gallery-prof {

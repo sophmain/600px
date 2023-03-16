@@ -15,7 +15,7 @@
 }
 .photos-modal-container {
     min-width: 700px;
-    height: 500px;
+    max-height: 500px; 
     overflow-y: auto;
     padding: 16px;
     text-align: center;

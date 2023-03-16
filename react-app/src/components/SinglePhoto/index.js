@@ -19,7 +19,7 @@ const SinglePhoto = () => {
     const [postButton, setPostButton] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
     const [currentComment, setCurrentComment] = useState('')
-    const [liked, setLiked] = useState(false)
+    // const [liked, setLiked] = useState(false)
     const [errors, setErrors] = useState([])
 
 
@@ -149,14 +149,6 @@ const SinglePhoto = () => {
         return Math.floor(seconds) + " s"
 
     }
-    // const dateConverter = (uploadDate) => {
-    //     let uploadDate = new Date(uploadDate)
-    //     let year = uploadDate.toLocalString('default', {year: 'numeric'} )
-    //     let month = uploadDate.toLocalString('default', {month: '2-digit'} )
-    //     let day = uploadDate.toLocalString('default', {day: '2-digit'} )
-    //     let formattedDate = year + '-' + month + '-' + day
-    //     return forma
-    // }
 
     return (
         <div className='page-background'>
@@ -252,13 +244,10 @@ const SinglePhoto = () => {
                                     buttonText={
                                         <span className='likes-modal-button-text'>
                                             {likesArr.filter(like => (like.photoId === +photoId)).length}
-                                            {likesArr.filter(like => (like.photoId === +photoId)).length === 1 && (
-                                                <div className='likes-modal-people-person'> person liked this photo</div>
-                                            )}
-                                            {likesArr.filter(like => (like.photoId === +photoId)).length !== 1 && (
+                                            {(likesArr.filter(like => (like.photoId === +photoId)).length === 1 ?
+                                                <div className='likes-modal-people-person'> person liked this photo</div> :
                                                 <div className='likes-modal-people-person'> people liked this photo</div>
                                             )}
-
                                             <i className="fa-solid fa-chevron-right likes-chevron"></i>
                                         </span>
                                     }
