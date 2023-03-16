@@ -6,4 +6,5 @@ from .photo import Photo
 from .upload import Upload
 from .comment import Comment
 from .like import Like
+from .follower import Follower
 from .db import environment, SCHEMA

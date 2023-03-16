@@ -2,7 +2,6 @@ const LOAD_LIKES = 'likes/LOAD_LIKES'
 const POST_LIKE = 'likes/POST_LIKE'
 const DELETE_LIKE = 'likes/DELETE_LIKE'
 const LOAD_ALLLIKES = 'likes/LOAD_ALLLIKES'
-// const LOAD_SINGLELIKE = 'likes/LOAD_SINGLELIKE'
 
 //action creators
 const actionLoadLikes = (likes, photoId)=> ({
@@ -18,10 +17,6 @@ const actionDeleteLike = (deleteId) => ({
     type: DELETE_LIKE,
     deleteId
 })
-// const actionLoadSingleLike = (like) => ({
-//     type: LOAD_SINGLELIKE,
-//     like
-// })
 const actionLoadAllLikes = (likes) => ({
     type: LOAD_ALLLIKES,
     likes
@@ -38,16 +33,6 @@ export const thunkLoadAllPhotoLikes = (photoId) => async (dispatch) => {
     }
 
 };
-
-// export const thunkLoadSingleLike = (photoId) => async (dispatch) => {
-//     const response = await fetch(`/api/photos/${photoId}/likes/one`)
-
-//     if (response.ok) {
-//         const singleLike = await response.json()
-//         dispatch(actionLoadSingleLike(singleLike))
-//         return singleLike
-//     }
-// }
 
 export const thunkPostLike = (photoId, userId) => async (dispatch) => {
     const response = await fetch(`/api/photos/${photoId}/likes`, {
@@ -108,10 +93,6 @@ const likesReducer = (state = initialState, action) => {
             newState = { ...state }
             newState.photoLikes = normalize(action.likes)
             return newState
-        // case LOAD_SINGLELIKE:
-        //     newState = { ...state }
-        //     newState.singleLike = action.like
-        //     return newState
         case LOAD_ALLLIKES:
             newState = { ...state }
             newState.allLikes = normalize(action.likes)

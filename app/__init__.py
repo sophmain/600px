@@ -11,6 +11,7 @@ from .api.photo_routes import photo_routes
 from .api.gallery_routes import gallery_routes
 from .api.comment_routes import comment_routes
 from .api.like_routes import like_routes
+from .api.follow_routes import follow_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -36,6 +37,7 @@ app.register_blueprint(photo_routes, url_prefix='/api/photos')
 app.register_blueprint(gallery_routes, url_prefix='/api/galleries')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(like_routes, url_prefix='/api/likes')
+app.register_blueprint(follow_routes, url_prefix='/api/followers')
 db.init_app(app)
 Migrate(app, db)
 

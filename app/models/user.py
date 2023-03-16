@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from sqlalchemy.orm import validates
+from .follower import Follower
 
 
 class User(db.Model, UserMixin):
@@ -27,31 +28,9 @@ class User(db.Model, UserMixin):
     photo = db.relationship('Photo', back_populates='user')
     comments = db.relationship('Comment', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
+    followers = db.relationship('Follower', back_populates='user', foreign_keys=[Follower.user_id])
+    following = db.relationship('Follower', back_populates='follower', foreign_keys=[Follower.follower_id])
 
-
-    # @validates('first_name')
-    # def validate_first_name(self, key, first_name):
-    #     if len(first_name) > 50:
-    #         raise ValueError("First name cannot be longer than 50 characters")
-    #     return first_name
-
-    # @validates('last_name')
-    # def validate_last_name(self, key, last_name):
-    #     if len(last_name) > 50:
-    #         raise ValueError("Last name cannot be longer than 50 characters")
-    #     return last_name
-
-    # @validates('username')
-    # def validate_username(self, key, username):
-    #     if len(username) > 50:
-    #         raise ValueError("Username cannot be longer than 50 characters")
-    #     return username
-
-    # @validates('email')
-    # def validate_email(self, key, email):
-    #     if "@" not in email:
-    #         raise ValueError("failed simple email validation")
-    #     return email
 
     @property
     def password(self):
@@ -75,5 +54,6 @@ class User(db.Model, UserMixin):
             'country': self.country,
             'about': self.about,
             'prof_photo_url': self.prof_photo_url,
-            'cover_photo_url': self.cover_photo_url
+            'cover_photo_url': self.cover_photo_url,
+
         }

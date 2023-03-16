@@ -31,8 +31,8 @@ const CreateGalleryForm = () => {
         const data = await dispatch(thunkCreateGallery(payload))
 
         if (Array.isArray(data)) {
-            const formattedData = data.map((data) => data.split(': ')[1])
-            setErrors(formattedData)
+            // const formattedData = data.map((data) => data.split(': ')[1])
+            setErrors(data)
         } else {
             await setCreatedGallery(data)
         }
@@ -55,11 +55,11 @@ const CreateGalleryForm = () => {
             <div className='create-gallery-form-container'>
 
                 <form className='gallery-form' onSubmit={handleSubmit}>
-                    <ul className="validation-errors">
+                    {/* <ul className="validation-errors">
                         {errors.map((error, idx) => (
                             <li key={idx}>{error}</li>
                         ))}
-                    </ul>
+                    </ul> */}
                     <label>
                         <p className='gallery-form-label'>
                             Title*
@@ -72,6 +72,9 @@ const CreateGalleryForm = () => {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
+                        <div className='errors-profile-edit'>
+                            {errors.filter((error) => error.includes('title')).length > 0 ? errors.filter((error) => error.includes('title'))[0].split(': ')[1] : ''}
+                        </div>
                     </label>
                     <label>
                         <p className='gallery-form-label'>
@@ -85,6 +88,9 @@ const CreateGalleryForm = () => {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
+                        <div className='errors-profile-edit'>
+                            {errors.filter((error) => error.includes('description')).length > 0 ? errors.filter((error) => error.includes('description'))[0].split(': ')[1] : ''}
+                        </div>
                     </label>
                     <label>
                         <p className='gallery-form-label'>

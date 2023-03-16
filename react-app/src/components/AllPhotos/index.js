@@ -23,8 +23,9 @@ const AllPhotos = () => {
     const allPhotosObj = useSelector((state) => state.photos.allPhotos)
     const sessionUser = useSelector((state) => state.session.user)
     const allLikes = useSelector((state) => state.likes.allLikes)
+    const allUsers = useSelector((state) => state.session.allUsers)
 
-
+    console.log('all users', allUsers)
     if (!allPhotosObj) return null
 
     const photos = Object.values(allPhotosObj)

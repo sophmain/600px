@@ -12,13 +12,13 @@ import { useDispatch, useSelector } from 'react-redux';
 const SplashPage = () => {
     const dispatch = useDispatch()
 
-    useEffect(()=> {
+    useEffect(() => {
         dispatch(thunkLoadPhotos())
     }, [dispatch])
-    const photos = useSelector((state)=> state.photos.allPhotos)
+    const photos = useSelector((state) => state.photos.allPhotos)
     if (!photos) return null
     const photosArr = Object.values(photos)
-
+    console.log('photo arr', photosArr)
 
     return (
         <div className='splash-page-container'>
@@ -38,19 +38,19 @@ const SplashPage = () => {
                         showIndicators={false}
 
                     >
-                        <img src='https://i.imgur.com/ZYbx75I.jpg' height='100%' width='100%'/>
-                        <img src='https://i.imgur.com/CfJh2Pa.jpg' height='100%' width='100%'/>
-                        <img src='https://i.imgur.com/jDUym8X.jpg' height='100%' width='100%'/>
-                        <img src='https://i.imgur.com/EOOyVE4.jpg' height='100%' width='100%'/>
-                        <img src='https://i.imgur.com/EtAD0p3.jpg' height='100%' width='100%'/>
-                        <img src='https://i.imgur.com/LCOsnOs.jpg' height='100%' width='100%'/>
+                        <img src='https://i.imgur.com/ZYbx75I.jpg' height='100%' width='100%' />
+                        <img src='https://i.imgur.com/CfJh2Pa.jpg' height='100%' width='100%' />
+                        <img src='https://i.imgur.com/jDUym8X.jpg' height='100%' width='100%' />
+                        <img src='https://i.imgur.com/EOOyVE4.jpg' height='100%' width='100%' />
+                        <img src='https://i.imgur.com/EtAD0p3.jpg' height='100%' width='100%' />
+                        <img src='https://i.imgur.com/LCOsnOs.jpg' height='100%' width='100%' />
 
                     </Carousel>
                 </div>
                 <div className='linear-gradient-splash'></div>
                 <div className='text-over-photo-splash'>
                     <h1 style={{ fontSize: '44px' }}>Discover and share the world's best photos</h1>
-                    <p classname='detail-text-splash'>Get inspired with incredible photos from diverse styles and genres around the world. Build a portfolio and showcase your work- get immediate exposure with your first upload.</p>
+                    <p className='detail-text-splash'>Get inspired with incredible photos from diverse styles and genres around the world. Build a portfolio and showcase your work- get immediate exposure with your first upload.</p>
                     <div>
                         <OpenModalButton
                             className='sign-up-modal-splash'
@@ -62,16 +62,19 @@ const SplashPage = () => {
                 {/* <div className='editors-choice-container'>
                     <h2>The best of the best.</h2>
                     <p>Hand picked images by some of the best photographers on our site. </p>
-                    <div className='editors-picks-photo-container'>
-                        <img className='image-size' src={photosArr[0].photoUrl} alt='drone over ship hong kong'></img>
-                        <img className='image-size' src={photosArr[34].photoUrl} alt='drone over ship hong kong'></img>
-                        <img className='image-size' src={photosArr[37].photoUrl} alt='drone over ship hong kong'></img>
-                        <img className='image-size' src={photosArr[4].photoUrl} alt='drone over ship hong kong'></img>
-                        <img className='image-size' src={photosArr[18].photoUrl} alt='drone over ship hong kong'></img>
-                        <img className='image-size' src={photosArr[6].photoUrl} alt='drone over ship hong kong'></img>
-                        <img className='image-size' src={photosArr[35].photoUrl} alt='drone over ship hong kong'></img>
-                        <img className='image-size' src={photosArr[11].photoUrl} alt='drone over ship hong kong'></img>
-                    </div>
+                    {photosArr && (
+                        <div className='editors-picks-photo-container'>
+                            <img className='image-size' src={photosArr[0].photoUrl} alt='drone over ship hong kong'></img>
+                            <img className='image-size' src={photosArr[34].photoUrl} alt='drone over ship hong kong'></img>
+                            <img className='image-size' src={photosArr[38].photoUrl} alt='drone over ship hong kong'></img>
+                            <img className='image-size' src={photosArr[4].photoUrl} alt='drone over ship hong kong'></img>
+                            <img className='image-size' src={photosArr[18].photoUrl} alt='drone over ship hong kong'></img>
+                            <img className='image-size' src={photosArr[6].photoUrl} alt='drone over ship hong kong'></img>
+                            <img className='image-size' src={photosArr[35].photoUrl} alt='drone over ship hong kong'></img>
+                            <img className='image-size' src={photosArr[11].photoUrl} alt='drone over ship hong kong'></img>
+                        </div>
+                    )}
+
                 </div> */}
 
             </div>
