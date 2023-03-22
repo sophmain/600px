@@ -1,14 +1,19 @@
 .splash-photo-container{
+
     width: 100%;
 
 }
 .splash-page-carousel{
+    position: relative;
     opacity: 1;
     height: 550px;
     width: 100%;
     object-fit: cover;
     /* transition: opacity .7s ease-in-out; */
     z-index: 0;
+    object-position: 60% 80%;
+
+
 
 }
 .carousel {

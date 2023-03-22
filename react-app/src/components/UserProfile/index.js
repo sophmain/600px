@@ -125,7 +125,7 @@ const UserProfile = () => {
                             className='photo-likes-modal'
                             buttonText={
                                 <span className='follower-modal-button-text'>
-                                    <div className='user-followers-count' style={{ marginRight: '10px', fontSize: '14px' }}>{following.length} <span style={{ fontWeight: 'bold' }}>Following</span></div>
+                                    <div className='user-followers-count' style={{ fontSize: '14px' }}>{following.length} <span style={{ fontWeight: 'bold' }}>Following</span></div>
                                 </span>
                             }
                             modalComponent={<FollowingModal userId={userId} />}

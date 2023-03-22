@@ -18,6 +18,7 @@ import EditProfile from "./components/EditProfile";
 import SplashPage from "./components/SplashPage";
 import UserLikes from "./components/UserLikes";
 import Footer from "./components/Footer";
+import Search from "./components/Search";
 import NotFound from "./components/PageNotFound";
 
 function App() {
@@ -79,6 +80,9 @@ function App() {
           </Route>
           <Route exact path='/profile/:userId/likes'>
             <UserLikes />
+          </Route>
+          <Route exact path='/search'>
+            <Search />
           </Route>
           <Route path='/'>
             <NotFound />
