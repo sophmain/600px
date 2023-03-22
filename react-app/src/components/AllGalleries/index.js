@@ -24,7 +24,7 @@ const AllGalleries = () => {
     return (
         <div>
             <div className='all-gallery-header'>
-                <h1 className='all-gallery-title'>Featured galleries</h1>
+                <h1 className='all-gallery-title'>Featured Galleries</h1>
                 <p className='all-gallery-subheader'>Browse through some of the best galleries on 600px.</p>
                 <div className='subheader-home'>
                     <NavLink to={'/'} className='not-selected-subheader' style={{marginRight: '15px'}}>Home</NavLink>

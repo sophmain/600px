@@ -7,6 +7,7 @@ import galleryReducer from './gallery';
 import commentsReducer from './comment';
 import likesReducer from './like';
 import followerReducer from './follower';
+import searchReducer from './search';
 
 const rootReducer = combineReducers({
   session,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   galleries: galleryReducer,
   comments: commentsReducer,
   likes: likesReducer,
-  followers: followerReducer
+  followers: followerReducer,
+  search: searchReducer
 });
 
 

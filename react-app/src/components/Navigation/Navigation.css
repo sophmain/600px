@@ -136,3 +136,64 @@
 .dropdown-button:hover {
   color: white;
 }
+.nav-bar-search-wrapper{
+  background-color: rgb(246, 246, 246);
+  border-radius: 25px;
+  padding: 0px 20px;
+  height: 40px;
+  width: 250px;
+  margin-right: 20px;
+  text-indent: 48px;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+.nav-bar-search-text-field{
+  border: none;
+  background-color: rgb(246, 246, 246);
+  height: 38px;
+  width: 220px;
+  text-indent: 10px;
+  font-size: 16px;
+}
+.nav-bar-search-button{
+  border: none;
+  background-color: rgb(246, 246, 246);
+  color: rgb(195, 195, 195);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.nav-bar-search-text-field:focus{
+  outline: none;
+}
+.auto-search-link-item{
+  text-decoration: none;
+  color: black;
+}
+.nav-bar-search-autocomplete{
+  position: absolute;
+  background-color: white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  top: 45px;
+  z-index: 2;
+  padding: 10px 0px;
+  box-shadow: 0px 0px 5px lightgray;
+
+}
+.auto-search-item{
+  list-style-type: none;
+}
+.auto-search-link-item{
+  text-decoration: none;
+  color: black;
+  padding: 10px 20px;
+}
+.auto-search-link-item:hover{
+  background-color: rgb(231, 231, 231);
+}
