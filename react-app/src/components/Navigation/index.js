@@ -1,16 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { cleanUpSearchAction, thunkCreateSearch } from '../../store/search';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const history = useHistory()
+	const dispatch = useDispatch()
 	const [showMenu, setShowMenu] = useState(false);
+	const [autocompleteResults, setAutocompleteResults] = useState([]);
+	const [query, setQuery] = useState('');
 	const ulRef = useRef();
 
 	const uploadPhoto = (e) => {
@@ -37,18 +41,72 @@ function Navigation({ isLoaded }) {
 		return () => document.removeEventListener("click", closeMenu);
 	}, [showMenu]);
 
-	const allPhotos = () => {
-		history.push(`/photos`)
-	}
+	const photosObj = useSelector((state) => state.photos.allPhotos)
+	if (!photosObj) return null
 
-	const ulClassName = "discover-dropdown" + (showMenu ? "" : " hidden");
-	const closeMenu = () => setShowMenu(false);
+	// const allPhotos = () => {
+	// 	history.push(`/photos`)
+	// }
+
+	// const ulClassName = "discover-dropdown" + (showMenu ? "" : " hidden");
+	// const closeMenu = () => setShowMenu(false);
+
+	const handleSearch = async (e) => {
+		e.preventDefault();
+
+		dispatch(cleanUpSearchAction())
+		dispatch(thunkCreateSearch(query))
+		setQuery('')
+		history.push('/search')
+	};
+
+	const handleAutocomplete = (e) => {
+		const searchQuery = e.target.value;
+		console.log('search query', searchQuery)
+		setQuery(searchQuery);
+		const photosArr = Object.values(photosObj);
+
+		//not all photos have descriptions
+
+		const results = photosArr.filter((photo) => {
+			const description = photo.description ? photo.description.toLowerCase() : ''
+			return photo.title.toLowerCase().includes(searchQuery.toLowerCase()) || description.includes(searchQuery.toLowerCase());
+		})
+		setAutocompleteResults(results);
+	};
 
 	let sessionLinks;
 	if (sessionUser) {
 		sessionLinks = (
 			<div className='nav-bar-right'>
+			<div className='nav-bar-search-container'>
+				<form onSubmit={handleSearch} className='nav-bar-search-form'>
+					<div className="nav-bar-search-wrapper">
+						<button type="submit" className="nav-bar-search-button">
+							<i className="fa fa-search"></i>
+						</button>
+						<input
+							placeholder="Search 600px"
+							className="nav-bar-search-text-field"
+							type="text" value={query}
+							onChange={handleAutocomplete}
+							onBlur={() => setAutocompleteResults([])}
 
+						/>
+
+
+					</div>
+					{autocompleteResults.length > 0 && (
+						<ul className="nav-bar-search-autocomplete">
+							{autocompleteResults.map((result) => (
+								<NavLink className='auto-search-link-item' to={`/photos/${result.id}`} onClick={() => { setQuery(''); setAutocompleteResults([]) }}>
+									<li className='auto-search-item' key={result.id}>{result.title}</li>
+								</NavLink>
+							))}
+						</ul>
+					)}
+				</form>
+			</div>
 				<div style={{ marginRight: '15px' }}>
 					<ProfileButton user={sessionUser} />
 				</div>
@@ -90,6 +148,7 @@ function Navigation({ isLoaded }) {
 					</>
 				</ul>
 			</div> */}
+
 			<div className='nav-bar-login-signup'>
 				{isLoaded && sessionLinks}
 			</div>

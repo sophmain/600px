@@ -245,10 +245,6 @@ def all_likes(id):
 
     return jsonify(like_res)
 
-# @photo_routes.route('/<int:id>/likes/<int:userId>', methods=['GET'])
-# def single_like(id):
-#     found_like = Like.query.filter(and_(Like.photo_id == id, Like.user_id == current_user.id))
-#     return found_like.to_dict()
 
 @photo_routes.route('/<int:id>/likes', methods=['POST'])
 @login_required
