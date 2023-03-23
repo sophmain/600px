@@ -34,7 +34,9 @@ const Search = () => {
     if (!allLikes) return null
     return searchRes && (
         <div className='all-search-container'>
-            <h4 className='search-subheader'>{searchArr.length} photos</h4>
+            <h4 className='search-subheader'>
+                {searchArr.length === 1 ? <p>{searchArr.length} photo</p> : <p>{searchArr.length} photos</p>}
+            </h4>
 
             <div className='user-photos-container'>
                 <div className='user-photos-mapped'>
