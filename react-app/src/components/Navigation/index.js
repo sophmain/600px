@@ -79,34 +79,37 @@ function Navigation({ isLoaded }) {
 	if (sessionUser) {
 		sessionLinks = (
 			<div className='nav-bar-right'>
-			<div className='nav-bar-search-container'>
-				<form onSubmit={handleSearch} className='nav-bar-search-form'>
-					<div className="nav-bar-search-wrapper">
-						<button type="submit" className="nav-bar-search-button">
-							<i className="fa fa-search"></i>
-						</button>
-						<input
-							placeholder="Search 600px"
-							className="nav-bar-search-text-field"
-							type="text" value={query}
-							onChange={handleAutocomplete}
-							onBlur={() => setAutocompleteResults([])}
+				<div className='nav-bar-search-container'>
+					<form onSubmit={handleSearch} className='nav-bar-search-form'>
+						<div className="nav-bar-search-wrapper">
+							<button type="submit" className="nav-bar-search-button">
+								<i className="fa fa-search"></i>
+							</button>
+							<input
+								placeholder="Search 600px"
+								className="nav-bar-search-text-field"
+								type="text" value={query}
+								onChange={handleAutocomplete}
+								onBlur={() => setAutocompleteResults([])}
 
-						/>
+							/>
 
 
-					</div>
-					{autocompleteResults.length > 0 && (
-						<ul className="nav-bar-search-autocomplete">
-							{autocompleteResults.map((result) => (
-								<NavLink key={result.id} className='auto-search-link-item' to={`/photos/${result.id}`} onClick={() => { setQuery(''); setAutocompleteResults([]) }}>
-									<li className='auto-search-item' key={result.id}>{result.title}</li>
-								</NavLink>
-							))}
-						</ul>
-					)}
-				</form>
-			</div>
+						</div>
+						{autocompleteResults.length > 0 && (
+							<ul className="nav-bar-search-autocomplete">
+								{autocompleteResults.map((result) => (
+									<NavLink key={result.id} className='auto-search-link-item' to={`/photos/${result.id}`} onClick={() => { setQuery(''); setAutocompleteResults([]) }}>
+										<li className='auto-search-item' key={result.id}>{result.title}</li>
+									</NavLink>
+								))}
+							</ul>
+						)}
+					</form>
+				</div>
+				<NavLink className='nav-direct-messaging' to={'/message'}>
+					<i class="fa-regular fa-paper-plane"></i>
+				</NavLink>
 				<div style={{ marginRight: '15px' }}>
 					<ProfileButton user={sessionUser} />
 				</div>

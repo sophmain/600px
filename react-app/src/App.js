@@ -19,6 +19,7 @@ import SplashPage from "./components/SplashPage";
 import UserLikes from "./components/UserLikes";
 import Footer from "./components/Footer";
 import Search from "./components/Search";
+import DirectMessage from "./components/DirectMessage";
 import NotFound from "./components/PageNotFound";
 
 function App() {
@@ -83,6 +84,9 @@ function App() {
           </Route>
           <Route exact path='/search'>
             <Search />
+          </Route>
+          <Route exact path='/message'>
+              <DirectMessage />
           </Route>
           <Route path='/'>
             <NotFound />
