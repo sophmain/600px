@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from sqlalchemy import or_, and_
 from flask_login import current_user, login_required
 from app.models import DirectMessage, db, User

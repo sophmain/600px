@@ -2,23 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
 import { thunkLoadFollowers } from "../../store/follower";
+import { thunkLoadMessages } from "../../store/message";
+
+
 let socket;
 
-const DirectMessage = () => {
+const DirectMessage = ({ followingId }) => {
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
-    const [currentMessageId, setCurrentMessageId] = useState('')
     const user = useSelector(state => state.session.user)
-    const followingObj = useSelector(state => state.followers.allFollowers)
 
-    console.log('following', followingObj)
-    console.log('currentmessageid', currentMessageId)
-    console.log('messages', messages)
-    console.log('chatInput', chatInput)
+    //filter our current messages based on followerId so when clicking user to chat, only displays that conversation
+    const userMessages = messages.filter((message) => message.followingId == followingId)
+    const userHistoryMessagesObj = useSelector(state => state.message.allMessages)
 
     useEffect(() => {
         dispatch(thunkLoadFollowers(user.id))
+        dispatch(thunkLoadMessages(followingId))
         // open socket connection
         // create websocket
         socket = io();
@@ -30,37 +31,28 @@ const DirectMessage = () => {
         return (() => {
             socket.disconnect()
         })
-    }, [])
+    }, [followingId])
 
-    if (!followingObj) return null
-    const following = Object.values(followingObj).filter((following)=> following.userId === user.id)
-    console.log('following', following)
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
     };
 
     const sendChat = (e) => {
         e.preventDefault()
-        socket.emit("chat", { user_id: user.id, message: chatInput, following_id: currentMessageId });
+        socket.emit("chat", { user_id: user.id, message: chatInput, following_id: followingId });
         setChatInput("")
     }
+    if (!userHistoryMessagesObj) return null
+    const userHistoryMessages = Object.values(userHistoryMessagesObj)
 
     return (user && (
         <div>
-            <div className='messaging-side-bar-user-select'>
-                <h1>Messenger</h1>
-                <div className='messaging-current-open-container'>
-                    {following.length > 0 && following.map((follow)=> {
-                        return (
-                            <div className='messaging-single-message' onClick={() => setCurrentMessageId(follow.id)}>
-                            {follow.followerFirstName} {follow.followerLastName}
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
             <div>
-                {messages.map((message, ind) => (
+                {userHistoryMessages.map((message, ind) => (
+                    <div key={ind}>{`${message.userId}: ${message.message}`}</div>
+                ))}
+                {userMessages.map((message, ind) => (
+
                     <div key={ind}>{`${message.userId}: ${message.message}`}</div>
                 ))}
             </div>
