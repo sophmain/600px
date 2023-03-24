@@ -20,6 +20,6 @@ class DirectMessage(db.Model):
             "userId": self.user_id,
             "followingId": self.following_id,
             "message": self.message,
-            "createdAt": self.created_at,
-            "updatedAt": self.updated_at
+            "createdAt": str(self.created_at),
+            "updatedAt": str(self.updated_at)
         }

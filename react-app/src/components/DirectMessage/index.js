@@ -8,11 +8,12 @@ const DirectMessage = () => {
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
+    const [currentMessageId, setCurrentMessageId] = useState('')
     const user = useSelector(state => state.session.user)
     const followingObj = useSelector(state => state.followers.allFollowers)
 
     console.log('following', followingObj)
-
+    console.log('currentmessageid', currentMessageId)
     console.log('messages', messages)
     console.log('chatInput', chatInput)
 
@@ -40,8 +41,7 @@ const DirectMessage = () => {
 
     const sendChat = (e) => {
         e.preventDefault()
-        socket.emit("chat", { userId: user.id, message: chatInput });
-        console.log('socket', socket)
+        socket.emit("chat", { user_id: user.id, message: chatInput, following_id: currentMessageId });
         setChatInput("")
     }
 
@@ -52,7 +52,7 @@ const DirectMessage = () => {
                 <div className='messaging-current-open-container'>
                     {following.length > 0 && following.map((follow)=> {
                         return (
-                            <div className='messaging-single-message'>
+                            <div className='messaging-single-message' onClick={() => setCurrentMessageId(follow.id)}>
                             {follow.followerFirstName} {follow.followerLastName}
                             </div>
                         )

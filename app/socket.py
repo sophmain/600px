@@ -21,11 +21,9 @@ def handle_message(data):
     print('>>>>>>> recieved message', data)
     if data != "User connected!":
         message = DirectMessage(
-            {
-                "user_id": data["user_id"],
-                "message": data["message"],
-                "following_id": data["following_id"],
-            }
+            user_id= data["user_id"],
+            message= data["message"],
+            following_id= data["following_id"]
         )
         db.session.add(message)
         db.session.commit()

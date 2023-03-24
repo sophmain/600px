@@ -26,4 +26,5 @@ def get_messages(id):
         .order_by(DirectMessage.created_at.asc())
         .all()
     )
-    return {"chat": [message.to_dict() for message in messages]}
+    all_messages = [message.to_dict() for message in messages]
+    return jsonify(all_messages)
