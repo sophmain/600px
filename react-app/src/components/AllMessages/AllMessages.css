@@ -1,0 +1,53 @@
+.all-messages-container {
+    border-top: 1px solid lightgray;
+    display: flex;
+    flex-direction: row;
+}
+.messaging-current-following-container{
+    width: 40%;
+    border-right: 1px solid lightgray;
+}
+.all-messages-title{
+    margin: 0px;
+    font-size: 24px;
+    padding: 12px 0px;
+    border-bottom: 1px solid lightgray;
+}
+.all-messages-user-name{
+    font-weight: bold;
+    margin-left: 15px;
+}
+.all-messages-user{
+    cursor: pointer;
+}
+.all-messages-user:hover{
+    background-color: lightgray;
+}
+.medium-profile-icon {
+    min-width: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.all-messages-single-user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 5px;
+}
+.all-messages-users-container{
+    overflow-y: auto;
+    max-height: 1000px;
+}
+.all-messages-selected-follower{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 11.5px;
+    border-bottom: 1px solid lightgray;
+}
+.all-messages-single-conversation{
+    width: 60%;
+    position: relative;
+}
