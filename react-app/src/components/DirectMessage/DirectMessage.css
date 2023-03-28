@@ -1,4 +1,4 @@
-.direct-message-live, .direct-message-history{
+.direct-message{
     font-size: 16px;
     padding: 10px;
     word-break: break-word;
@@ -7,13 +7,13 @@
     margin: 10px;
     width: fit-content;
 }
-.direct-message-live.follower, .direct-message-history.follower{
+.direct-message.follower{
     background-color: rgb(247, 248, 250);
     color: rgb(34, 34, 34);
     border-radius: 1rem 1rem 1rem 0px;
     width: fit-content;
 }
-.direct-message-live.user, .direct-message-history.user{
+.direct-message.user{
     background-color: rgb(8, 112, 209);
     color: white;
     border-radius: 1rem 1rem 0px;

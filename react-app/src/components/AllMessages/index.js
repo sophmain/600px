@@ -4,7 +4,7 @@ import { thunkLoadFollowers } from "../../store/follower";
 import DirectMessage from "../DirectMessage";
 import './AllMessages.css'
 
-const AllMessages = () => {
+const AllMessages = ({setIsLoaded}) => {
     const dispatch = useDispatch();
     const [currentMessageId, setCurrentMessageId] = useState("");
     const user = useSelector((state) => state.session.user);
@@ -12,6 +12,7 @@ const AllMessages = () => {
 
     useEffect(() => {
         dispatch(thunkLoadFollowers(user.id));
+        setIsLoaded(true)
     }, [user.id, currentMessageId]);
 
     if (!followingObj) return null;
@@ -21,8 +22,6 @@ const AllMessages = () => {
     );
     const selected = following.filter((follower) => follower.followerid = currentMessageId)[0]
 
-    console.log("following", following);
-    console.log("current message id", currentMessageId);
 
     return (
         <div className='all-messages-container'>
@@ -56,6 +55,7 @@ const AllMessages = () => {
                     )}
                 </div>
                 <DirectMessage
+                    setIsLoaded={setIsLoaded}
                     followingId={currentMessageId}
                     setCurrentMessageId={setCurrentMessageId}
                 />

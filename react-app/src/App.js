@@ -31,6 +31,7 @@ function App() {
 
   const user = useSelector((state) => state.session.user)
 
+
   return (
     <>
       <Navigation isLoaded={isLoaded} />
@@ -86,7 +87,7 @@ function App() {
             <Search />
           </Route>
           <Route exact path='/message'>
-              <AllMessages />
+              <AllMessages setIsLoaded={setIsLoaded}/>
           </Route>
           <Route path='/'>
             <NotFound />

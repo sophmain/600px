@@ -30,3 +30,5 @@ def handle_message(data):
         chat = message.to_dict()
     emit("chat", chat, broadcast=True)
     #emit("chat", data, broadcast=True)
+
+

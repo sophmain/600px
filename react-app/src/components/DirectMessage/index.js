@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
 import { thunkLoadFollowers } from "../../store/follower";
-import { thunkLoadMessages } from "../../store/message";
+import { thunkDeleteMessage, thunkLoadMessages } from "../../store/message";
 import './DirectMessage.css'
 
 
@@ -12,14 +12,15 @@ const DirectMessage = ({ followingId, setCurrentMessageId }) => {
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
+    const [selectedMessageId, setSelectedMessageId] = useState(null);
+    //const [deletingMessageId, setDeletingMessageId] = useState(null);
     const user = useSelector(state => state.session.user)
 
     //filter our current messages based on followerId so when clicking user to chat, only displays that conversation
-    console.log('messages', messages)
-    console.log('followingId', followingId)
     const userMessages = messages.filter((message) => (message.followingId == followingId && message.userId == user.id) || (message.userId == followingId && message.followingId == user.id))
-    console.log('user messages', userMessages)
     const userHistoryMessagesObj = useSelector(state => state.message.allMessages)
+
+    console.log('selected message', selectedMessageId)
 
     useEffect(() => {
         dispatch(thunkLoadFollowers(user.id))
@@ -50,21 +51,53 @@ const DirectMessage = ({ followingId, setCurrentMessageId }) => {
     if (!userHistoryMessagesObj) return null
     const userHistoryMessages = Object.values(userHistoryMessagesObj)
     console.log('userHistory', userHistoryMessages)
+    const messageDate = (messageDate) => {
+
+    }
 
     return (user && (
         <div className='direct-message-container'>
             <div className='direct-messages-parent'>
-                {userHistoryMessages.map((message, ind) => (
-                    <div className={`direct-message-history ${message.userId === followingId ? 'follower' : 'user'}`} key={ind}>{`${message.userId}: ${message.message}`}</div>
+                {userHistoryMessages.concat(userMessages).map((message) => (
+                    <>
+                        <div
+                            className={`direct-message ${message.userId === followingId ? 'follower' : 'user'}`}
+                            key={message.id}
+                            onMouseEnter={() => setSelectedMessageId(message.id)}
+                            onMouseLeave={() => {
+                                setSelectedMessageId(null);
+                            }}
+                        >
+                            {message.message}
+                            {selectedMessageId === message.id && message.userId === user.id && (
+                                <div className="direct-message-options">
+                                    <button
+                                        className="direct-message-option"
+                                        onClick={() => dispatch(thunkDeleteMessage(message.id))}
+                                    >
+                                        Delete
+                                    </button>
+                                    <div
+                                        className="direct-message-option"
+                                        onClick={() => console.log('Edit message')}
+                                    >
+                                        Edit
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div className='direct-message-time'>{() => messageDate(message.createdAt)}</div>
+                    </>
                 ))}
-                {userMessages.map((message, ind) => (
 
-                    <div className={`direct-message-live ${message.userId === followingId ? 'follower' : 'user'}`} key={ind}>{`${message.userId}: ${message.message}`}</div>
-                ))}
+                {/* {userMessages.map((message, ind) => (
+
+                    <div className={`direct-message-live ${message.userId === followingId ? 'follower' : 'user'}`} key={ind}>{`${message.message}`}</div>
+                ))} */}
             </div>
             <form className='direct-message-typing-box-container' onSubmit={sendChat}>
                 <input
-                className='direct-message-typing-box'
+                    className='direct-message-typing-box'
                     value={chatInput}
                     onChange={updateChatInput}
                 />

@@ -28,3 +28,15 @@ def get_messages(id):
     )
     all_messages = [message.to_dict() for message in messages]
     return jsonify(all_messages)
+
+#delete message by message id
+@message_routes.route("/<int:id>", methods=["DELETE"])
+@login_required
+def delete_dm(id):
+    data = DirectMessage.query.get(id)
+    if data:
+        db.session.delete(data)
+        db.session.commit()
+        return {'message': 'Successfully deleted'}
+    else:
+        return {'error': 'Could not delete message'}

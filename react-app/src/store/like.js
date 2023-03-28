@@ -100,9 +100,7 @@ const likesReducer = (state = initialState, action) => {
         case DELETE_LIKE:
             newState = { ...state }
             delete newState.allLikes[action.deleteId]
-            // delete newState.allLikes[action.deleteId]
             newState.allLikes = { ...newState.allLikes }
-            // newState.allLikes = { ...newState.allLikes }
             return newState
         case POST_LIKE:
             newState = { ...state }
