@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
 import { thunkLoadFollowers } from "../../store/follower";
@@ -8,11 +8,12 @@ import './DirectMessage.css'
 
 let socket;
 
-const DirectMessage = ({ followingId, setCurrentMessageId }) => {
+const DirectMessage = ({ followingId }) => {
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [selectedMessageId, setSelectedMessageId] = useState(null);
+    const chatBoxRef = useRef(null); //chatbox div as reverence for scrollTop
     const user = useSelector(state => state.session.user)
 
     //filter our current messages based on followerId so when clicking user to chat, only displays that conversation
@@ -39,15 +40,25 @@ const DirectMessage = ({ followingId, setCurrentMessageId }) => {
         })
     }, [user, dispatch, followingId, messages])
 
+    useEffect(() => {
+        //scroll to bottom of message container after each message is sent or when messages state is updated
+        const chatBox = chatBoxRef.current
+        if (chatBox){
+            chatBox.scrollTop = chatBox.scrollHeight
+        }
+    }, [messages, userHistoryMessagesObj])
+
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
     };
 
     const sendChat = (e) => {
         e.preventDefault()
+
         socket.emit("chat", { user_id: user.id, message: chatInput, following_id: followingId });
         setChatInput("")
     }
+
     if (!userHistoryMessagesObj) return null
     const userHistoryMessages = Object.values(userHistoryMessagesObj).filter((message) => {
         // Check if the message is not included in userMessages and filter out duplicates
@@ -60,50 +71,47 @@ const DirectMessage = ({ followingId, setCurrentMessageId }) => {
     const deleteMessage = (messageId) => {
         dispatch(thunkDeleteMessage(messageId))
         socket.emit("delete", messageId)
-    }
+        setSelectedMessageId(null)
 
-    console.log('userhistory', userHistoryMessages)
-    console.log('user messages', userMessages)
+    }
 
     return (user && (
         <div className='direct-message-container'>
-            <div className='direct-messages-parent'>
+            <div className='direct-messages-parent' ref={chatBoxRef}>
                 {userHistoryMessages.concat(userMessages).map((message) => (
-                    <>
+                    <div
+                        className='direct-message-single-parent'
+                        onMouseEnter={() => setSelectedMessageId(message.id)}
+                        onMouseLeave={() => {
+                            setSelectedMessageId(null);
+                        }}
+                        key={message.id}
+                    >
                         <div
                             className={`direct-message ${message.userId === followingId ? 'follower' : 'user'}`}
-                            key={message.id}
-                            onMouseEnter={() => setSelectedMessageId(message.id)}
-                            onMouseLeave={() => {
-                                setSelectedMessageId(null);
-                            }}
                         >
                             {message.message}
-                            {selectedMessageId === message.id && message.userId === user.id && (
-                                <div className="direct-message-options">
-                                    <button
-                                        className="direct-message-option"
-                                        onClick={() => deleteMessage(message.id)}
-                                    >
-                                        Delete
-                                    </button>
-                                    <div
-                                        className="direct-message-option"
-                                        onClick={() => console.log('Edit message')}
-                                    >
-                                        Edit
-                                    </div>
-                                </div>
-                            )}
                         </div>
+                        {selectedMessageId === message.id && message.userId === user.id && (
+                            <div className="direct-message-options">
+                                <button
+                                    className="direct-message-option"
+                                    onClick={() => deleteMessage(message.id)}
+                                >
+                                    Delete
+                                </button>
+                                {/* <div
+                                    className="direct-message-option"
+                                    onClick={() => console.log('Edit message')}
+                                >
+                                    Edit
+                                </div> */}
+                            </div>
+                        )}
+
                         <div className='direct-message-time'>{() => messageDate(message.createdAt)}</div>
-                    </>
+                    </div>
                 ))}
-
-                {/* {userMessages.map((message, ind) => (
-
-                    <div className={`direct-message-live ${message.userId === followingId ? 'follower' : 'user'}`} key={ind}>{`${message.message}`}</div>
-                ))} */}
             </div>
             <form className='direct-message-typing-box-container' onSubmit={sendChat}>
                 <input

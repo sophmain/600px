@@ -11,24 +11,23 @@
     background-color: rgb(247, 248, 250);
     color: rgb(34, 34, 34);
     border-radius: 1rem 1rem 1rem 0px;
-    width: fit-content;
+    float: left;
 }
 .direct-message.user{
     background-color: rgb(8, 112, 209);
     color: white;
     border-radius: 1rem 1rem 0px;
     text-align: end;
-    align-self: flex-end;
+    float: right;
 
 }
 
-.direct-message-container{
-
+/* .direct-message-container{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-}
+} */
 .direct-message-typing-box-container{
     display: flex;
     flex-direction: row;
@@ -60,6 +59,27 @@
 }
 .direct-messages-parent{
     height: 500px;
-    overflow-y: auto;
+    overflow-y: scroll;
     margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+}
+.direct-message-option{
+    border: none;
+    font-size: 12px;
+    background-color: white;
+    position: absolute;
+    bottom: -15px;
+    right: 10px;
+    cursor: pointer;
+    color: gray;
+    padding: 5px;
+}
+.direct-message-option:hover{
+    color:rgb(8, 112, 209);
+}
+.direct-message-single-parent{
+    position: relative;
+    margin: 8px 0px;
+
 }

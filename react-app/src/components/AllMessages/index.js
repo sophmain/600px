@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkLoadFollowers } from "../../store/follower";
 import DirectMessage from "../DirectMessage";
@@ -8,6 +8,7 @@ const AllMessages = ({setIsLoaded}) => {
     const dispatch = useDispatch();
     const [currentMessageId, setCurrentMessageId] = useState("");
     const user = useSelector((state) => state.session.user);
+    const chatBoxRef = useRef(null);
     const followingObj = useSelector((state) => state.followers.allFollowers);
 
     useEffect(() => {
@@ -57,7 +58,7 @@ const AllMessages = ({setIsLoaded}) => {
                 <DirectMessage
                     setIsLoaded={setIsLoaded}
                     followingId={currentMessageId}
-                    setCurrentMessageId={setCurrentMessageId}
+                    chatBoxRef={chatBoxRef}
                 />
             </div>
 
