@@ -13,19 +13,16 @@ const DirectMessage = ({ followingId, setCurrentMessageId }) => {
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [selectedMessageId, setSelectedMessageId] = useState(null);
-    //const [deletingMessageId, setDeletingMessageId] = useState(null);
     const user = useSelector(state => state.session.user)
 
     //filter our current messages based on followerId so when clicking user to chat, only displays that conversation
     const userMessages = messages.filter((message) => (message.followingId == followingId && message.userId == user.id) || (message.userId == followingId && message.followingId == user.id))
     const userHistoryMessagesObj = useSelector(state => state.message.allMessages)
 
-    console.log('selected message', selectedMessageId)
-
     useEffect(() => {
         dispatch(thunkLoadFollowers(user.id))
         dispatch(thunkLoadMessages(followingId))
-        //setCurrentMessageId(followingId);
+
         // open socket connection
         // create websocket
         socket = io();
@@ -33,11 +30,14 @@ const DirectMessage = ({ followingId, setCurrentMessageId }) => {
         socket.on("chat", (chat) => {
             setMessages(messages => [...messages, chat])
         })
+        socket.on("delete", (messageId) => {
+            setMessages(messages => messages.filter((message) => message.id !== messageId));
+        })
         // when component unmounts, disconnect
         return (() => {
             socket.disconnect()
         })
-    }, [user, dispatch, followingId])
+    }, [user, dispatch, followingId, messages])
 
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
@@ -49,11 +49,21 @@ const DirectMessage = ({ followingId, setCurrentMessageId }) => {
         setChatInput("")
     }
     if (!userHistoryMessagesObj) return null
-    const userHistoryMessages = Object.values(userHistoryMessagesObj)
-    console.log('userHistory', userHistoryMessages)
+    const userHistoryMessages = Object.values(userHistoryMessagesObj).filter((message) => {
+        // Check if the message is not included in userMessages and filter out duplicates
+        return !userMessages.find((userMessage) => userMessage.id === message.id);
+    });
+
     const messageDate = (messageDate) => {
 
     }
+    const deleteMessage = (messageId) => {
+        dispatch(thunkDeleteMessage(messageId))
+        socket.emit("delete", messageId)
+    }
+
+    console.log('userhistory', userHistoryMessages)
+    console.log('user messages', userMessages)
 
     return (user && (
         <div className='direct-message-container'>
@@ -73,7 +83,7 @@ const DirectMessage = ({ followingId, setCurrentMessageId }) => {
                                 <div className="direct-message-options">
                                     <button
                                         className="direct-message-option"
-                                        onClick={() => dispatch(thunkDeleteMessage(message.id))}
+                                        onClick={() => deleteMessage(message.id)}
                                     >
                                         Delete
                                     </button>

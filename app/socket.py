@@ -31,4 +31,10 @@ def handle_message(data):
     emit("chat", chat, broadcast=True)
     #emit("chat", data, broadcast=True)
 
-
+@socketio.on("delete")
+def handle_delete(messageId):
+    message = DirectMessage.query.get(messageId)
+    if message:
+        db.session.delete(message)
+        db.session.commit()
+        emit("delete", messageId, broadcast=True)

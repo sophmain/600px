@@ -3,6 +3,7 @@ from sqlalchemy import or_, and_
 from flask_login import current_user, login_required
 from app.models import DirectMessage, db, User
 from datetime import datetime
+from flask_socketio import emit
 
 message_routes = Blueprint("direct_messages", __name__)
 
@@ -37,6 +38,7 @@ def delete_dm(id):
     if data:
         db.session.delete(data)
         db.session.commit()
+        # emit('message_deleted', {'messageId': id}, broadcast=True)
         return {'message': 'Successfully deleted'}
     else:
         return {'error': 'Could not delete message'}
