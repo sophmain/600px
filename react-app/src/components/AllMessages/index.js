@@ -20,10 +20,16 @@ const AllMessages = () => {
     }, [user.id, currentMessageId]);
 
     if (!followingObj || !allConversationsObj) return null;
+    const conversations = Object.values(allConversationsObj)
+    console.log('conversations', conversations)
+    console.log(Object.values(followingObj))
 
-    const following = Object.values(followingObj).filter(
-        (following) => following.userId === user.id
-    );
+const following = Object.values(followingObj).filter(following => {
+  return following.userId === user.id && conversations.some(
+    conversation => conversation.followingId == following.followerId
+  );
+});
+console.log('following', following)
     // if (!userHistoryMessagesObj) return null
     // console.log('history', Object.values(userHistoryMessagesObj))
     // current selected user to display above chat window
@@ -36,13 +42,13 @@ const AllMessages = () => {
                     <h1 className='all-messages-title'>Messenger</h1>
                     <div className='all-messages-users-container'>
                         {following.length > 0 &&
-                            following.map((follow) => {
+                            following.map((following) => {
                                 return (
-                                    <div className="all-messages-user" key={follow.id}>
-                                        <div className="all-messages-single-user" onClick={() => setCurrentMessageId(follow.followerId)}>
-                                            <img className='medium-profile-icon' src={follow.followerProfile} alt='profile'></img>
+                                    <div className="all-messages-user" key={following.id}>
+                                        <div className="all-messages-single-user" onClick={() => setCurrentMessageId(following.followerId)}>
+                                            <img className='medium-profile-icon' src={following.followerProfile} alt='profile'></img>
                                             <div className='all-messages-user-name'>
-                                                {follow.followerFirstName} {follow.followerLastName}
+                                                {following.followerFirstName} {following.followerLastName}
                                             </div>
                                         </div>
                                     </div>
