@@ -62,7 +62,7 @@ const DirectMessage = ({ followingId }) => {
         socket.emit("chat", { user_id: user.id, message: chatInput, following_id: followingId });
         setChatInput("")
     }
-
+    console.log('followingId', followingId)
     if (!userHistoryMessagesObj) return null
     const userHistoryMessages = Object.values(userHistoryMessagesObj).filter((message) => {
         // Check if the message is not included in userMessages and filter out duplicates

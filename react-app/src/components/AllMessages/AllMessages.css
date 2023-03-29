@@ -18,9 +18,9 @@
     border-right: 1px solid lightgray;
 }
 .all-messages-title{
-    margin: 0px 0px 0px 10px;
+    margin: 0px;
     font-size: 24px;
-    padding: 12px 0px;
+    padding: 12px 0px 12px 10px;
     border-bottom: 1px solid lightgray;
 }
 .all-messages-user-name{
@@ -61,3 +61,9 @@
     width: 60%;
     position: relative;
 }
+/* .all-messages-following-subheader{
+    color: rgb(191, 191, 191);
+    font-weight: bold;
+    font-size: 12px;
+    margin: 5px 5px;
+} */
