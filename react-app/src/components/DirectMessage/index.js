@@ -14,6 +14,7 @@ const DirectMessage = ({ followingId }) => {
     const [messages, setMessages] = useState([]);
     const [selectedMessageId, setSelectedMessageId] = useState(null);
     const chatBoxRef = useRef(null); //chatbox div as reverence for scrollTop
+
     const user = useSelector(state => state.session.user)
 
     //filter our current messages based on followerId so when clicking user to chat, only displays that conversation
@@ -22,7 +23,10 @@ const DirectMessage = ({ followingId }) => {
 
     useEffect(() => {
         dispatch(thunkLoadFollowers(user.id))
-        dispatch(thunkLoadMessages(followingId))
+        if (followingId){
+            dispatch(thunkLoadMessages(followingId))
+        }
+
 
         // open socket connection
         // create websocket
@@ -75,7 +79,7 @@ const DirectMessage = ({ followingId }) => {
 
     }
 
-    return (user && (
+    return (user && followingId &&(
         <div className='direct-message-container'>
             <div className='direct-messages-parent' ref={chatBoxRef}>
                 {userHistoryMessages.concat(userMessages).map((message) => (
@@ -118,6 +122,7 @@ const DirectMessage = ({ followingId }) => {
                     className='direct-message-typing-box'
                     value={chatInput}
                     onChange={updateChatInput}
+                    placeholder='Say something'
                 />
                 <button className='direct-message-send' type="submit">Send</button>
             </form>

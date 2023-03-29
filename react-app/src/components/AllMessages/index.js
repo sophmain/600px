@@ -1,67 +1,95 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkLoadFollowers } from "../../store/follower";
+import { thunkLoadConversations, thunkLoadMessages } from "../../store/message";
 import DirectMessage from "../DirectMessage";
 import './AllMessages.css'
 
-const AllMessages = ({setIsLoaded}) => {
+const AllMessages = () => {
     const dispatch = useDispatch();
     const [currentMessageId, setCurrentMessageId] = useState("");
+
     const user = useSelector((state) => state.session.user);
-    const chatBoxRef = useRef(null);
     const followingObj = useSelector((state) => state.followers.allFollowers);
+    const allConversationsObj = useSelector(state => state.message.allConversations)
 
     useEffect(() => {
         dispatch(thunkLoadFollowers(user.id));
-        setIsLoaded(true)
+        dispatch(thunkLoadConversations())
+
     }, [user.id, currentMessageId]);
 
-    if (!followingObj) return null;
+    if (!followingObj || !allConversationsObj) return null;
 
     const following = Object.values(followingObj).filter(
         (following) => following.userId === user.id
     );
-    const selected = following.filter((follower) => follower.followerid = currentMessageId)[0]
-
+    // if (!userHistoryMessagesObj) return null
+    // console.log('history', Object.values(userHistoryMessagesObj))
+    // current selected user to display above chat window
+    const selected = following.filter((follower) => follower.followerId == currentMessageId)[0]
 
     return (
-        <div className='all-messages-container'>
-            <div className="messaging-current-following-container">
-                <h1 className='all-messages-title'>Messenger</h1>
-                <div className='all-messages-users-container'>
-                    {following.length > 0 &&
-                        following.map((follow) => {
-                            return (
-                                <div className="all-messages-user" key={follow.id}>
-                                    <div className="all-messages-single-user" onClick={() => setCurrentMessageId(follow.followerId)}>
-                                        <img className='medium-profile-icon' src={follow.followerProfile} alt='profile'></img>
-                                        <div className='all-messages-user-name'>
-                                            {follow.followerFirstName} {follow.followerLastName}
+        <div className='messages-background-container'>
+            <div className='all-messages-container'>
+                <div className="messaging-current-following-container">
+                    <h1 className='all-messages-title'>Messenger</h1>
+                    <div className='all-messages-users-container'>
+                        {following.length > 0 &&
+                            following.map((follow) => {
+                                return (
+                                    <div className="all-messages-user" key={follow.id}>
+                                        <div className="all-messages-single-user" onClick={() => setCurrentMessageId(follow.followerId)}>
+                                            <img className='medium-profile-icon' src={follow.followerProfile} alt='profile'></img>
+                                            <div className='all-messages-user-name'>
+                                                {follow.followerFirstName} {follow.followerLastName}
+                                            </div>
                                         </div>
                                     </div>
+                                );
+                            })}
+                    </div>
+                </div>
+                <div className="all-messages-single-conversation">
+                    <div>
+                        {selected && (
+                            <div className='all-messages-selected-follower'>
+                                <img className='small-profile-icon' src={selected.followerProfile} alt='profile'></img>
+                                <div className='all-messages-user-name'>
+                                    {selected.followerFirstName} {selected.followerLastName}
                                 </div>
-                            );
-                        })}
-                </div>
-            </div>
-            <div className="all-messages-single-conversation">
-                <div>
-                    {selected && (
-                        <div className='all-messages-selected-follower'>
-                            <img className='small-profile-icon' src={selected.followerProfile} alt='profile'></img>
-                            <div className='all-messages-user-name'>
-                                {selected.followerFirstName} {selected.followerLastName}
                             </div>
-                        </div>
-                    )}
-                </div>
-                <DirectMessage
-                    setIsLoaded={setIsLoaded}
-                    followingId={currentMessageId}
-                    chatBoxRef={chatBoxRef}
-                />
-            </div>
+                        )}
+                        {/* {!selected && (
+                            <>
+                                <div>
+                                    <h2>New Conversation</h2>
+                                </div>
+                                <div className='all-messages-new-conversation'>
+                                    {following.length > 0 &&
+                                        following.map((follow) => {
+                                            return (
+                                                <div className="all-messages-user" key={follow.id}>
+                                                    <div className="all-messages-single-user" onClick={() => setCurrentMessageId(follow.followerId)}>
+                                                        <img className='medium-profile-icon' src={follow.followerProfile} alt='profile'></img>
+                                                        <div className='all-messages-user-name'>
+                                                            {follow.followerFirstName} {follow.followerLastName}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                </div>
+                            </>
+                        )} */}
+                    </div>
+                    <DirectMessage
+                        followingId={currentMessageId}
 
+                    />
+                </div>
+
+            </div>
         </div>
     );
 };

@@ -1,14 +1,24 @@
+.messages-background-container{
+    background-color: rgb(247, 248, 250);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 .all-messages-container {
-    border-top: 1px solid lightgray;
+
     display: flex;
     flex-direction: row;
+    height: 500px;
+    width: 50%;
+    min-width: 400px;
+    background-color: white;
 }
 .messaging-current-following-container{
     width: 40%;
     border-right: 1px solid lightgray;
 }
 .all-messages-title{
-    margin: 0px;
+    margin: 0px 0px 0px 10px;
     font-size: 24px;
     padding: 12px 0px;
     border-bottom: 1px solid lightgray;
@@ -24,7 +34,7 @@
     background-color: lightgray;
 }
 .medium-profile-icon {
-    min-width: 30px;
+    min-width: 50px;
     width: 50px;
     height: 50px;
     border-radius: 50%;

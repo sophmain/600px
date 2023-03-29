@@ -7,7 +7,7 @@ from flask_socketio import emit
 
 message_routes = Blueprint("direct_messages", __name__)
 
-# get all messages
+# get all user messages
 @message_routes.route("/<int:id>")
 @login_required
 def get_messages(id):
@@ -29,6 +29,19 @@ def get_messages(id):
     )
     all_messages = [message.to_dict() for message in messages]
     return jsonify(all_messages)
+
+# get all user messages
+@message_routes.route("/")
+@login_required
+def get_conversations():
+    messages = (
+        DirectMessage.query
+        .order_by(DirectMessage.created_at.asc())
+        .all()
+    )
+    all_messages = [message.to_dict() for message in messages]
+    return jsonify(all_messages)
+
 
 #delete message by message id
 @message_routes.route("/<int:id>", methods=["DELETE"])
