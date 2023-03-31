@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkLoadFollowers } from "../../store/follower";
-import { thunkLoadConversations, thunkLoadMessages } from "../../store/message";
+import { thunkLoadConversations } from "../../store/message";
 import DirectMessage from "../DirectMessage";
 import './AllMessages.css'
 
@@ -22,44 +22,50 @@ const AllMessages = () => {
     if (!followingObj || !allConversationsObj) return null;
     const conversations = Object.values(allConversationsObj)
 
-    console.log('conversations', conversations)
-    console.log(Object.values(followingObj))
-
-
-    const openConversations = Object.values(followingObj).filter(following => {
-        return following.userId === user.id && conversations.some(
-            conversation => (conversation.followingId == following.followerId || conversation.userId == following.followerId)
-        );
-    });
-    const notOpenConversations = Object.values(followingObj).filter(following => {
-        return following.userId === user.id && !conversations.some(
-            conversation => (conversation.followingId == following.followerId || conversation.userId == following.followerId)
-        );
-    });
     const allFollowing = Object.values(followingObj).filter(following => {
-        return following.userId === user.id
+        return following.followerId === user.id
     })
-    console.log('open', openConversations)
-    console.log('allfollowing', allFollowing)
-    // if (!userHistoryMessagesObj) return null
-    // console.log('history', Object.values(userHistoryMessagesObj))
+
+    // filters to only show users that have conversations started with the logged in user
+    const openConversations = Object.values(followingObj).filter(following => {
+        const hasConversation = conversations.some(conversation =>
+            (conversation.userId === following.userId || conversation.followingId === following.userId)
+        );
+        return ((following.followerId === user.id)) && hasConversation;
+    });
+    // filters to only show users that do not have conversations started with the logged in user
+    const notOpenConversations = Object.values(followingObj).filter(following => {
+        const hasConversation = conversations.some(conversation =>
+            (conversation.userId === following.userId || conversation.followingId === following.userId)
+        );
+        return ((following.followerId === user.id)) && !hasConversation;
+    });
+
+    // console.log('open', openConversations)
+    // console.log('allfollowing', allFollowing)
+    // console.log('closed', notOpenConversations)
+
     // current selected user to display above chat window
-    const selected = allFollowing.filter((follower) => follower.followerId == currentMessageId)[0]
-    console.log('selected', selected)
+    const selected = allFollowing.filter((follower) => follower.userId == currentMessageId)[0]
+
     return (
         <div className='messages-background-container'>
             <div className='all-messages-container'>
                 <div className="messaging-current-following-container">
-                    <h1 className='all-messages-title'>Messenger</h1>
+                    <h1 className='all-messages-title'>
+                        Messenger
+                        <i className="fa-regular fa-paper-plane" style={{ marginLeft: '5px', color: 'rgb(8, 112, 209)', fontSize: '18px' }} onClick={() => setCurrentMessageId(null)}> +</i>
+
+                    </h1>
                     <div className='all-messages-users-container'>
                         {openConversations.length > 0 &&
                             openConversations.map((following) => {
                                 return (
                                     <div className="all-messages-user" key={following.id}>
-                                        <div className="all-messages-single-user" onClick={() => setCurrentMessageId(following.followerId)}>
-                                            <img className='medium-profile-icon' src={following.followerProfile} alt='profile'></img>
+                                        <div className="all-messages-single-user" onClick={() => setCurrentMessageId(following.userId)}>
+                                            <img className='medium-profile-icon' src={following.userProfile} alt='profile'></img>
                                             <div className='all-messages-user-name'>
-                                                {following.followerFirstName} {following.followerLastName}
+                                                {following.userFirstName} {following.userLastName}
                                             </div>
                                         </div>
                                     </div>
@@ -71,9 +77,9 @@ const AllMessages = () => {
                     <div>
                         {selected && (
                             <div className='all-messages-selected-follower'>
-                                <img className='small-profile-icon' src={selected.followerProfile} alt='profile'></img>
+                                <img className='small-profile-icon' src={selected.userProfile} alt='profile'></img>
                                 <div className='all-messages-user-name'>
-                                    {selected.followerFirstName} {selected.followerLastName}
+                                    {selected.userFirstName} {selected.userLastName}
                                 </div>
                             </div>
                         )}
@@ -83,15 +89,14 @@ const AllMessages = () => {
                                     <h3 className='all-messages-title' style={{ fontSize: '16px', padding: '16.75px 5px' }}>New Conversation</h3>
                                 </div>
                                 <div className='all-messages-new-conversation'>
-                                    {/* <p className='all-messages-following-subheader'>Following</p> */}
                                     {notOpenConversations.length > 0 &&
                                         notOpenConversations.map((follow) => {
                                             return (
                                                 <div className="all-messages-user" key={follow.id}>
-                                                    <div className="all-messages-single-user" onClick={() => setCurrentMessageId(follow.followerId)}>
-                                                        <img className='small-profile-icon' src={follow.followerProfile} alt='profile'></img>
+                                                    <div className="all-messages-single-user" onClick={() => { setCurrentMessageId(follow.userId) }}>
+                                                        <img className='small-profile-icon' src={follow.userProfile} alt='profile'></img>
                                                         <div className='all-messages-user-name'>
-                                                            {follow.followerFirstName} {follow.followerLastName}
+                                                            {follow.userFirstName} {follow.userLastName}
                                                         </div>
                                                     </div>
                                                 </div>

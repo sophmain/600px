@@ -22,6 +22,10 @@
     font-size: 24px;
     padding: 12px 0px 12px 10px;
     border-bottom: 1px solid lightgray;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 .all-messages-user-name{
     font-weight: bold;

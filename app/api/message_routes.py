@@ -35,7 +35,12 @@ def get_messages(id):
 @login_required
 def get_conversations():
     messages = (
-        DirectMessage.query
+        DirectMessage.query.filter(
+            or_(
+                DirectMessage.user_id == current_user.id,
+                DirectMessage.following_id == current_user.id,
+                ),
+            )
         .order_by(DirectMessage.created_at.asc())
         .all()
     )
