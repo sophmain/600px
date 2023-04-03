@@ -7,4 +7,5 @@ from .upload import Upload
 from .comment import Comment
 from .like import Like
 from .follower import Follower
+from .direct_message import DirectMessage
 from .db import environment, SCHEMA

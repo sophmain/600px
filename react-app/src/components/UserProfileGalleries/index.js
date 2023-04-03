@@ -154,10 +154,10 @@ const UserProfileGalleries = () => {
                     {userGalleries.length > 0 && userGalleries.map((gallery) => {
 
                         return (
-                            <>
+                            <div key={gallery.id} >
                                 {gallery && (
                                     <div>
-                                        <div className='gallery-card' key={gallery.id} onClick={() => toGallery(gallery)}>
+                                        <div className='gallery-card' onClick={() => toGallery(gallery)}>
                                             {gallery.photos.length > 0 && (
                                                 <img className='photo-size all-gallery-image' src={gallery.photos[0].photoUrl} alt='gallery'></img>
                                             )}
@@ -177,7 +177,7 @@ const UserProfileGalleries = () => {
                                         </div>
                                     </div>
                                 )}
-                            </>
+                            </div>
                         )
                     })}
 
