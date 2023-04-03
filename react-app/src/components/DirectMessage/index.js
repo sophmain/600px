@@ -8,7 +8,7 @@ import './DirectMessage.css'
 
 let socket;
 
-const DirectMessage = ({ followingId }) => {
+const DirectMessage = ({ followingId , setToggle, toggle}) => {
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
@@ -61,6 +61,7 @@ const DirectMessage = ({ followingId }) => {
 
         socket.emit("chat", { user_id: user.id, message: chatInput, following_id: followingId });
         setChatInput("")
+        setToggle(!toggle)
     }
     console.log('followingId', followingId)
     if (!userHistoryMessagesObj) return null
@@ -70,12 +71,24 @@ const DirectMessage = ({ followingId }) => {
     });
 
     const messageDate = (messageDate) => {
-
+        console.log('message date', messageDate)
+        const messageTime = messageDate.slice(10,16)
+        let hour = messageTime.slice(0,3)
+        const minute = messageTime.slice(4,6)
+        if (hour > 12){
+            hour -= 12
+            return `${hour}:${minute} PM`
+        }
+        if (hour == 12){
+            return `${hour}:${minute} PM`
+        }
+        else return `${hour}:${minute} AM`
     }
     const deleteMessage = (messageId) => {
         dispatch(thunkDeleteMessage(messageId))
         socket.emit("delete", messageId)
         setSelectedMessageId(null)
+        setToggle(!toggle)
 
     }
 
@@ -113,7 +126,7 @@ const DirectMessage = ({ followingId }) => {
                             </div>
                         )}
 
-                        <div className='direct-message-time'>{() => messageDate(message.createdAt)}</div>
+                        <div className='direct-message-time'>{messageDate(message.createdAt)}</div>
                     </div>
                 ))}
             </div>

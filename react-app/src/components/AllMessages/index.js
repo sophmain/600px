@@ -8,6 +8,7 @@ import './AllMessages.css'
 const AllMessages = () => {
     const dispatch = useDispatch();
     const [currentMessageId, setCurrentMessageId] = useState("");
+    const [toggle, setToggle] = useState(false)
 
     const user = useSelector((state) => state.session.user);
     const followingObj = useSelector((state) => state.followers.allFollowers);
@@ -17,7 +18,7 @@ const AllMessages = () => {
         dispatch(thunkLoadFollowers(user.id));
         dispatch(thunkLoadConversations())
 
-    }, [user.id, currentMessageId]);
+    }, [user.id, currentMessageId, toggle]);
 
     if (!followingObj || !allConversationsObj) return null;
     const conversations = Object.values(allConversationsObj)
@@ -108,6 +109,8 @@ const AllMessages = () => {
                     </div>
                     <DirectMessage
                         followingId={currentMessageId}
+                        setToggle = {setToggle}
+                        toggle={toggle}
 
                     />
                 </div>
