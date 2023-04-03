@@ -8,6 +8,7 @@ import commentsReducer from './comment';
 import likesReducer from './like';
 import followerReducer from './follower';
 import searchReducer from './search';
+import messageReducer from './message';
 
 const rootReducer = combineReducers({
   session,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   comments: commentsReducer,
   likes: likesReducer,
   followers: followerReducer,
-  search: searchReducer
+  search: searchReducer,
+  message: messageReducer
 });
 
 

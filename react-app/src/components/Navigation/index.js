@@ -6,6 +6,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { cleanUpSearchAction, thunkCreateSearch } from '../../store/search';
+import { thunkLoadPhotos } from '../../store/photo';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -15,6 +16,7 @@ function Navigation({ isLoaded }) {
 	const [showMenu, setShowMenu] = useState(false);
 	const [autocompleteResults, setAutocompleteResults] = useState([]);
 	const [query, setQuery] = useState('');
+	const [hovered, setHovered] = useState(false);
 	const ulRef = useRef();
 
 	const uploadPhoto = (e) => {
@@ -22,10 +24,10 @@ function Navigation({ isLoaded }) {
 		history.push(`/upload`)
 	}
 
-	const openMenu = () => {
-		if (showMenu) return;
-		setShowMenu(true);
-	};
+	// load photos once for search component
+	useEffect(()=> {
+		dispatch(thunkLoadPhotos())
+	},[])
 
 	useEffect(() => {
 		if (!showMenu) return;
@@ -44,9 +46,13 @@ function Navigation({ isLoaded }) {
 	const photosObj = useSelector((state) => state.photos.allPhotos)
 	if (!photosObj) return null
 
-	// const allPhotos = () => {
-	// 	history.push(`/photos`)
-	// }
+	const handleMouseEnter = () => {
+		setHovered(true);
+	};
+
+	const handleMouseLeave = () => {
+		setHovered(false);
+	};
 
 	// const ulClassName = "discover-dropdown" + (showMenu ? "" : " hidden");
 	// const closeMenu = () => setShowMenu(false);
@@ -74,39 +80,53 @@ function Navigation({ isLoaded }) {
 		})
 		setAutocompleteResults(results);
 	};
+	const handleBlur = () => {
+		if (!hovered) {
+		  setAutocompleteResults([]);
+		}
+	  };
 
 	let sessionLinks;
 	if (sessionUser) {
 		sessionLinks = (
 			<div className='nav-bar-right'>
-			<div className='nav-bar-search-container'>
-				<form onSubmit={handleSearch} className='nav-bar-search-form'>
-					<div className="nav-bar-search-wrapper">
-						<button type="submit" className="nav-bar-search-button">
-							<i className="fa fa-search"></i>
-						</button>
-						<input
-							placeholder="Search 600px"
-							className="nav-bar-search-text-field"
-							type="text" value={query}
-							onChange={handleAutocomplete}
-							onBlur={() => setAutocompleteResults([])}
+				<div className='nav-bar-search-container'>
+					<form onSubmit={handleSearch} className='nav-bar-search-form'>
+						<div className="nav-bar-search-wrapper">
+							<button type="submit" className="nav-bar-search-button">
+								<i className="fa fa-search"></i>
+							</button>
+							<input
+								placeholder="Search 600px"
+								className="nav-bar-search-text-field"
+								type="text" value={query}
+								onChange={handleAutocomplete}
+								onBlur={handleBlur}
 
-						/>
+							/>
 
 
-					</div>
-					{autocompleteResults.length > 0 && (
-						<ul className="nav-bar-search-autocomplete">
-							{autocompleteResults.map((result) => (
-								<NavLink key={result.id} className='auto-search-link-item' to={`/photos/${result.id}`} onClick={() => { setQuery(''); setAutocompleteResults([]) }}>
-									<li className='auto-search-item' key={result.id}>{result.title}</li>
-								</NavLink>
-							))}
-						</ul>
-					)}
-				</form>
-			</div>
+						</div>
+						{autocompleteResults.length > 0 && (
+							<ul className="nav-bar-search-autocomplete" onMouseLeave={handleMouseLeave}>
+								{autocompleteResults.map((result) => (
+									<NavLink
+										key={result.id}
+										className='auto-search-link-item'
+										to={`/photos/${result.id}`}
+										onClick={() => { setQuery(''); setAutocompleteResults([]) }}
+										onMouseEnter={handleMouseEnter}
+									>
+										<li className='auto-search-item' key={result.id}>{result.title}</li>
+									</NavLink>
+								))}
+							</ul>
+						)}
+					</form>
+				</div>
+				<NavLink className='nav-direct-messaging' to={'/messages'}>
+					<i className="fa-regular fa-paper-plane"></i>
+				</NavLink>
 				<div style={{ marginRight: '15px' }}>
 					<ProfileButton user={sessionUser} />
 				</div>

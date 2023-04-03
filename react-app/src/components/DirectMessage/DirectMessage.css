@@ -1,0 +1,87 @@
+.direct-message{
+    font-size: 16px;
+    padding: 10px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 33rem;
+    margin: 10px;
+    width: fit-content;
+}
+.direct-message.follower{
+    background-color: rgb(247, 248, 250);
+    color: rgb(34, 34, 34);
+    border-radius: 1rem 1rem 1rem 0px;
+    float: left;
+}
+.direct-message.user{
+    background-color: rgb(8, 112, 209);
+    color: white;
+    border-radius: 1rem 1rem 0px;
+    text-align: end;
+    float: right;
+
+}
+
+/* .direct-message-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+} */
+.direct-message-typing-box-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    border-top: 1px solid lightgray;
+    height: 40px;
+    background-color: white;
+
+}
+.direct-message-send{
+    background-color:rgb(8, 112, 209);
+    color: white;
+    border: none;
+    border-radius: 28px;
+    padding: 5px 16px;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 5px;
+}
+.direct-message-typing-box{
+    width: 80%;
+    border: none;
+    height: 32px;
+    font-size: 16px;
+    margin-left: 5px;
+}
+.direct-message-typing-box:focus{
+    outline: none;
+}
+.direct-messages-parent{
+    height: 406px;
+    overflow-y: scroll;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+}
+.direct-message-option{
+    border: none;
+    font-size: 12px;
+    background-color: white;
+    position: absolute;
+    bottom: -15px;
+    right: 10px;
+    cursor: pointer;
+    color: gray;
+    padding: 5px;
+}
+.direct-message-option:hover{
+    color:rgb(8, 112, 209);
+}
+.direct-message-single-parent{
+    position: relative;
+    margin-bottom: 8px;
+}

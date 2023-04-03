@@ -19,7 +19,9 @@ import SplashPage from "./components/SplashPage";
 import UserLikes from "./components/UserLikes";
 import Footer from "./components/Footer";
 import Search from "./components/Search";
+import AllMessages from "./components/AllMessages";
 import NotFound from "./components/PageNotFound";
+import DirectMessage from "./components/DirectMessage";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +31,8 @@ function App() {
   }, [dispatch]);
 
   const user = useSelector((state) => state.session.user)
+
+  if (!isLoaded) return null
 
   return (
     <>
@@ -84,6 +88,12 @@ function App() {
           <Route exact path='/search'>
             <Search />
           </Route>
+          <Route exact path='/messages'>
+            <AllMessages />
+          </Route>
+          {/* <Route exact path='/messages/:messageId'>
+              <DirectMessage />
+          </Route> */}
           <Route path='/'>
             <NotFound />
           </Route>
