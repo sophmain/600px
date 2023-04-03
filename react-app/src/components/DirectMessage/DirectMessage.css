@@ -85,3 +85,7 @@
     position: relative;
     margin-bottom: 8px;
 }
+.direct-message-time{
+    text-align: center;
+    font-size: 12px;
+}
