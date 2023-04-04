@@ -63,7 +63,7 @@ function Navigation({ isLoaded }) {
 		dispatch(cleanUpSearchAction())
 		dispatch(thunkCreateSearch(query))
 		history.push('/search')
-		//setQuery('')
+		setQuery('')
 	};
 
 	const handleAutocomplete = (e) => {
