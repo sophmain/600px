@@ -21,6 +21,7 @@ export const thunkCreateSearch = (query) => async (dispatch) => {
 
     if (response.ok) {
         const newSearch = await response.json()
+        console.log('search results thunk', newSearch)
         dispatch(createSearch(newSearch))
         return newSearch
     }
