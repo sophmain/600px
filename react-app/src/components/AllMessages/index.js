@@ -19,7 +19,7 @@ const AllMessages = () => {
         dispatch(thunkLoadConversations())
 
     }, [user.id, currentMessageId, toggle]);
-
+    console.log('toggle', toggle)
     if (!followingObj || !allConversationsObj) return null;
     const conversations = Object.values(allConversationsObj)
 
@@ -48,7 +48,8 @@ const AllMessages = () => {
 
     // current selected user to display above chat window
     const selected = allFollowing.filter((follower) => follower.userId == currentMessageId)[0]
-
+    console.log('selected', selected)
+    console.log('following id', followingId)
     return (
         <div className='messages-background-container'>
             <div className='all-messages-container'>

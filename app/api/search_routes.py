@@ -19,8 +19,9 @@ def validation_errors_to_error_messages(validation_errors):
 @search_routes.route('', methods=['GET', 'POST'])
 def search():
     query = request.args.get('q')
+    print('query', query)
     photos = Photo.query.filter(or_(Photo.title.like("%"+query.lower()+"%"),  Photo.description.like("%"+query.lower()+"%"))).all()
-
+    print('photos', photos)
     if photos:
         return jsonify([photo.to_dict() for photo in photos])
-    return {}
+    return jsonify([])

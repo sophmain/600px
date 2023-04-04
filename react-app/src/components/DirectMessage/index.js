@@ -43,7 +43,7 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
             socket.disconnect()
         })
     }, [user, dispatch, followingId, messages])
-
+    console.log('messages', messages)
     useEffect(() => {
         //scroll to bottom of message container after each message is sent or when messages state is updated
         const chatBox = chatBoxRef.current
@@ -51,7 +51,7 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
             chatBox.scrollTop = chatBox.scrollHeight
         }
     }, [messages, userHistoryMessagesObj])
-
+    console.log('history messages', userHistoryMessages)
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
     };
@@ -97,40 +97,40 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
             <div className='direct-messages-parent' ref={chatBoxRef}>
                 {userHistoryMessages.concat(userMessages).map((message) => (
                     <>
-                                            <div className='direct-message-time'>{messageDate(message.createdAt)}</div>
-                    <div
-                        className='direct-message-single-parent'
-                        onMouseEnter={() => setSelectedMessageId(message.id)}
-                        onMouseLeave={() => {
-                            setSelectedMessageId(null);
-                        }}
-                        key={message.id}
-                    >
+                        <div className='direct-message-time'>{messageDate(message.createdAt)}</div>
                         <div
-                            className={`direct-message ${message.userId === followingId ? 'follower' : 'user'}`}
+                            className='direct-message-single-parent'
+                            onMouseEnter={() => setSelectedMessageId(message.id)}
+                            onMouseLeave={() => {
+                                setSelectedMessageId(null);
+                            }}
+                            key={message.id}
                         >
-                            {message.message}
-                        </div>
+                            <div
+                                className={`direct-message ${message.userId === followingId ? 'follower' : 'user'}`}
+                            >
+                                {message.message}
+                            </div>
 
-                        {selectedMessageId === message.id && message.userId === user.id && (
-                            <div className="direct-message-options">
-                                <button
-                                    className="direct-message-option"
-                                    onClick={() => deleteMessage(message.id)}
-                                >
-                                    Delete
-                                </button>
-                                {/* <div
+                            {selectedMessageId === message.id && message.userId === user.id && (
+                                <div className="direct-message-options">
+                                    <button
+                                        className="direct-message-option"
+                                        onClick={() => deleteMessage(message.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                    {/* <div
                                     className="direct-message-option"
                                     onClick={() => console.log('Edit message')}
                                 >
                                     Edit
                                 </div> */}
-                            </div>
-                        )}
+                                </div>
+                            )}
 
 
-                    </div>
+                        </div>
                     </>
                 ))}
             </div>
