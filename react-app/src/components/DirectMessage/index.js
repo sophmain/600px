@@ -94,58 +94,64 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
 
     return (user && followingId && (
         <div className='direct-message-container'>
-            <div className='direct-messages-parent' ref={chatBoxRef}>
-                {userHistoryMessages.concat(userMessages).length > 0 && userHistoryMessages.concat(userMessages).map((message) => (
-                    <>
-                        <div className='direct-message-time'>{messageDate(message.createdAt)}</div>
-                        <div
-                            className='direct-message-single-parent'
-                            onMouseEnter={() => setSelectedMessageId(message.id)}
-                            onMouseLeave={() => {
-                                setSelectedMessageId(null);
-                            }}
-                            key={message.id}
-                        >
-                            <div
-                                className={`direct-message ${message.userId === followingId ? 'follower' : 'user'}`}
-                            >
-                                {message.message}
-                            </div>
-
-                            {selectedMessageId === message.id && message.userId === user.id && (
-                                <div className="direct-message-options">
-                                    <button
-                                        className="direct-message-option"
-                                        onClick={() => deleteMessage(message.id)}
-                                    >
-                                        Delete
-                                    </button>
-                                    {/* <div
-                                    className="direct-message-option"
-                                    onClick={() => console.log('Edit message')}
-                                >
-                                    Edit
-                                </div> */}
-                                </div>
-                            )}
-
-
-                        </div>
-                    </>
-                ))}
+            <div className="under-construction">
+                <img className='under-construction-img' src="https://i.imgur.com/7tgeB59.jpg" title="source: imgur.com" alt='under construction' />
+                <p style={{textAlign: 'center', fontWeight: 'bold'}}>Under Construction</p>
             </div>
-            <form className='direct-message-typing-box-container' onSubmit={sendChat}>
-                <input
-                    className='direct-message-typing-box'
-                    value={chatInput}
-                    onChange={updateChatInput}
-                    placeholder='Say something'
-                />
-                <button className='direct-message-send' type="submit">Send</button>
-            </form>
         </div>
-    )
-    )
+        //         <div className='direct-messages-parent' ref={chatBoxRef}>
+
+        //             {userHistoryMessages.concat(userMessages).length > 0 && userHistoryMessages.concat(userMessages).map((message) => (
+        //                 <>
+        //                     <div className='direct-message-time'>{messageDate(message.createdAt)}</div>
+        //                     <div
+        //                         className='direct-message-single-parent'
+        //                         onMouseEnter={() => setSelectedMessageId(message.id)}
+        //                         onMouseLeave={() => {
+        //                             setSelectedMessageId(null);
+        //                         }}
+        //                         key={message.id}
+        //                     >
+        //                         <div
+        //                             className={`direct-message ${message.userId === followingId ? 'follower' : 'user'}`}
+        //                         >
+        //                             {message.message}
+        //                         </div>
+
+        //                         {selectedMessageId === message.id && message.userId === user.id && (
+        //                             <div className="direct-message-options">
+        //                                 <button
+        //                                     className="direct-message-option"
+        //                                     onClick={() => deleteMessage(message.id)}
+        //                                 >
+        //                                     Delete
+        //                                 </button>
+        //                                 {/* <div
+        //                                 className="direct-message-option"
+        //                                 onClick={() => console.log('Edit message')}
+        //                             >
+        //                                 Edit
+        //                             </div> */}
+        //                             </div>
+        //                         )}
+
+
+        //                     </div>
+        //                 </>
+        //             ))}
+
+        //         </div>
+        //         {/* <form className='direct-message-typing-box-container' onSubmit={sendChat}>
+        //             <input
+        //                 className='direct-message-typing-box'
+        //                 value={chatInput}
+        //                 onChange={updateChatInput}
+        //                 placeholder='Say something'
+        //             />
+        //             <button className='direct-message-send' type="submit">Send</button>
+        //         </form> */}
+        //     </div >
+    ))
 };
 
 
