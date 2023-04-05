@@ -51,7 +51,7 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
             chatBox.scrollTop = chatBox.scrollHeight
         }
     }, [messages, userHistoryMessagesObj])
-    console.log('history messages', userHistoryMessages)
+
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
     };
@@ -69,7 +69,7 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
         // Check if the message is not included in userMessages and filter out duplicates
         return !userMessages.find((userMessage) => userMessage.id === message.id);
     });
-
+    console.log('history messages', userHistoryMessages)
     const messageDate = (messageDate) => {
         console.log('message date', messageDate)
         const messageTime = messageDate.slice(10, 16)
