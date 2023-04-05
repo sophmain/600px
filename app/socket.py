@@ -4,11 +4,10 @@ import os, json
 
 # configure cors_allowed_origins
 if os.environ.get("FLASK_ENV") == "production":
-    # origins = [
-    #     'http://sixhundredpx.onrender.com',
-    #     'http://sixhundredpx.onrender.com'
-    # ]
-    origins = "*"
+    origins = [
+        'http://sixhundredpx.onrender.com',
+        'https://sixhundredpx.onrender.com'
+    ]
 else:
     origins = "*"
 
