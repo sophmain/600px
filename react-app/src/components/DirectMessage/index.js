@@ -95,7 +95,7 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
     return (user && followingId && (
         <div className='direct-message-container'>
             <div className='direct-messages-parent' ref={chatBoxRef}>
-                {userHistoryMessages.concat(userMessages).map((message) => (
+                {userHistoryMessages.concat(userMessages).length > 0 && userHistoryMessages.concat(userMessages).map((message) => (
                     <>
                         <div className='direct-message-time'>{messageDate(message.createdAt)}</div>
                         <div
