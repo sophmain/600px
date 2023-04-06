@@ -31,7 +31,6 @@ export const thunkPostFollow = (payload) => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     })
-    console.log('response in post follow thunk', response)
     if (response.ok) {
         const newFollowing = await response.json()
         dispatch(actionPostFollow(newFollowing))

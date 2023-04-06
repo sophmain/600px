@@ -28,10 +28,8 @@ export const thunkDeleteMessage = (messageId) => async (dispatch) => {
     const response = await fetch(`/api/messages/${messageId}`, {
         method: 'DELETE'
     })
-    console.log('response in thunk', response)
     if (response.ok){
         const deleteMessage = await response.json()
-        console.log('delete message', deleteMessage)
         dispatch(actionDeleteMessage(messageId))
         return messageId
     }

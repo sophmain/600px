@@ -25,8 +25,7 @@ const FollowerModal = ({ userId }) => {
     const followers = followersArr.filter((follower) => follower.userId === +userId)
     // boolean to check if user is already following to conditionally render follow button
     const isFollowing = followers.filter((follower) => follower.followerId === sessionUser.id).length > 0
-    console.log('followers in modal', followers)
-    console.log('following in modal', following)
+
     const payload = {
         userId: sessionUser.id,
         followingId: userId
