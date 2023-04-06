@@ -24,7 +24,7 @@ const CreateGalleryForm = () => {
             userId: user.id,
             title,
             description,
-            visible,
+            visible
         }
 
 
