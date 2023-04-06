@@ -27,7 +27,6 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
             dispatch(thunkLoadMessages(followingId))
         }
 
-
         // open socket connection
         // create websocket
         socket = io();
@@ -43,8 +42,6 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
             socket.disconnect()
         })
     }, [user, dispatch, followingId, messages])
-
-    console.log('messages', messages)
 
     useEffect(() => {
         //scroll to bottom of message container after each message is sent or when messages state is updated
@@ -65,14 +62,12 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
         setChatInput("")
         setToggle(!toggle)
     }
-    console.log('followingId', followingId)
 
     if (!userHistoryMessagesObj) return null
     const userHistoryMessages = Object.values(userHistoryMessagesObj).filter((message) => {
         // Check if the message is not included in userMessages and filter out duplicates
         return !userMessages.find((userMessage) => userMessage.id === message.id);
     });
-    console.log('history messages', userHistoryMessages)
 
     // converts date string to AP/PM time
     const messageDate = (messageDate) => {
@@ -139,12 +134,9 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
                                     </div> */}
                                 </div>
                             )}
-
-
                         </div>
                     </>
                 ))}
-
             </div>
             <form className='direct-message-typing-box-container' onSubmit={sendChat}>
                 <input
@@ -156,7 +148,6 @@ const DirectMessage = ({ followingId, setToggle, toggle }) => {
                 <button className='direct-message-send' type="submit">Send</button>
             </form>
         </div >
-
     ))
 };
 

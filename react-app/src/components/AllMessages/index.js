@@ -19,7 +19,7 @@ const AllMessages = () => {
         dispatch(thunkLoadConversations())
 
     }, [user.id, currentMessageId, toggle]);
-    console.log('toggle', toggle)
+
     if (!followingObj || !allConversationsObj) return null;
     const conversations = Object.values(allConversationsObj)
 
@@ -42,13 +42,8 @@ const AllMessages = () => {
         return ((following.followerId === user.id)) && !hasConversation;
     });
 
-    // console.log('open', openConversations)
-    // console.log('allfollowing', allFollowing)
-    // console.log('closed', notOpenConversations)
-
     // current selected user to display above chat window
     const selected = allFollowing.filter((follower) => follower.userId == currentMessageId)[0]
-    console.log('selected', selected)
 
     return (
         <div className='messages-background-container'>

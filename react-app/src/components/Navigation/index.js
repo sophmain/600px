@@ -68,7 +68,6 @@ function Navigation({ isLoaded }) {
 
 	const handleAutocomplete = (e) => {
 		const searchQuery = e.target.value;
-		console.log('search query', searchQuery)
 		setQuery(searchQuery);
 		const photosArr = Object.values(photosObj);
 

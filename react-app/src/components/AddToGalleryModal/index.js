@@ -10,11 +10,7 @@ import './AddToGalleryModal.css'
 
 const AddToGalleryModal = ({ photo }) => {
     const dispatch = useDispatch()
-    const history = useHistory()
     const { closeModal } = useModal()
-
-    //const [selectedGallery, setSelectedGallery] = useState([])
-    // console.log('selected gallery', selectedGallery)
 
     useEffect(() => {
         dispatch(thunkLoadGalleries())

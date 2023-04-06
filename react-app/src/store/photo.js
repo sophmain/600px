@@ -131,7 +131,6 @@ export const thunkDeletePhoto = (photoToDelete) => async (dispatch) => {
     const response = await fetch(`/api/photos/${photoToDelete.id}`, {
         method: "DELETE"
     })
-    console.log('response', response)
     if (response.ok) {
         await response.json()
         dispatch(actionDeletePhoto(photoToDelete.id))

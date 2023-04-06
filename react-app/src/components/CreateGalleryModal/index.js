@@ -14,14 +14,8 @@ const CreateGalleryModal = ({ photo }) => {
     const [visible, setVisible] = useState(false)
     const [errors, setErrors] = useState([])
     const [createdGallery, setCreatedGallery] = useState('')
-    //const [photo, setPhoto] = useState([])
 
-    console.log('visible', visible)
     const user = useSelector(state => state.session.user)
-    //const photo = useSelector(state => state.photos.singlePhoto)
-    //const galleries = useSelector(state => state.galleries.allGalleries)
-    //const numGallery = galleries.length()
-
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -33,25 +27,20 @@ const CreateGalleryModal = ({ photo }) => {
             title,
             visible: !visible,
             description,
-            // photos: [{...photo}]
         }
 
 
         const data = await dispatch(thunkCreateGallery(payload))
 
         if (Array.isArray(data)) {
-            // const formattedData = data.map((data) => data.split(': ')[1])
             setErrors(data)
         } else {
             await setCreatedGallery(data)
-
-            // await dispatch(thunkPostPhotoGallery(createdGallery.id, [photo]))
             closeModal();
         }
     }
     useEffect(() => {
         if (createdGallery) {
-
             dispatch(thunkPostPhotoGallery(createdGallery.id, [photo.id]))
             history.push(`/galleries/${createdGallery.id}`)
         }
