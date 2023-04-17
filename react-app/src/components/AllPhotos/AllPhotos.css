@@ -93,7 +93,7 @@
     position: absolute;
     top: 0;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0));
-    width: calc(100% - 25px);
+    width: calc(100% - 30px);
     height: 90px;
     transition: .5s ease;
     opacity:0;
