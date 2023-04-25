@@ -31,16 +31,8 @@ const SelectProfilePhotosModal = ({ gallery }) => {
     const addPhoto = (e, photo) => {
         e.preventDefault()
 
-        // if (!selectedPhotosId.includes(+photo.id)){
-        //     selectedPhotosId.push(photo.id)
-        //     setSelectedPhotos(selectedPhotosId)
-
-        // } else {
-        //     selectedPhotosId.splice(selectedPhotosId.indexOf(photo.id), 1)
-        //     setSelectedPhotos(selectedPhotosId)
-        // }
         const updatedSelectedPhotos = (selectedPhotos.includes(+photo.id))
-        ? selectedPhotos.filter((id)=> id !== photo.id)
+        ? selectedPhotos.filter((id)=> id !== photo.id) // filters out photo if it is already selected (unselect photo)
         : [...selectedPhotos, photo.id]
         setSelectedPhotos(updatedSelectedPhotos)
 
@@ -48,7 +40,7 @@ const SelectProfilePhotosModal = ({ gallery }) => {
             const updatedClickBorder = { ...prevClickBorder };
             if (selectedPhotos.includes(+photo.id)) {
               delete updatedClickBorder[photo.id];
-            
+
             } else {
               updatedClickBorder[photo.id] = "border-click-on";
 

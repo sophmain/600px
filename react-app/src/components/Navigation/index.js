@@ -13,12 +13,14 @@ function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const history = useHistory()
 	const dispatch = useDispatch()
+
 	const [showMenu, setShowMenu] = useState(false);
 	const [autocompleteResults, setAutocompleteResults] = useState([]);
 	const [query, setQuery] = useState('');
 	const [hovered, setHovered] = useState(false);
 	const ulRef = useRef();
 
+	// take user to upload photo page
 	const uploadPhoto = (e) => {
 		e.preventDefault()
 		history.push(`/upload`)
@@ -29,6 +31,7 @@ function Navigation({ isLoaded }) {
 		dispatch(thunkLoadPhotos())
 	},[])
 
+	// user profile dropdown
 	useEffect(() => {
 		if (!showMenu) return;
 
@@ -43,6 +46,7 @@ function Navigation({ isLoaded }) {
 		return () => document.removeEventListener("click", closeMenu);
 	}, [showMenu]);
 
+	// have access to all photos for search
 	const photosObj = useSelector((state) => state.photos.allPhotos)
 	if (!photosObj) return null
 
@@ -79,6 +83,8 @@ function Navigation({ isLoaded }) {
 		})
 		setAutocompleteResults(results);
 	};
+
+	// only clears auto results onblur if not hovered on the result list
 	const handleBlur = () => {
 		if (!hovered) {
 		  setAutocompleteResults([]);
@@ -101,10 +107,7 @@ function Navigation({ isLoaded }) {
 								type="text" value={query}
 								onChange={handleAutocomplete}
 								onBlur={handleBlur}
-
 							/>
-
-
 						</div>
 						{autocompleteResults.length > 0 && (
 							<ul className="nav-bar-search-autocomplete" onMouseLeave={handleMouseLeave}>
