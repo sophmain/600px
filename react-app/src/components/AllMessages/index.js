@@ -10,31 +10,35 @@ const AllMessages = () => {
     const [currentMessageId, setCurrentMessageId] = useState("");
     const [toggle, setToggle] = useState(false)
 
+    // Selectors to access data from Redux store
     const user = useSelector((state) => state.session.user);
     const followingObj = useSelector((state) => state.followers.allFollowers);
     const allConversationsObj = useSelector(state => state.message.allConversations)
 
     useEffect(() => {
+        // Load followers and conversations when the component mounts or when the current message id or toggle state changes
         dispatch(thunkLoadFollowers(user.id));
         dispatch(thunkLoadConversations())
-
     }, [user.id, currentMessageId, toggle]);
 
+    // Return null if follower or conversation data has not loaded yet
     if (!followingObj || !allConversationsObj) return null;
-    const conversations = Object.values(allConversationsObj)
+    const conversations = Object.values(allConversationsObj);
 
+    // Get all the followers who are being followed by the logged in user
     const allFollowing = Object.values(followingObj).filter(following => {
         return following.followerId === user.id
-    })
+    });
 
-    // filters to only show users that have conversations started with the logged in user
+    // Filter the followers to show only the ones who have conversations started with the logged in user
     const openConversations = Object.values(followingObj).filter(following => {
         const hasConversation = conversations.some(conversation =>
             (conversation.userId === following.userId || conversation.followingId === following.userId)
         );
         return ((following.followerId === user.id)) && hasConversation;
     });
-    // filters to only show users that do not have conversations started with the logged in user
+
+    // Filter the followers to show only the ones who do not have conversations started with the logged in user
     const notOpenConversations = Object.values(followingObj).filter(following => {
         const hasConversation = conversations.some(conversation =>
             (conversation.userId === following.userId || conversation.followingId === following.userId)
@@ -42,8 +46,8 @@ const AllMessages = () => {
         return ((following.followerId === user.id)) && !hasConversation;
     });
 
-    // current selected user to display above chat window
-    const selected = allFollowing.filter((follower) => follower.userId == currentMessageId)[0]
+    // Get the currently selected user to display above the chat window
+    const selected = allFollowing.filter((follower) => follower.userId == currentMessageId)[0];
 
     return (
         <div className='messages-background-container'>
