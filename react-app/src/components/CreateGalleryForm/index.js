@@ -27,7 +27,6 @@ const CreateGalleryForm = () => {
             visible
         }
 
-
         const data = await dispatch(thunkCreateGallery(payload))
 
         if (Array.isArray(data)) {
@@ -53,13 +52,7 @@ const CreateGalleryForm = () => {
                 <h2 className='create-gallery-form-title'>Create gallery</h2>
             </div>
             <div className='create-gallery-form-container'>
-
                 <form className='gallery-form' onSubmit={handleSubmit}>
-                    {/* <ul className="validation-errors">
-                        {errors.map((error, idx) => (
-                            <li key={idx}>{error}</li>
-                        ))}
-                    </ul> */}
                     <label>
                         <p className='gallery-form-label'>
                             Title*
